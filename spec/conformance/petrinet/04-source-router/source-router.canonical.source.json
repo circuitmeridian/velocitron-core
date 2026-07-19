@@ -1,0 +1,4 @@
+{
+  "sourceId": "source-router.canonical.petrinet",
+  "text": "net source_router \"Source router\"\n\n@arc_0: (sample_in) -sample-> [route_co2mon]\n[route_co2mon] -sample-> (co2mon_samples)\n@arc_2: (sample_in) -sample-> [route_weather]\n[route_weather] -sample-> (weather_samples)\n\n[route_co2mon] handler \"route_co2mon\"\n[route_weather] handler \"route_weather\"\n\n@arc_0 predicate cel \"source == \\\"co2mon\\\"\"\n@arc_2 predicate cel \"source == \\\"weather\\\"\"\n\nmarking initial (sample_in) <- $token_0\n$token_0: sample {\"co2_ppm\":602,\"error\":null,\"humidity_pct\":51,\"source\":\"co2mon\",\"temp_c\":28.9,\"timestamp_ms\":1234567890000}\n"
+}

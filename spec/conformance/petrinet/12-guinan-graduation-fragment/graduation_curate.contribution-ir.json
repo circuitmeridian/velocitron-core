@@ -1,0 +1,231 @@
+{
+  "contributions": [
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_curate.petrinet",
+        "statement": 0
+      },
+      "kind": "document.net-header",
+      "ordinal": 0,
+      "span": {
+        "end": {
+          "byteOffset": 50,
+          "column": 51,
+          "line": 1
+        },
+        "source": "graduation_curate.petrinet",
+        "start": {
+          "byteOffset": 0,
+          "column": 1,
+          "line": 1
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "description": "Curate graduation fragment",
+        "name": "graduation_curate"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_curate.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.declare",
+      "ordinal": 1,
+      "span": {
+        "end": {
+          "byteOffset": 92,
+          "column": 41,
+          "line": 3
+        },
+        "source": "graduation_curate.petrinet",
+        "start": {
+          "byteOffset": 52,
+          "column": 1,
+          "line": 3
+        }
+      },
+      "target": {
+        "id": {
+          "document": "graduation_curate.petrinet",
+          "part": 0,
+          "statement": 1
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "refresh_due"
+        },
+        "from": {
+          "name": "refresh_due_in",
+          "type": "place"
+        },
+        "mode": "consume",
+        "to": {
+          "name": "curate",
+          "type": "transition"
+        },
+        "transitionNameSpan": {
+          "end": {
+            "byteOffset": 91,
+            "column": 40,
+            "line": 3
+          },
+          "source": "graduation_curate.petrinet",
+          "start": {
+            "byteOffset": 85,
+            "column": 34,
+            "line": 3
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "graduation_curate.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.declare",
+      "ordinal": 2,
+      "span": {
+        "end": {
+          "byteOffset": 121,
+          "column": 70,
+          "line": 3
+        },
+        "source": "graduation_curate.petrinet",
+        "start": {
+          "byteOffset": 84,
+          "column": 33,
+          "line": 3
+        }
+      },
+      "target": {
+        "id": {
+          "document": "graduation_curate.petrinet",
+          "part": 1,
+          "statement": 1
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "speak_req"
+        },
+        "from": {
+          "name": "curate",
+          "type": "transition"
+        },
+        "mode": "produce",
+        "to": {
+          "name": "speak_request",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_curate.petrinet",
+        "statement": 2
+      },
+      "kind": "transition.handler",
+      "ordinal": 3,
+      "span": {
+        "end": {
+          "byteOffset": 155,
+          "column": 33,
+          "line": 5
+        },
+        "source": "graduation_curate.petrinet",
+        "start": {
+          "byteOffset": 123,
+          "column": 1,
+          "line": 5
+        }
+      },
+      "target": {
+        "name": "curate",
+        "type": "transition"
+      },
+      "value": {
+        "handler": "curate@curate"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_curate.petrinet",
+        "statement": 3
+      },
+      "kind": "place.port",
+      "ordinal": 4,
+      "span": {
+        "end": {
+          "byteOffset": 195,
+          "column": 40,
+          "line": 6
+        },
+        "source": "graduation_curate.petrinet",
+        "start": {
+          "byteOffset": 156,
+          "column": 1,
+          "line": 6
+        }
+      },
+      "target": {
+        "name": "refresh_due_in",
+        "type": "place"
+      },
+      "value": {
+        "color": "refresh_due",
+        "direction": "input"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_curate.petrinet",
+        "statement": 4
+      },
+      "kind": "place.port",
+      "ordinal": 5,
+      "span": {
+        "end": {
+          "byteOffset": 233,
+          "column": 38,
+          "line": 7
+        },
+        "source": "graduation_curate.petrinet",
+        "start": {
+          "byteOffset": 196,
+          "column": 1,
+          "line": 7
+        }
+      },
+      "target": {
+        "name": "speak_request",
+        "type": "place"
+      },
+      "value": {
+        "color": "speak_req",
+        "direction": "output"
+      }
+    }
+  ],
+  "document": {
+    "id": "graduation_curate.petrinet"
+  },
+  "documentKind": "net",
+  "format": "velocitron.petrinet/contribution-ir",
+  "version": 1
+}

@@ -1,0 +1,74 @@
+{
+  "annotations": {
+    "petrinet.dsl/v1": {
+      "arcHandles": {},
+      "extensions": {
+        "vendor": {
+          "mode": "safe"
+        }
+      },
+      "markings": {},
+      "views": {
+        "layout": {
+          "positions": {
+            "place:input": {
+              "x": 10,
+              "y": 20
+            }
+          },
+          "routes": {}
+        }
+      }
+    }
+  },
+  "arcs": [
+    {
+      "consume": {
+        "type": "token"
+      },
+      "from": {
+        "place": "input"
+      },
+      "to": {
+        "transition": "go"
+      }
+    },
+    {
+      "from": {
+        "transition": "go"
+      },
+      "produce": {
+        "destination": "output",
+        "type": "done"
+      },
+      "to": {
+        "place": "output"
+      }
+    }
+  ],
+  "name": "metadata_idempotence",
+  "places": [
+    {
+      "accepts": [
+        "token"
+      ],
+      "annotations": {
+        "fusion": true
+      },
+      "description": "Stable input",
+      "name": "input"
+    },
+    {
+      "accepts": [
+        "done"
+      ],
+      "name": "output"
+    }
+  ],
+  "transitions": [
+    {
+      "handler": "go@metadata",
+      "name": "go"
+    }
+  ]
+}

@@ -1,0 +1,189 @@
+{
+  "cases": [
+    {
+      "expectedEnabledTransitions": [
+        "speak_gate_speak"
+      ],
+      "expectedFinalMarking": {
+        "speak_request": [
+          {
+            "data": {},
+            "type": "speak_req"
+          }
+        ]
+      },
+      "expectedFiringSequence": [
+        {
+          "status": "completed",
+          "transition": "speak_gate_speak"
+        }
+      ],
+      "initialMarking": {
+        "curation_token": [
+          {
+            "data": {
+              "should_speak": true
+            },
+            "type": "curation"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "should_speak true selects speak branch",
+      "registryVariant": "complementary"
+    },
+    {
+      "expectedEnabledTransitions": [
+        "speak_gate_skip"
+      ],
+      "expectedFinalMarking": {
+        "final_utterance": [
+          {
+            "data": {
+              "silent": true,
+              "text": ""
+            },
+            "type": "utterance"
+          }
+        ]
+      },
+      "expectedFiringSequence": [
+        {
+          "status": "completed",
+          "transition": "speak_gate_skip"
+        }
+      ],
+      "initialMarking": {
+        "curation_token": [
+          {
+            "data": {
+              "should_speak": false
+            },
+            "type": "curation"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "should_speak false selects skip branch",
+      "registryVariant": "complementary"
+    },
+    {
+      "expectedEnabledTransitions": [],
+      "expectedFinalMarking": {
+        "curation_token": [
+          {
+            "data": {
+              "should_speak": true
+            },
+            "type": "curation"
+          }
+        ]
+      },
+      "expectedFiringSequence": [],
+      "initialMarking": {
+        "curation_token": [
+          {
+            "data": {
+              "should_speak": true
+            },
+            "type": "curation"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "missing speak guard disables speak branch",
+      "registryVariant": "missing_speak_guard"
+    },
+    {
+      "expectedEnabledTransitions": [],
+      "expectedFinalMarking": {
+        "curation_token": [
+          {
+            "data": {
+              "should_speak": true
+            },
+            "type": "curation"
+          }
+        ]
+      },
+      "expectedFiringSequence": [],
+      "initialMarking": {
+        "curation_token": [
+          {
+            "data": {
+              "should_speak": true
+            },
+            "type": "curation"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "raising speak guard disables speak branch",
+      "registryVariant": "raising_speak_guard"
+    },
+    {
+      "expectedEnabledTransitions": [
+        "speak_gate_speak",
+        "speak_gate_skip"
+      ],
+      "expectedFinalMarking": {
+        "speak_request": [
+          {
+            "data": {},
+            "type": "speak_req"
+          }
+        ]
+      },
+      "expectedFiringSequence": [
+        {
+          "status": "completed",
+          "transition": "speak_gate_speak"
+        }
+      ],
+      "initialMarking": {
+        "curation_token": [
+          {
+            "data": {
+              "should_speak": false
+            },
+            "type": "curation"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "both true follows declaration order",
+      "registryVariant": "both_true"
+    },
+    {
+      "expectedEnabledTransitions": [],
+      "expectedFinalMarking": {
+        "curation_token": [
+          {
+            "data": {
+              "should_speak": false
+            },
+            "type": "curation"
+          }
+        ]
+      },
+      "expectedFiringSequence": [],
+      "initialMarking": {
+        "curation_token": [
+          {
+            "data": {
+              "should_speak": false
+            },
+            "type": "curation"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "both false preserves curation token",
+      "registryVariant": "both_false"
+    }
+  ],
+  "description": "Guarded curation choice, fail-closed guard resolution, and complementary-guard conflict behavior",
+  "dslVariants": [
+    "guarded-curation-choice.petrinet"
+  ]
+}

@@ -1,0 +1,237 @@
+{
+  "cases": [
+    {
+      "expectedEnabledTransitions": [
+        "detect_crossing"
+      ],
+      "expectedFinalMarking": {
+        "alert_out": [
+          {
+            "data": {},
+            "type": "alert"
+          }
+        ],
+        "latest_sample": [
+          {
+            "data": {
+              "ppm": 1200,
+              "source": "co2mon"
+            },
+            "type": "sample"
+          }
+        ],
+        "previous_sample": [
+          {
+            "data": {
+              "ppm": 900,
+              "source": "co2mon"
+            },
+            "type": "sample"
+          }
+        ]
+      },
+      "expectedFiringSequence": [
+        {
+          "status": "completed",
+          "transition": "detect_crossing"
+        }
+      ],
+      "initialMarking": {
+        "arrival": [
+          {
+            "data": {
+              "source": "co2mon"
+            },
+            "type": "arrival"
+          }
+        ],
+        "latest_sample": [
+          {
+            "data": {
+              "ppm": 1200,
+              "source": "co2mon"
+            },
+            "type": "sample"
+          }
+        ],
+        "previous_sample": [
+          {
+            "data": {
+              "ppm": 900,
+              "source": "co2mon"
+            },
+            "type": "sample"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "given a complete crossing window, when fired, then reads are retained and one alert is emitted"
+    },
+    {
+      "expectedEnabledTransitions": [],
+      "expectedFinalMarking": {
+        "arrival": [
+          {
+            "data": {
+              "source": "co2mon"
+            },
+            "type": "arrival"
+          }
+        ],
+        "previous_sample": [
+          {
+            "data": {
+              "ppm": 900,
+              "source": "co2mon"
+            },
+            "type": "sample"
+          }
+        ]
+      },
+      "expectedFiringSequence": [],
+      "initialMarking": {
+        "arrival": [
+          {
+            "data": {
+              "source": "co2mon"
+            },
+            "type": "arrival"
+          }
+        ],
+        "previous_sample": [
+          {
+            "data": {
+              "ppm": 900,
+              "source": "co2mon"
+            },
+            "type": "sample"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "given an empty latest sample, when queried, then detection is disabled"
+    },
+    {
+      "expectedEnabledTransitions": [],
+      "expectedFinalMarking": {
+        "arrival": [
+          {
+            "data": {
+              "source": "co2mon"
+            },
+            "type": "arrival"
+          }
+        ],
+        "latest_sample": [
+          {
+            "data": {
+              "ppm": 1200,
+              "source": "co2mon"
+            },
+            "type": "sample"
+          }
+        ]
+      },
+      "expectedFiringSequence": [],
+      "initialMarking": {
+        "arrival": [
+          {
+            "data": {
+              "source": "co2mon"
+            },
+            "type": "arrival"
+          }
+        ],
+        "latest_sample": [
+          {
+            "data": {
+              "ppm": 1200,
+              "source": "co2mon"
+            },
+            "type": "sample"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "given an empty previous sample, when queried, then detection is disabled"
+    },
+    {
+      "expectedEnabledTransitions": [],
+      "expectedFinalMarking": {
+        "arrival": [
+          {
+            "data": {
+              "source": "co2mon"
+            },
+            "type": "arrival"
+          }
+        ],
+        "latest_sample": [
+          {
+            "data": {
+              "ppm": 1200,
+              "source": "co2mon"
+            },
+            "type": "sample"
+          }
+        ],
+        "open_alert": [
+          {
+            "data": {},
+            "type": "alert"
+          }
+        ],
+        "previous_sample": [
+          {
+            "data": {
+              "ppm": 900,
+              "source": "co2mon"
+            },
+            "type": "sample"
+          }
+        ]
+      },
+      "expectedFiringSequence": [],
+      "initialMarking": {
+        "arrival": [
+          {
+            "data": {
+              "source": "co2mon"
+            },
+            "type": "arrival"
+          }
+        ],
+        "latest_sample": [
+          {
+            "data": {
+              "ppm": 1200,
+              "source": "co2mon"
+            },
+            "type": "sample"
+          }
+        ],
+        "open_alert": [
+          {
+            "data": {},
+            "type": "alert"
+          }
+        ],
+        "previous_sample": [
+          {
+            "data": {
+              "ppm": 900,
+              "source": "co2mon"
+            },
+            "type": "sample"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "given an open alert, when queried, then the inhibitor blocks detection"
+    }
+  ],
+  "description": "Read a sample window unless an alert is already open",
+  "dslVariants": [
+    "crossing-window.petrinet"
+  ]
+}

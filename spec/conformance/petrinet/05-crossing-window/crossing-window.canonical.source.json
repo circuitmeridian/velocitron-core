@@ -1,0 +1,4 @@
+{
+  "sourceId": "crossing-window.canonical.petrinet",
+  "text": "net crossing_window \"Read a sample window unless an alert is already open\"\n\n@arc_0: (arrival) -arrival-> [detect_crossing]\n(latest_sample) -sample->? [detect_crossing]\n(previous_sample) -sample->? [detect_crossing]\n(open_alert) -alert->0 [detect_crossing]\n[detect_crossing] -alert-> (alert_out)\n\n[detect_crossing] handler \"detect_crossing@ingest\"\n\n@arc_0 predicate cel \"source == \\\"co2mon\\\"\"\n\nmarking initial (arrival) <- $token_0\nmarking initial (latest_sample) <- $token_1\nmarking initial (previous_sample) <- $token_2\n$token_0: arrival {\"source\":\"co2mon\"}\n$token_1: sample {\"ppm\":1200,\"source\":\"co2mon\"}\n$token_2: sample {\"ppm\":900,\"source\":\"co2mon\"}\n"
+}

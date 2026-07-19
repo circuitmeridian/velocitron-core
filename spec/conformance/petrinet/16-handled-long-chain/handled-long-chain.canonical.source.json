@@ -1,0 +1,4 @@
+{
+  "sourceId": "handled-long-chain.canonical.petrinet",
+  "text": "net handled_long_chain\n\n(a) -red->? [b]\n[b] -blue-> (c)\n(c) -token->0 [d]\n[d] -green-> (e)\n"
+}

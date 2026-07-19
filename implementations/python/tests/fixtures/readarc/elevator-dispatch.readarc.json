@@ -1,0 +1,71 @@
+{
+  "arcs": [
+    {
+      "consume": {
+        "mode": "read",
+        "type": "sensor",
+        "weight": 2
+      },
+      "description": "Read two sensor tokens without consuming them.",
+      "from": {
+        "place": "sensors"
+      },
+      "to": {
+        "transition": "dispatch_car"
+      }
+    },
+    {
+      "consume": {
+        "type": "call"
+      },
+      "from": {
+        "place": "calls"
+      },
+      "to": {
+        "transition": "dispatch_car"
+      }
+    },
+    {
+      "from": {
+        "transition": "dispatch_car"
+      },
+      "produce": {
+        "destination": "dispatched",
+        "type": "dispatch"
+      },
+      "to": {
+        "place": "dispatched"
+      }
+    }
+  ],
+  "description": "An elevator dispatches a car to a pending call only when both floor sensors are reporting. The two sensor tokens are READ with weight 2 (test-without-consume): dispatch requires both present and sees both in its binding, but neither is removed, so the sensors keep reporting for the next dispatch.",
+  "name": "elevator-dispatch",
+  "places": [
+    {
+      "accepts": [
+        "sensor"
+      ],
+      "description": "Holds the floor-sensor readings currently reporting.",
+      "name": "sensors"
+    },
+    {
+      "accepts": [
+        "call"
+      ],
+      "name": "calls"
+    },
+    {
+      "accepts": [
+        "dispatch"
+      ],
+      "name": "dispatched"
+    }
+  ],
+  "transitions": [
+    {
+      "description": "Send a car to a pending call once both sensors report.",
+      "handler": "elevator.dispatch_car",
+      "name": "dispatch_car"
+    }
+  ]
+}

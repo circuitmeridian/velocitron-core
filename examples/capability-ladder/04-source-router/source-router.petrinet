@@ -1,0 +1,14 @@
+net source_router "Source router"
+
+@co2_route: (sample_in) -sample-> [route_co2mon] -sample-> (co2mon_samples)
+@weather_route: (sample_in) -sample-> [route_weather] -sample-> (weather_samples)
+
+[route_co2mon] handler "route_co2mon"
+[route_weather] handler "route_weather"
+
+@co2_route predicate cel "source == \"co2mon\""
+@weather_route predicate cel "source == \"weather\""
+
+marking initial (sample_in) <- $co2_reading
+
+$co2_reading: sample {"source": "co2mon", "co2_ppm": 602, "temp_c": 28.9, "humidity_pct": 51.0, "timestamp_ms": 1234567890000, "error": null}

@@ -1,0 +1,36 @@
+{
+  "description": "Two edible bread slices and a cheese block (thickness 6) are sliced 3x under a guard (thickness_mm >= 2), layered into one sandwich, and eaten; the net quiesces.",
+  "expectedFinalMarking": {
+    "cheese_block": [
+      {
+        "data": {
+          "thickness_mm": 0
+        },
+        "type": "cheese_block"
+      }
+    ]
+  },
+  "expectedFiringSequence": [
+    {
+      "status": "completed",
+      "transition": "slice_cheese"
+    },
+    {
+      "status": "completed",
+      "transition": "slice_cheese"
+    },
+    {
+      "status": "completed",
+      "transition": "slice_cheese"
+    },
+    {
+      "status": "completed",
+      "transition": "layer_cheese_between_bread"
+    },
+    {
+      "status": "completed",
+      "transition": "eat_cheese_sandwich"
+    }
+  ],
+  "maxSteps": 15
+}

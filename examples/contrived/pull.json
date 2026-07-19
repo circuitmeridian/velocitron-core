@@ -1,0 +1,516 @@
+{
+  "arcs": [
+    {
+      "consume": {
+        "type": "unit"
+      },
+      "from": {
+        "place": "demand_a"
+      },
+      "to": {
+        "transition": "prep_a"
+      }
+    },
+    {
+      "consume": {
+        "type": "unit"
+      },
+      "from": {
+        "place": "ready_a"
+      },
+      "to": {
+        "transition": "prep_a"
+      }
+    },
+    {
+      "from": {
+        "transition": "prep_a"
+      },
+      "produce": {
+        "destination": "preparing_a",
+        "type": "unit"
+      },
+      "to": {
+        "place": "preparing_a"
+      }
+    },
+    {
+      "consume": {
+        "type": "unit"
+      },
+      "from": {
+        "place": "preparing_a"
+      },
+      "to": {
+        "transition": "work_a"
+      }
+    },
+    {
+      "from": {
+        "transition": "work_a"
+      },
+      "produce": {
+        "destination": "working_a",
+        "type": "unit"
+      },
+      "to": {
+        "place": "working_a"
+      }
+    },
+    {
+      "consume": {
+        "type": "unit"
+      },
+      "from": {
+        "place": "working_a"
+      },
+      "to": {
+        "transition": "done_a"
+      }
+    },
+    {
+      "from": {
+        "transition": "done_a"
+      },
+      "produce": {
+        "destination": "product_a",
+        "type": "unit"
+      },
+      "to": {
+        "place": "product_a"
+      }
+    },
+    {
+      "from": {
+        "transition": "done_a"
+      },
+      "produce": {
+        "destination": "ready_a",
+        "type": "unit"
+      },
+      "to": {
+        "place": "ready_a"
+      }
+    },
+    {
+      "consume": {
+        "type": "unit"
+      },
+      "from": {
+        "place": "demand_b"
+      },
+      "to": {
+        "transition": "prep_b"
+      }
+    },
+    {
+      "consume": {
+        "type": "unit"
+      },
+      "from": {
+        "place": "ready_b"
+      },
+      "to": {
+        "transition": "prep_b"
+      }
+    },
+    {
+      "from": {
+        "transition": "prep_b"
+      },
+      "produce": {
+        "destination": "preparing_b",
+        "type": "unit"
+      },
+      "to": {
+        "place": "preparing_b"
+      }
+    },
+    {
+      "from": {
+        "transition": "prep_b"
+      },
+      "produce": {
+        "destination": "demand_a",
+        "type": "unit"
+      },
+      "to": {
+        "place": "demand_a"
+      }
+    },
+    {
+      "consume": {
+        "type": "unit"
+      },
+      "from": {
+        "place": "preparing_b"
+      },
+      "to": {
+        "transition": "work_b"
+      }
+    },
+    {
+      "consume": {
+        "type": "unit"
+      },
+      "from": {
+        "place": "product_a"
+      },
+      "to": {
+        "transition": "work_b"
+      }
+    },
+    {
+      "from": {
+        "transition": "work_b"
+      },
+      "produce": {
+        "destination": "working_b",
+        "type": "unit"
+      },
+      "to": {
+        "place": "working_b"
+      }
+    },
+    {
+      "consume": {
+        "type": "unit"
+      },
+      "from": {
+        "place": "working_b"
+      },
+      "to": {
+        "transition": "done_b"
+      }
+    },
+    {
+      "from": {
+        "transition": "done_b"
+      },
+      "produce": {
+        "destination": "product_b",
+        "type": "unit"
+      },
+      "to": {
+        "place": "product_b"
+      }
+    },
+    {
+      "from": {
+        "transition": "done_b"
+      },
+      "produce": {
+        "destination": "ready_b",
+        "type": "unit"
+      },
+      "to": {
+        "place": "ready_b"
+      }
+    },
+    {
+      "consume": {
+        "type": "unit"
+      },
+      "from": {
+        "place": "demand_c"
+      },
+      "to": {
+        "transition": "prep_c"
+      }
+    },
+    {
+      "consume": {
+        "type": "unit"
+      },
+      "from": {
+        "place": "ready_c"
+      },
+      "to": {
+        "transition": "prep_c"
+      }
+    },
+    {
+      "from": {
+        "transition": "prep_c"
+      },
+      "produce": {
+        "destination": "preparing_c",
+        "type": "unit"
+      },
+      "to": {
+        "place": "preparing_c"
+      }
+    },
+    {
+      "from": {
+        "transition": "prep_c"
+      },
+      "produce": {
+        "destination": "demand_b",
+        "type": "unit"
+      },
+      "to": {
+        "place": "demand_b"
+      }
+    },
+    {
+      "consume": {
+        "type": "unit"
+      },
+      "from": {
+        "place": "preparing_c"
+      },
+      "to": {
+        "transition": "work_c"
+      }
+    },
+    {
+      "consume": {
+        "type": "unit"
+      },
+      "from": {
+        "place": "product_b"
+      },
+      "to": {
+        "transition": "work_c"
+      }
+    },
+    {
+      "from": {
+        "transition": "work_c"
+      },
+      "produce": {
+        "destination": "working_c",
+        "type": "unit"
+      },
+      "to": {
+        "place": "working_c"
+      }
+    },
+    {
+      "consume": {
+        "type": "unit"
+      },
+      "from": {
+        "place": "working_c"
+      },
+      "to": {
+        "transition": "done_c"
+      }
+    },
+    {
+      "from": {
+        "transition": "done_c"
+      },
+      "produce": {
+        "destination": "product_c",
+        "type": "unit"
+      },
+      "to": {
+        "place": "product_c"
+      }
+    },
+    {
+      "from": {
+        "transition": "done_c"
+      },
+      "produce": {
+        "destination": "ready_c",
+        "type": "unit"
+      },
+      "to": {
+        "place": "ready_c"
+      }
+    },
+    {
+      "consume": {
+        "type": "unit"
+      },
+      "from": {
+        "place": "product_c"
+      },
+      "to": {
+        "transition": "receive_c"
+      }
+    },
+    {
+      "from": {
+        "transition": "receive_c"
+      },
+      "produce": {
+        "destination": "received",
+        "type": "unit"
+      },
+      "to": {
+        "place": "received"
+      }
+    }
+  ],
+  "initialMarking": {
+    "demand_c": [
+      {
+        "data": {},
+        "type": "unit"
+      }
+    ],
+    "ready_a": [
+      {
+        "data": {},
+        "type": "unit"
+      }
+    ],
+    "ready_b": [
+      {
+        "data": {},
+        "type": "unit"
+      }
+    ],
+    "ready_c": [
+      {
+        "data": {},
+        "type": "unit"
+      }
+    ]
+  },
+  "name": "pull-manufacturing",
+  "places": [
+    {
+      "accepts": [
+        "unit"
+      ],
+      "name": "ready_a"
+    },
+    {
+      "accepts": [
+        "unit"
+      ],
+      "name": "preparing_a"
+    },
+    {
+      "accepts": [
+        "unit"
+      ],
+      "name": "working_a"
+    },
+    {
+      "accepts": [
+        "unit"
+      ],
+      "name": "product_a"
+    },
+    {
+      "accepts": [
+        "unit"
+      ],
+      "name": "demand_a"
+    },
+    {
+      "accepts": [
+        "unit"
+      ],
+      "name": "ready_b"
+    },
+    {
+      "accepts": [
+        "unit"
+      ],
+      "name": "preparing_b"
+    },
+    {
+      "accepts": [
+        "unit"
+      ],
+      "name": "working_b"
+    },
+    {
+      "accepts": [
+        "unit"
+      ],
+      "name": "product_b"
+    },
+    {
+      "accepts": [
+        "unit"
+      ],
+      "name": "demand_b"
+    },
+    {
+      "accepts": [
+        "unit"
+      ],
+      "name": "ready_c"
+    },
+    {
+      "accepts": [
+        "unit"
+      ],
+      "name": "preparing_c"
+    },
+    {
+      "accepts": [
+        "unit"
+      ],
+      "name": "working_c"
+    },
+    {
+      "accepts": [
+        "unit"
+      ],
+      "name": "product_c"
+    },
+    {
+      "accepts": [
+        "unit"
+      ],
+      "name": "demand_c"
+    },
+    {
+      "accepts": [
+        "unit"
+      ],
+      "name": "received"
+    }
+  ],
+  "transitions": [
+    {
+      "handler": "prep_a",
+      "name": "prep_a"
+    },
+    {
+      "handler": "work_a",
+      "name": "work_a"
+    },
+    {
+      "handler": "done_a",
+      "name": "done_a"
+    },
+    {
+      "handler": "prep_b",
+      "name": "prep_b"
+    },
+    {
+      "handler": "work_b",
+      "name": "work_b"
+    },
+    {
+      "handler": "done_b",
+      "name": "done_b"
+    },
+    {
+      "handler": "prep_c",
+      "name": "prep_c"
+    },
+    {
+      "handler": "work_c",
+      "name": "work_c"
+    },
+    {
+      "handler": "done_c",
+      "name": "done_c"
+    },
+    {
+      "handler": "receive_c",
+      "name": "receive_c"
+    }
+  ]
+}

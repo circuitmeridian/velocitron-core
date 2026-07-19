@@ -1,0 +1,26 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 55,
+    "file": "batch-gate.invalid-capacity.petrinet",
+    "line": 7,
+    "message": "capacityPerColorKey max must be an integer greater than or equal to 1; got 0 for (batches)",
+    "span": {
+      "end": {
+        "byteOffset": 138,
+        "column": 56,
+        "line": 7
+      },
+      "source": "batch-gate.invalid-capacity.petrinet",
+      "start": {
+        "byteOffset": 137,
+        "column": 55,
+        "line": 7
+      }
+    }
+  },
+  "source": {
+    "sourceId": "batch-gate.invalid-capacity.petrinet",
+    "text": "net batch_gate_invalid_capacity\n\n(batches) -batch-> [take]\n\n[take] handler \"take\"\n\n(batches) capacityPerColorKey {\"key\":\"batch_id\",\"max\":0}\n"
+  }
+}

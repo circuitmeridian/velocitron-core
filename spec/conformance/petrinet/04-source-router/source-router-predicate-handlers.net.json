@@ -1,0 +1,103 @@
+{
+  "arcs": [
+    {
+      "consume": {
+        "predicate": {
+          "handler": "is_co2mon"
+        },
+        "type": "sample"
+      },
+      "from": {
+        "place": "sample_in"
+      },
+      "to": {
+        "transition": "route_co2mon"
+      }
+    },
+    {
+      "from": {
+        "transition": "route_co2mon"
+      },
+      "produce": {
+        "destination": "co2mon_samples",
+        "type": "sample"
+      },
+      "to": {
+        "place": "co2mon_samples"
+      }
+    },
+    {
+      "consume": {
+        "predicate": {
+          "handler": "is_weather"
+        },
+        "type": "sample"
+      },
+      "from": {
+        "place": "sample_in"
+      },
+      "to": {
+        "transition": "route_weather"
+      }
+    },
+    {
+      "from": {
+        "transition": "route_weather"
+      },
+      "produce": {
+        "destination": "weather_samples",
+        "type": "sample"
+      },
+      "to": {
+        "place": "weather_samples"
+      }
+    }
+  ],
+  "description": "Source router",
+  "initialMarking": {
+    "sample_in": [
+      {
+        "data": {
+          "co2_ppm": 602,
+          "error": null,
+          "humidity_pct": 51.0,
+          "source": "co2mon",
+          "temp_c": 28.9,
+          "timestamp_ms": 1234567890000
+        },
+        "type": "sample"
+      }
+    ]
+  },
+  "name": "source_router",
+  "places": [
+    {
+      "accepts": [
+        "sample"
+      ],
+      "name": "sample_in"
+    },
+    {
+      "accepts": [
+        "sample"
+      ],
+      "name": "co2mon_samples"
+    },
+    {
+      "accepts": [
+        "sample"
+      ],
+      "name": "weather_samples"
+    }
+  ],
+  "transitions": [
+    {
+      "handler": "route_co2mon",
+      "name": "route_co2mon"
+    },
+    {
+      "handler": "route_weather",
+      "name": "route_weather"
+    }
+  ]
+}

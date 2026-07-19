@@ -1,0 +1,139 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: "24.15.0"
+  PNPM_VERSION: "11.13.1"
+  PYTHON_VERSION: "3.12.11"
+  UV_VERSION: "0.11.29"
+  UV_CHECKSUM: "04f8b82f5d47f0512dcd32c67a4a6f16a0ea27c81537c338fd0ad6b23cebe829"
+
+jobs:
+  python:
+    name: Python / CEL ${{ matrix.cel }}
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        cel:
+          - core
+          - cpp
+          - rust
+          - all
+    env:
+      UV_PROJECT_ENVIRONMENT: ${{ github.workspace }}/implementations/python/.venv-ci-${{ matrix.cel }}
+    steps:
+      - name: Check out the reviewed source
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+
+      - name: Install pinned uv
+        uses: astral-sh/setup-uv@11f9893b081a58869d3b5fccaea48c9e9e46f990 # v8.3.2
+        with:
+          version: ${{ env.UV_VERSION }}
+          checksum: ${{ env.UV_CHECKSUM }}
+          enable-cache: true
+          cache-dependency-glob: implementations/python/uv.lock
+
+      - name: Install pinned Python
+        run: uv python install "$PYTHON_VERSION"
+
+      - name: Sync the locked CEL leg
+        working-directory: implementations/python
+        env:
+          UV_PYTHON: ${{ env.PYTHON_VERSION }}
+        run: |
+          set -euo pipefail
+          case "${{ matrix.cel }}" in
+            core) extras=() ;;
+            cpp) extras=(--extra cel-cpp) ;;
+            rust) extras=(--extra cel-rust) ;;
+            all) extras=(--extra cel-cpp --extra cel-rust) ;;
+            *) echo "Unknown CEL leg" >&2; exit 2 ;;
+          esac
+          uv sync --locked --no-default-groups --group test "${extras[@]}"
+
+      - name: Run Python tests
+        working-directory: implementations/python
+        run: uv run --no-sync pytest
+
+  contracts-and-typescript:
+    name: Generated contracts and TypeScript
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    env:
+      UV_PYTHON: "3.12.11"
+      PRE_COMMIT_HOME: ${{ github.workspace }}/.cache/pre-commit
+      VELOCITRON_ANTLR_CACHE: ${{ github.workspace }}/.cache/antlr
+    steps:
+      - name: Check out the reviewed source
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+
+      - name: Install pinned uv
+        uses: astral-sh/setup-uv@11f9893b081a58869d3b5fccaea48c9e9e46f990 # v8.3.2
+        with:
+          version: ${{ env.UV_VERSION }}
+          checksum: ${{ env.UV_CHECKSUM }}
+          enable-cache: true
+          cache-dependency-glob: implementations/python/uv.lock
+
+      - name: Install pinned Python and locked dependencies
+        run: |
+          uv python install "$PYTHON_VERSION"
+          uv sync --locked --project implementations/python
+          echo "$GITHUB_WORKSPACE/implementations/python/.venv/bin" >> "$GITHUB_PATH"
+
+      - name: Install pinned pnpm
+        uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+        with:
+          version: ${{ env.PNPM_VERSION }}
+          run_install: false
+
+      - name: Install pinned Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install frozen TypeScript dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check generated Python parser
+        run: python3 tools/antlr.py check
+
+      - name: Check generated TypeScript parser and schemas
+        run: pnpm check:generated
+
+      - name: Type-check Python
+        working-directory: implementations/python
+        run: basedpyright --project pyrightconfig.json
+
+      - name: Type-check TypeScript
+        run: pnpm typecheck
+
+      - name: Run TypeScript and cross-language tests
+        run: pnpm test
+
+      - name: Audit the browser seam
+        run: pnpm audit:browser
+
+      - name: Build and smoke-test the npm package
+        run: pnpm build

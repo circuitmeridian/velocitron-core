@@ -1,0 +1,72 @@
+{
+  "arcs": [
+    {
+      "consume": {
+        "type": "coin"
+      },
+      "from": {
+        "place": "coin_slot"
+      },
+      "to": {
+        "transition": "accept_coin"
+      }
+    },
+    {
+      "from": {
+        "transition": "accept_coin"
+      },
+      "produce": {
+        "destination": "cash_box",
+        "type": "coin"
+      },
+      "to": {
+        "place": "cash_box"
+      }
+    },
+    {
+      "consume": {
+        "type": "coin"
+      },
+      "from": {
+        "place": "coin_slot"
+      },
+      "to": {
+        "transition": "return_coin"
+      }
+    }
+  ],
+  "description": "Coin choice",
+  "initialMarking": {
+    "coin_slot": [
+      {
+        "data": {},
+        "type": "coin"
+      }
+    ]
+  },
+  "name": "coin_choice",
+  "places": [
+    {
+      "accepts": [
+        "coin"
+      ],
+      "name": "coin_slot"
+    },
+    {
+      "accepts": [
+        "coin"
+      ],
+      "name": "cash_box"
+    }
+  ],
+  "transitions": [
+    {
+      "handler": "accept_coin",
+      "name": "accept_coin"
+    },
+    {
+      "handler": "return_coin",
+      "name": "return_coin"
+    }
+  ]
+}

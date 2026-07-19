@@ -1,0 +1,27 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 1,
+    "file": "speaks_window.reserved-annotation-key.petrinet",
+    "help": "use extensions for opaque full-document data",
+    "line": 2,
+    "message": "annotation key 'petrinet.dsl/v1' is reserved for compiler-owned metadata",
+    "span": {
+      "end": {
+        "byteOffset": 57,
+        "column": 36,
+        "line": 2
+      },
+      "source": "speaks_window.reserved-annotation-key.petrinet",
+      "start": {
+        "byteOffset": 22,
+        "column": 1,
+        "line": 2
+      }
+    }
+  },
+  "source": {
+    "sourceId": "speaks_window.reserved-annotation-key.petrinet",
+    "text": "net reserved_metadata\nnet annotation \"petrinet.dsl/v1\" {}\n"
+  }
+}

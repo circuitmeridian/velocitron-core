@@ -1,0 +1,16 @@
+net per_key_suppression "Pass the first request with no same-key suppression"
+
+@request: (requests) -request-> [admit] -request-> (admitted)
+@not_suppressed: (suppressions) -suppression->0 [admit]
+
+[admit] handler "admit_request"
+
+@not_suppressed correlate cel "token.key == binding.requests[0].key"
+
+marking initial (requests) <- $request_a
+marking initial (requests) <- $request_b
+marking initial (suppressions) <- $suppress_a
+
+$request_a: request {"key": "A"}
+$request_b: request {"key": "B"}
+$suppress_a: suppression {"key": "A"}

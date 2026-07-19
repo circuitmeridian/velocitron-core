@@ -1,0 +1,27 @@
+{
+  "diagnostic": {
+    "code": "PN201",
+    "column": 31,
+    "file": "guarded-curation-choice.missing-handler.petrinet",
+    "help": "add `[speak_gate_speak] handler \"...\"`",
+    "line": 3,
+    "message": "transition [speak_gate_speak] is incomplete: required handler fact is missing",
+    "span": {
+      "end": {
+        "byteOffset": 91,
+        "column": 47,
+        "line": 3
+      },
+      "source": "guarded-curation-choice.missing-handler.petrinet",
+      "start": {
+        "byteOffset": 75,
+        "column": 31,
+        "line": 3
+      }
+    }
+  },
+  "source": {
+    "sourceId": "guarded-curation-choice.missing-handler.petrinet",
+    "text": "net guarded_curation_choice_missing_handler\n\n(curation_token) -curation-> [speak_gate_speak] -speak_req-> (speak_request)\n[speak_gate_speak] guard \"speak_eligible@curate\"\n"
+  }
+}

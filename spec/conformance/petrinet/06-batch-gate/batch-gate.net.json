@@ -1,0 +1,78 @@
+{
+  "arcs": [
+    {
+      "consume": {
+        "type": "item",
+        "weight": 2
+      },
+      "from": {
+        "place": "items"
+      },
+      "to": {
+        "transition": "form_batch"
+      }
+    },
+    {
+      "from": {
+        "transition": "form_batch"
+      },
+      "produce": {
+        "destination": "batches",
+        "type": "batch"
+      },
+      "to": {
+        "place": "batches"
+      }
+    }
+  ],
+  "description": "Consume two items; verify, but do not gate, per-key batch capacity",
+  "initialMarking": {
+    "batches": [
+      {
+        "data": {
+          "batch_id": "A"
+        },
+        "type": "batch"
+      }
+    ],
+    "items": [
+      {
+        "data": {
+          "batch_id": "A"
+        },
+        "type": "item"
+      },
+      {
+        "data": {
+          "batch_id": "A"
+        },
+        "type": "item"
+      }
+    ]
+  },
+  "name": "batch_gate",
+  "places": [
+    {
+      "accepts": [
+        "item"
+      ],
+      "name": "items"
+    },
+    {
+      "accepts": [
+        "batch"
+      ],
+      "capacityPerColorKey": {
+        "key": "batch_id",
+        "max": 1
+      },
+      "name": "batches"
+    }
+  ],
+  "transitions": [
+    {
+      "handler": "form_batch",
+      "name": "form_batch"
+    }
+  ]
+}

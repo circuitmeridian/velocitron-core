@@ -1,0 +1,4 @@
+{
+  "sourceId": "coin-deposit.petrinet",
+  "text": "net coin_deposit \"Coin deposit\"\n\n(coin_slot) -coin-> [accept_coin] -coin-> (cash_box)\n\n[accept_coin] handler \"accept_coin\"\n\nmarking initial (coin_slot) <- $inserted_coin\n$inserted_coin: coin {}\n"
+}

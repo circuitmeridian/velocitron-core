@@ -1,0 +1,4 @@
+{
+  "sourceId": "guarded-curation-choice.canonical.petrinet",
+  "text": "net guarded_curation_choice \"Choose the speak or silent curation branch with complementary guards\"\n\n(curation_token) -curation-> [speak_gate_speak] -speak_req-> (speak_request)\n(curation_token) -curation-> [speak_gate_skip] -utterance-> (final_utterance)\n\n[speak_gate_speak] handler \"request_speak@curate\"\n[speak_gate_skip] handler \"skip_speak@curate\"\n[speak_gate_speak] guard \"speak_eligible@curate\"\n[speak_gate_skip] guard \"speak_skip@curate\"\n\nmarking initial (curation_token) <- $curation\n$curation: curation {\"should_speak\":true}\n"
+}

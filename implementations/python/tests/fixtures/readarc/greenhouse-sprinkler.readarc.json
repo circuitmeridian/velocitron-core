@@ -1,0 +1,93 @@
+{
+  "arcs": [
+    {
+      "consume": {
+        "mode": "read",
+        "predicate": {
+          "cel": "active"
+        },
+        "type": "season_flag"
+      },
+      "description": "Read the season flag; only an active season enables watering.",
+      "from": {
+        "place": "season"
+      },
+      "to": {
+        "transition": "water_zone"
+      }
+    },
+    {
+      "consume": {
+        "mode": "read",
+        "type": "tick"
+      },
+      "description": "Read the current clock tick without consuming it.",
+      "from": {
+        "place": "clock"
+      },
+      "to": {
+        "transition": "water_zone"
+      }
+    },
+    {
+      "consume": {
+        "type": "zone"
+      },
+      "from": {
+        "place": "zones"
+      },
+      "to": {
+        "transition": "water_zone"
+      }
+    },
+    {
+      "from": {
+        "transition": "water_zone"
+      },
+      "produce": {
+        "destination": "watered",
+        "type": "watering"
+      },
+      "to": {
+        "place": "watered"
+      }
+    }
+  ],
+  "description": "A greenhouse waters a zone only during an active growing season and only while the clock is ticking. Both the season flag (with a predicate) and the clock tick are READ arcs: watering is gated on them but consumes neither, so many zones can be watered against the same season and tick.",
+  "name": "greenhouse-sprinkler",
+  "places": [
+    {
+      "accepts": [
+        "season_flag"
+      ],
+      "description": "Holds one season_flag token describing the current growing season.",
+      "name": "season"
+    },
+    {
+      "accepts": [
+        "tick"
+      ],
+      "description": "Holds the current clock tick.",
+      "name": "clock"
+    },
+    {
+      "accepts": [
+        "zone"
+      ],
+      "name": "zones"
+    },
+    {
+      "accepts": [
+        "watering"
+      ],
+      "name": "watered"
+    }
+  ],
+  "transitions": [
+    {
+      "description": "Water one zone when the season is active.",
+      "handler": "sprinkler.water_zone",
+      "name": "water_zone"
+    }
+  ]
+}

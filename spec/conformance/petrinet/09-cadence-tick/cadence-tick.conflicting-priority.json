@@ -1,0 +1,45 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 1,
+    "file": "cadence-tick.conflicting-priority.petrinet",
+    "help": "remove one declaration or make both priority values identical",
+    "line": 6,
+    "message": "conflicting priority facts for transition [on_tick]",
+    "related": [
+      {
+        "message": "first priority was declared here",
+        "span": {
+          "end": {
+            "byteOffset": 160,
+            "column": 22,
+            "line": 5
+          },
+          "source": "cadence-tick.conflicting-priority.petrinet",
+          "start": {
+            "byteOffset": 139,
+            "column": 1,
+            "line": 5
+          }
+        }
+      }
+    ],
+    "span": {
+      "end": {
+        "byteOffset": 181,
+        "column": 21,
+        "line": 6
+      },
+      "source": "cadence-tick.conflicting-priority.petrinet",
+      "start": {
+        "byteOffset": 161,
+        "column": 1,
+        "line": 6
+      }
+    }
+  },
+  "source": {
+    "sourceId": "cadence-tick.conflicting-priority.petrinet",
+    "text": "net cadence_tick_conflicting_priority\n\n(tick_latch) -tick_latch-> [on_tick] -tick_latch-> (tick_latch)\n[on_tick] handler \"on_tick@cadence\"\n[on_tick] priority 10\n[on_tick] priority 5\n"
+  }
+}

@@ -1,0 +1,4 @@
+{
+  "sourceId": "metadata-idempotence.canonical.petrinet",
+  "text": "net metadata_idempotence\n\n(input) -token-> [go]\n[go] -done-> (output)\n\n[go] handler \"go@metadata\"\n\n(input) description \"Stable input\"\n(input) annotation fusion true\n\nview layout position (input) at {\"x\":10,\"y\":20}\nextensions {\"vendor\":{\"mode\":\"safe\"}}\n"
+}

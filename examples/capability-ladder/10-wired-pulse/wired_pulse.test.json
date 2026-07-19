@@ -1,0 +1,58 @@
+{
+  "cases": [
+    {
+      "bdd": {
+        "given": "one seed in the composed source seed place",
+        "then": "the opaque handlers record one received pulse and leave only its receipt",
+        "when": "the source emits through the fused wire place and the sink receives"
+      },
+      "expectedEnabledTransitions": [
+        "source.emit"
+      ],
+      "expectedFinalMarking": {
+        "sink.received": [
+          {
+            "data": {
+              "received": true
+            },
+            "type": "receipt"
+          }
+        ]
+      },
+      "expectedFiringSequence": [
+        {
+          "status": "completed",
+          "transition": "source.emit"
+        },
+        {
+          "status": "completed",
+          "transition": "sink.receive"
+        }
+      ],
+      "expectedJournalSequence": [
+        {
+          "sequence": 0,
+          "transition": "source.emit"
+        },
+        {
+          "sequence": 1,
+          "transition": "sink.receive"
+        }
+      ],
+      "initialMarking": {
+        "source.seed": [
+          {
+            "data": {},
+            "type": "seed"
+          }
+        ]
+      },
+      "maxSteps": 2,
+      "name": "wire carries one pulse from source to sink"
+    }
+  ],
+  "description": "A typed output-to-input wire fuses two constituent places into one end-to-end pulse path",
+  "dslVariants": [
+    "wired_pulse.petrinet"
+  ]
+}

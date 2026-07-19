@@ -1,0 +1,94 @@
+{
+  "arcs": [
+    {
+      "consume": {
+        "type": "request"
+      },
+      "from": {
+        "place": "requests"
+      },
+      "to": {
+        "transition": "admit"
+      }
+    },
+    {
+      "from": {
+        "transition": "admit"
+      },
+      "produce": {
+        "destination": "admitted",
+        "type": "request"
+      },
+      "to": {
+        "place": "admitted"
+      }
+    },
+    {
+      "consume": {
+        "correlate": {
+          "cel": "token.key == binding.requests[0].key"
+        },
+        "mode": "inhibit",
+        "type": "suppression"
+      },
+      "from": {
+        "place": "suppressions"
+      },
+      "to": {
+        "transition": "admit"
+      }
+    }
+  ],
+  "description": "Pass the first request with no same-key suppression",
+  "initialMarking": {
+    "requests": [
+      {
+        "data": {
+          "key": "A"
+        },
+        "type": "request"
+      },
+      {
+        "data": {
+          "key": "B"
+        },
+        "type": "request"
+      }
+    ],
+    "suppressions": [
+      {
+        "data": {
+          "key": "A"
+        },
+        "type": "suppression"
+      }
+    ]
+  },
+  "name": "per_key_suppression",
+  "places": [
+    {
+      "accepts": [
+        "request"
+      ],
+      "name": "requests"
+    },
+    {
+      "accepts": [
+        "request"
+      ],
+      "name": "admitted"
+    },
+    {
+      "accepts": [
+        "suppression"
+      ],
+      "name": "suppressions"
+    }
+  ],
+  "transitions": [
+    {
+      "handler": "admit_request",
+      "name": "admit"
+    }
+  ]
+}

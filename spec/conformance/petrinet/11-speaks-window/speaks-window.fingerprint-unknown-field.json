@@ -1,0 +1,240 @@
+{
+  "diagnostic": {
+    "code": "PN200",
+    "message": "unsupported petrinet.dsl/v1 field 'weight'",
+    "path": "annotations.petrinet.dsl/v1.arcHandles.window_close.fingerprint.weight"
+  },
+  "net": {
+    "annotations": {
+      "petrinet.dsl/v1": {
+        "arcHandles": {
+          "window_close": {
+            "fingerprint": {
+              "from": {
+                "place": "in_flight"
+              },
+              "mode": "consume",
+              "to": {
+                "transition": "finish"
+              },
+              "type": "speak_token",
+              "weight": 1
+            },
+            "index": 7
+          }
+        },
+        "extensions": {},
+        "markings": {
+          "queued": {
+            "request_in": [
+              {
+                "data": {
+                  "text": "Status?"
+                },
+                "type": "speak_req"
+              }
+            ]
+          }
+        },
+        "views": {
+          "window": {
+            "positions": {
+              "place:in_flight": {
+                "x": 320,
+                "y": 20
+              },
+              "place:judge_requested": {
+                "x": 320,
+                "y": 140
+              },
+              "place:request_in": {
+                "x": 0,
+                "y": 80
+              },
+              "place:utterance_out": {
+                "x": 680,
+                "y": 80
+              },
+              "transition:finish": {
+                "x": 500,
+                "y": 80
+              },
+              "transition:start": {
+                "x": 160,
+                "y": 80
+              }
+            },
+            "routes": {
+              "window_close": {
+                "points": [
+                  {
+                    "x": 400,
+                    "y": 20
+                  },
+                  {
+                    "x": 500,
+                    "y": 20
+                  }
+                ],
+                "style": "orthogonal"
+              }
+            }
+          }
+        }
+      }
+    },
+    "arcs": [
+      {
+        "consume": {
+          "type": "speak_req"
+        },
+        "from": {
+          "place": "request_in"
+        },
+        "to": {
+          "transition": "start"
+        }
+      },
+      {
+        "from": {
+          "transition": "start"
+        },
+        "produce": {
+          "destination": "in_flight",
+          "type": "speak_token"
+        },
+        "to": {
+          "place": "in_flight"
+        }
+      },
+      {
+        "consume": {
+          "mode": "inhibit",
+          "type": "speak_token"
+        },
+        "from": {
+          "place": "in_flight"
+        },
+        "to": {
+          "transition": "start"
+        }
+      },
+      {
+        "consume": {
+          "mode": "inhibit",
+          "type": "judge_req"
+        },
+        "from": {
+          "place": "judge_requested"
+        },
+        "to": {
+          "transition": "start"
+        }
+      },
+      {
+        "from": {
+          "transition": "start"
+        },
+        "produce": {
+          "destination": "judge_requested",
+          "type": "judge_req"
+        },
+        "to": {
+          "place": "judge_requested"
+        }
+      },
+      {
+        "consume": {
+          "type": "judge_req"
+        },
+        "from": {
+          "place": "judge_requested"
+        },
+        "to": {
+          "transition": "finish"
+        }
+      },
+      {
+        "from": {
+          "transition": "finish"
+        },
+        "produce": {
+          "destination": "utterance_out",
+          "type": "utterance"
+        },
+        "to": {
+          "place": "utterance_out"
+        }
+      },
+      {
+        "annotations": {
+          "window": "close"
+        },
+        "consume": {
+          "type": "speak_token"
+        },
+        "description": "Terminally consumes the in-flight token",
+        "from": {
+          "place": "in_flight"
+        },
+        "to": {
+          "transition": "finish"
+        }
+      }
+    ],
+    "description": "Minimal clean-start Speaks window",
+    "name": "speaks_window",
+    "places": [
+      {
+        "accepts": [
+          "speak_req"
+        ],
+        "name": "request_in",
+        "port": {
+          "direction": "input",
+          "type": "speak_req"
+        }
+      },
+      {
+        "accepts": [
+          "speak_token"
+        ],
+        "annotations": {
+          "fusion": true
+        },
+        "description": "Singleton token delimiting one active request",
+        "name": "in_flight"
+      },
+      {
+        "accepts": [
+          "judge_req"
+        ],
+        "name": "judge_requested"
+      },
+      {
+        "accepts": [
+          "utterance"
+        ],
+        "name": "utterance_out",
+        "port": {
+          "direction": "output",
+          "type": "utterance"
+        }
+      }
+    ],
+    "transitions": [
+      {
+        "description": "Accept a request only when all internal state is clean",
+        "handler": "chip_start@speaks",
+        "name": "start"
+      },
+      {
+        "annotations": {
+          "role": "terminal"
+        },
+        "handler": "finish@speaks",
+        "name": "finish"
+      }
+    ]
+  }
+}

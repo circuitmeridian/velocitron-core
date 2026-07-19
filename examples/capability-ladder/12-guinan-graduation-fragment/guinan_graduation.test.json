@@ -1,0 +1,121 @@
+{
+  "cases": [
+    {
+      "bdd": {
+        "given": "the merged graduation net with its immature clock and canonical cadence latch",
+        "then": "the clock remains a read token, the latch rearms, both fused boundaries drain, and one utterance remains",
+        "when": "clock 300 replaces clock 0 and the four namespaced handlers run to quiescence"
+      },
+      "expectedEnabledTransitions": [],
+      "expectedEnabledTransitionsAfterInjection": [
+        "cadence.on_tick"
+      ],
+      "expectedFinalMarking": {
+        "cadence.clock": [
+          {
+            "data": {
+              "now": 300
+            },
+            "type": "clock"
+          }
+        ],
+        "cadence.tick_latch": [
+          {
+            "data": {
+              "cadence_s": 300,
+              "fired_at": 300
+            },
+            "type": "tick_latch"
+          }
+        ],
+        "speaks.utterance_out": [
+          {
+            "data": {
+              "trigger": "tick"
+            },
+            "type": "utterance"
+          }
+        ]
+      },
+      "expectedFiringSequence": [
+        {
+          "status": "completed",
+          "transition": "cadence.on_tick"
+        },
+        {
+          "status": "completed",
+          "transition": "curate.curate"
+        },
+        {
+          "status": "completed",
+          "transition": "speaks.start"
+        },
+        {
+          "status": "completed",
+          "transition": "speaks.finish"
+        }
+      ],
+      "expectedJournalSequence": [
+        {
+          "kind": "update",
+          "place": "cadence.clock",
+          "sequence": 0
+        },
+        {
+          "sequence": 1,
+          "transition": "cadence.on_tick"
+        },
+        {
+          "sequence": 2,
+          "transition": "curate.curate"
+        },
+        {
+          "sequence": 3,
+          "transition": "speaks.start"
+        },
+        {
+          "sequence": 4,
+          "transition": "speaks.finish"
+        }
+      ],
+      "initialMarking": {
+        "cadence.clock": [
+          {
+            "data": {
+              "now": 0
+            },
+            "type": "clock"
+          }
+        ],
+        "cadence.tick_latch": [
+          {
+            "data": {
+              "cadence_s": 300,
+              "fired_at": 0
+            },
+            "type": "tick_latch"
+          }
+        ]
+      },
+      "injections": [
+        {
+          "attempt": 0,
+          "place": "cadence.clock",
+          "replace": true,
+          "token": {
+            "data": {
+              "now": 300
+            },
+            "type": "clock"
+          }
+        }
+      ],
+      "maxSteps": 4,
+      "name": "replacement clock drives the complete graduation chain"
+    }
+  ],
+  "description": "Cadence flows through Curate and Speaks across two fused typed boundaries",
+  "dslVariants": [
+    "guinan_graduation.petrinet"
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "arcs": [
+    {
+      "consume": {
+        "mode": "read",
+        "type": "desk_status"
+      },
+      "description": "Read the desk-open flag without consuming it.",
+      "from": {
+        "place": "desk_open"
+      },
+      "to": {
+        "transition": "check_out"
+      }
+    },
+    {
+      "consume": {
+        "type": "hold"
+      },
+      "from": {
+        "place": "holds"
+      },
+      "to": {
+        "transition": "check_out"
+      }
+    },
+    {
+      "from": {
+        "transition": "check_out"
+      },
+      "produce": {
+        "destination": "loans",
+        "type": "loan"
+      },
+      "to": {
+        "place": "loans"
+      }
+    }
+  ],
+  "description": "A circulation desk checks out a held book only while the desk is open. The desk-open flag is READ (test-without-consume): the checkout is gated on it but must not remove it, so the desk stays open for the next patron.",
+  "name": "library-hold",
+  "places": [
+    {
+      "accepts": [
+        "desk_status"
+      ],
+      "description": "Holds one desk_status token iff the circulation desk is open.",
+      "name": "desk_open"
+    },
+    {
+      "accepts": [
+        "hold"
+      ],
+      "name": "holds"
+    },
+    {
+      "accepts": [
+        "loan"
+      ],
+      "name": "loans"
+    }
+  ],
+  "transitions": [
+    {
+      "description": "Convert a hold into a loan while the desk is open.",
+      "handler": "desk.check_out",
+      "name": "check_out"
+    }
+  ]
+}

@@ -1,0 +1,247 @@
+{
+  "contributions": [
+    {
+      "id": {
+        "part": 0,
+        "source": "guinan_graduation.petrinet",
+        "statement": 0
+      },
+      "kind": "document.composition-header",
+      "ordinal": 0,
+      "span": {
+        "end": {
+          "byteOffset": 29,
+          "column": 30,
+          "line": 1
+        },
+        "source": "guinan_graduation.petrinet",
+        "start": {
+          "byteOffset": 0,
+          "column": 1,
+          "line": 1
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "namespace": "guinan_graduation"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "guinan_graduation.petrinet",
+        "statement": 1
+      },
+      "kind": "composition.use",
+      "ordinal": 1,
+      "span": {
+        "end": {
+          "byteOffset": 75,
+          "column": 45,
+          "line": 3
+        },
+        "source": "guinan_graduation.petrinet",
+        "start": {
+          "byteOffset": 31,
+          "column": 1,
+          "line": 3
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "alias": "cadence",
+        "ref": "graduation_cadence.petrinet"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "guinan_graduation.petrinet",
+        "statement": 2
+      },
+      "kind": "composition.use",
+      "ordinal": 2,
+      "span": {
+        "end": {
+          "byteOffset": 118,
+          "column": 43,
+          "line": 4
+        },
+        "source": "guinan_graduation.petrinet",
+        "start": {
+          "byteOffset": 76,
+          "column": 1,
+          "line": 4
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "alias": "curate",
+        "ref": "graduation_curate.petrinet"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "guinan_graduation.petrinet",
+        "statement": 3
+      },
+      "kind": "composition.use",
+      "ordinal": 3,
+      "span": {
+        "end": {
+          "byteOffset": 161,
+          "column": 43,
+          "line": 5
+        },
+        "source": "guinan_graduation.petrinet",
+        "start": {
+          "byteOffset": 119,
+          "column": 1,
+          "line": 5
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "alias": "speaks",
+        "ref": "graduation_speaks.petrinet"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "guinan_graduation.petrinet",
+        "statement": 4
+      },
+      "kind": "composition.wire",
+      "ordinal": 4,
+      "span": {
+        "end": {
+          "byteOffset": 220,
+          "column": 58,
+          "line": 7
+        },
+        "source": "guinan_graduation.petrinet",
+        "start": {
+          "byteOffset": 163,
+          "column": 1,
+          "line": 7
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "from": {
+          "alias": "cadence",
+          "place": "refresh_due_out",
+          "span": {
+            "end": {
+              "byteOffset": 193,
+              "column": 31,
+              "line": 7
+            },
+            "source": "guinan_graduation.petrinet",
+            "start": {
+              "byteOffset": 168,
+              "column": 6,
+              "line": 7
+            }
+          }
+        },
+        "to": {
+          "alias": "curate",
+          "place": "refresh_due_in",
+          "span": {
+            "end": {
+              "byteOffset": 220,
+              "column": 58,
+              "line": 7
+            },
+            "source": "guinan_graduation.petrinet",
+            "start": {
+              "byteOffset": 197,
+              "column": 35,
+              "line": 7
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "guinan_graduation.petrinet",
+        "statement": 5
+      },
+      "kind": "composition.wire",
+      "ordinal": 5,
+      "span": {
+        "end": {
+          "byteOffset": 271,
+          "column": 51,
+          "line": 8
+        },
+        "source": "guinan_graduation.petrinet",
+        "start": {
+          "byteOffset": 221,
+          "column": 1,
+          "line": 8
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "from": {
+          "alias": "curate",
+          "place": "speak_request",
+          "span": {
+            "end": {
+              "byteOffset": 248,
+              "column": 28,
+              "line": 8
+            },
+            "source": "guinan_graduation.petrinet",
+            "start": {
+              "byteOffset": 226,
+              "column": 6,
+              "line": 8
+            }
+          }
+        },
+        "to": {
+          "alias": "speaks",
+          "place": "request_in",
+          "span": {
+            "end": {
+              "byteOffset": 271,
+              "column": 51,
+              "line": 8
+            },
+            "source": "guinan_graduation.petrinet",
+            "start": {
+              "byteOffset": 252,
+              "column": 32,
+              "line": 8
+            }
+          }
+        }
+      }
+    }
+  ],
+  "document": {
+    "id": "guinan_graduation.petrinet"
+  },
+  "documentKind": "composition",
+  "format": "velocitron.petrinet/contribution-ir",
+  "version": 1
+}

@@ -1,0 +1,218 @@
+{
+  "contributions": [
+    {
+      "id": {
+        "part": 0,
+        "source": "wired_pulse.duplicate-wire.petrinet",
+        "statement": 0
+      },
+      "kind": "document.composition-header",
+      "ordinal": 0,
+      "span": {
+        "end": {
+          "byteOffset": 23,
+          "column": 24,
+          "line": 1
+        },
+        "source": "wired_pulse.duplicate-wire.petrinet",
+        "start": {
+          "byteOffset": 0,
+          "column": 1,
+          "line": 1
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "namespace": "wired_pulse"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "wired_pulse.duplicate-wire.petrinet",
+        "statement": 1
+      },
+      "kind": "composition.use",
+      "ordinal": 1,
+      "span": {
+        "end": {
+          "byteOffset": 62,
+          "column": 38,
+          "line": 3
+        },
+        "source": "wired_pulse.duplicate-wire.petrinet",
+        "start": {
+          "byteOffset": 25,
+          "column": 1,
+          "line": 3
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "alias": "source",
+        "ref": "pulse_source.petrinet"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "wired_pulse.duplicate-wire.petrinet",
+        "statement": 2
+      },
+      "kind": "composition.use",
+      "ordinal": 2,
+      "span": {
+        "end": {
+          "byteOffset": 96,
+          "column": 34,
+          "line": 4
+        },
+        "source": "wired_pulse.duplicate-wire.petrinet",
+        "start": {
+          "byteOffset": 63,
+          "column": 1,
+          "line": 4
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "alias": "sink",
+        "ref": "pulse_sink.petrinet"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "wired_pulse.duplicate-wire.petrinet",
+        "statement": 3
+      },
+      "kind": "composition.wire",
+      "ordinal": 3,
+      "span": {
+        "end": {
+          "byteOffset": 139,
+          "column": 43,
+          "line": 5
+        },
+        "source": "wired_pulse.duplicate-wire.petrinet",
+        "start": {
+          "byteOffset": 97,
+          "column": 1,
+          "line": 5
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "from": {
+          "alias": "source",
+          "place": "pulse_out",
+          "span": {
+            "end": {
+              "byteOffset": 120,
+              "column": 24,
+              "line": 5
+            },
+            "source": "wired_pulse.duplicate-wire.petrinet",
+            "start": {
+              "byteOffset": 102,
+              "column": 6,
+              "line": 5
+            }
+          }
+        },
+        "to": {
+          "alias": "sink",
+          "place": "pulse_in",
+          "span": {
+            "end": {
+              "byteOffset": 139,
+              "column": 43,
+              "line": 5
+            },
+            "source": "wired_pulse.duplicate-wire.petrinet",
+            "start": {
+              "byteOffset": 124,
+              "column": 28,
+              "line": 5
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "wired_pulse.duplicate-wire.petrinet",
+        "statement": 4
+      },
+      "kind": "composition.wire",
+      "ordinal": 4,
+      "span": {
+        "end": {
+          "byteOffset": 182,
+          "column": 43,
+          "line": 6
+        },
+        "source": "wired_pulse.duplicate-wire.petrinet",
+        "start": {
+          "byteOffset": 140,
+          "column": 1,
+          "line": 6
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "from": {
+          "alias": "source",
+          "place": "pulse_out",
+          "span": {
+            "end": {
+              "byteOffset": 163,
+              "column": 24,
+              "line": 6
+            },
+            "source": "wired_pulse.duplicate-wire.petrinet",
+            "start": {
+              "byteOffset": 145,
+              "column": 6,
+              "line": 6
+            }
+          }
+        },
+        "to": {
+          "alias": "sink",
+          "place": "pulse_in",
+          "span": {
+            "end": {
+              "byteOffset": 182,
+              "column": 43,
+              "line": 6
+            },
+            "source": "wired_pulse.duplicate-wire.petrinet",
+            "start": {
+              "byteOffset": 167,
+              "column": 28,
+              "line": 6
+            }
+          }
+        }
+      }
+    }
+  ],
+  "document": {
+    "id": "wired_pulse.duplicate-wire.petrinet"
+  },
+  "documentKind": "composition",
+  "format": "velocitron.petrinet/contribution-ir",
+  "version": 1
+}

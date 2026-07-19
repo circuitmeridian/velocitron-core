@@ -1,0 +1,54 @@
+{
+  "arcs": [
+    {
+      "consume": {
+        "type": "pulse"
+      },
+      "from": {
+        "place": "pulse_in"
+      },
+      "to": {
+        "transition": "receive"
+      }
+    },
+    {
+      "from": {
+        "transition": "receive"
+      },
+      "produce": {
+        "destination": "received",
+        "type": "receipt"
+      },
+      "to": {
+        "place": "received"
+      }
+    }
+  ],
+  "description": "Pulse sink",
+  "initialMarking": {},
+  "name": "pulse_sink",
+  "places": [
+    {
+      "accepts": [
+        "pulse"
+      ],
+      "name": "pulse_in",
+      "port": {
+        "direction": "input",
+        "type": "pulse"
+      }
+    },
+    {
+      "accepts": [
+        "receipt"
+      ],
+      "name": "received"
+    }
+  ],
+  "transitions": [
+    {
+      "handler": "receive@sink",
+      "name": "receive"
+    }
+  ]
+}

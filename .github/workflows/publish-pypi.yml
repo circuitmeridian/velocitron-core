@@ -1,0 +1,244 @@
+name: Publish Python package
+
+on:
+  workflow_dispatch:
+    inputs:
+      candidate_run_id:
+        description: Successful Build release candidate workflow run ID
+        required: true
+        type: string
+      candidate_artifact_id:
+        description: Immutable candidate artifact ID from that run
+        required: true
+        type: string
+      candidate_manifest_sha256:
+        description: Approved candidate manifest SHA-256 from that run
+        required: true
+        type: string
+
+permissions: {}
+
+concurrency:
+  group: publish-pypi
+  cancel-in-progress: false
+
+env:
+  EXPECTED_REPOSITORY: circuitmeridian/velocitron-core
+
+jobs:
+  verify:
+    name: Verify approved candidate without publish authority
+    runs-on: ubuntu-24.04
+    permissions:
+      actions: read
+      contents: read
+    outputs:
+      artifact-id: ${{ steps.copy.outputs.artifact-id }}
+      commit: ${{ steps.identity.outputs.commit }}
+      tag: ${{ steps.identity.outputs.tag }}
+      tag-ref: ${{ steps.identity.outputs.tag-ref }}
+      verifier-sha256: ${{ steps.identity.outputs.verifier-sha256 }}
+      version: ${{ steps.identity.outputs.version }}
+    env:
+      CANDIDATE_ARTIFACT_ID: ${{ inputs.candidate_artifact_id }}
+      CANDIDATE_MANIFEST_SHA256: ${{ inputs.candidate_manifest_sha256 }}
+      CANDIDATE_RUN_ID: ${{ inputs.candidate_run_id }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Require dispatch from the default branch
+        run: test "$GITHUB_REF" = "refs/heads/main"
+
+      - name: Bind candidate workflow revision
+        id: origin
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REPOSITORY" = "$EXPECTED_REPOSITORY"
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$CANDIDATE_RUN_ID" \
+            > "$RUNNER_TEMP/candidate-run.json"
+          run_json="$(cat "$RUNNER_TEMP/candidate-run.json")"
+          test "$(jq -r .path <<<"$run_json")" = ".github/workflows/release-candidate.yml"
+          test "$(jq -r .event <<<"$run_json")" = "workflow_dispatch"
+          test "$(jq -r .status <<<"$run_json")" = "completed"
+          test "$(jq -r .conclusion <<<"$run_json")" = "success"
+          test "$(jq -r .head_repository.full_name <<<"$run_json")" = "$GITHUB_REPOSITORY"
+          commit="$(jq -r .head_sha <<<"$run_json")"
+          test "$commit" != "null"
+          echo "commit=$commit" >> "$GITHUB_OUTPUT"
+
+      - name: Check out candidate-bound verification tooling
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          ref: ${{ steps.origin.outputs.commit }}
+          persist-credentials: false
+          sparse-checkout: |
+            .github/workflows/release-candidate.yml
+            tools/release_identity.py
+            tools/release_manifest.py
+          sparse-checkout-cone-mode: false
+
+      - name: Download the exact cross-run candidate artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          artifact-ids: ${{ inputs.candidate_artifact_id }}
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: ${{ inputs.candidate_run_id }}
+          path: release
+          digest-mismatch: error
+
+      - name: Verify workflow origin, manifest, bytes, and live tag
+        id: identity
+        env:
+          CANDIDATE_COMMIT: ${{ steps.origin.outputs.commit }}
+        run: |
+          set -euo pipefail
+          echo "$CANDIDATE_MANIFEST_SHA256  release/release-manifest.json" \
+            | sha256sum --check --strict
+          test "$(jq -r .workflow.path release/release-manifest.json)" \
+            = ".github/workflows/release-candidate.yml"
+          test "$(jq -r .workflow.sha release/release-manifest.json)" \
+            = "$CANDIDATE_COMMIT"
+          {
+            jq -r '.workflow | "\(.sha256)  \(.path)"' release/release-manifest.json
+            jq -r '.verificationTools[] | "\(.sha256)  \(.path)"' \
+              release/release-manifest.json
+          } | sha256sum --check --strict
+          python3 tools/release_identity.py verify-run \
+            --run-json "$RUNNER_TEMP/candidate-run.json" \
+            --repository "$GITHUB_REPOSITORY"
+
+          identity="$(python3 tools/release_manifest.py verify \
+            --root release \
+            --source-root "$GITHUB_WORKSPACE" \
+            --manifest release/release-manifest.json \
+            --expected-sha256 "$CANDIDATE_MANIFEST_SHA256" \
+            --repository "$GITHUB_REPOSITORY" \
+            --run-id "$CANDIDATE_RUN_ID" \
+            --workflow-sha "$CANDIDATE_COMMIT")"
+          tag="$(jq -r .tag <<<"$identity")"
+          tag_ref="$(jq -r .tagRef <<<"$identity")"
+          commit="$(jq -r .commit <<<"$identity")"
+          version="$(jq -r .version <<<"$identity")"
+          test "$commit" = "$CANDIDATE_COMMIT"
+
+          gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$tag" \
+            > "$RUNNER_TEMP/live-tag-ref.json"
+          live_tag_ref="$(jq -r .object.sha "$RUNNER_TEMP/live-tag-ref.json")"
+          gh api "repos/$GITHUB_REPOSITORY/git/tags/$live_tag_ref" \
+            > "$RUNNER_TEMP/live-tag-object.json"
+          python3 tools/release_identity.py verify-live-tag \
+            --ref-json "$RUNNER_TEMP/live-tag-ref.json" \
+            --tag-json "$RUNNER_TEMP/live-tag-object.json" \
+            --tag "$tag" \
+            --tag-ref "$tag_ref" \
+            --commit "$commit"
+          verifier_sha256="$(jq -r \
+            '.verificationTools[] | select(.path == "tools/release_identity.py") | .sha256' \
+            release/release-manifest.json)"
+          {
+            echo "tag=$tag"
+            echo "tag-ref=$tag_ref"
+            echo "commit=$commit"
+            echo "version=$version"
+            echo "verifier-sha256=$verifier_sha256"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Copy verified bytes into this approval run
+        id: copy
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: verified-pypi-candidate
+          path: release/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 7
+
+      - name: Summarize approval subject
+        env:
+          RELEASE_COMMIT: ${{ steps.identity.outputs.commit }}
+          RELEASE_TAG: ${{ steps.identity.outputs.tag }}
+          VERIFIED_ARTIFACT_ID: ${{ steps.copy.outputs.artifact-id }}
+        run: |
+          {
+            echo "## PyPI approval subject"
+            echo
+            echo "- Candidate run: \`$CANDIDATE_RUN_ID\`"
+            echo "- Candidate artifact: \`$CANDIDATE_ARTIFACT_ID\`"
+            echo "- Candidate manifest SHA-256: \`$CANDIDATE_MANIFEST_SHA256\`"
+            echo "- Tag: \`$RELEASE_TAG\`"
+            echo "- Source commit: \`$RELEASE_COMMIT\`"
+            echo "- Verified copy artifact: \`$VERIFIED_ARTIFACT_ID\`"
+            echo
+            echo "The next job requires a separate approval in the \`pypi\` environment."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  publish:
+    name: Publish the exact Python distributions
+    needs: verify
+    runs-on: ubuntu-24.04
+    environment:
+      name: pypi
+      url: https://pypi.org/project/velocitron/
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Check out candidate-bound tag verifier
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          ref: ${{ needs.verify.outputs.commit }}
+          persist-credentials: false
+          sparse-checkout: tools/release_identity.py
+          sparse-checkout-cone-mode: false
+
+      - name: Download only the verified in-run copy
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          artifact-ids: ${{ needs.verify.outputs.artifact-id }}
+          path: release
+          digest-mismatch: error
+
+      - name: Revalidate live annotated tag after approval
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_COMMIT: ${{ needs.verify.outputs.commit }}
+          RELEASE_TAG: ${{ needs.verify.outputs.tag }}
+          RELEASE_TAG_REF: ${{ needs.verify.outputs.tag-ref }}
+          VERIFIER_SHA256: ${{ needs.verify.outputs.verifier-sha256 }}
+        run: |
+          set -euo pipefail
+          echo "$VERIFIER_SHA256  tools/release_identity.py" \
+            | sha256sum --check --strict
+          gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$RELEASE_TAG" \
+            > "$RUNNER_TEMP/live-tag-ref.json"
+          test "$(jq -r .object.type "$RUNNER_TEMP/live-tag-ref.json")" = "tag"
+          live_tag_ref="$(jq -r .object.sha "$RUNNER_TEMP/live-tag-ref.json")"
+          test "$live_tag_ref" = "$RELEASE_TAG_REF"
+          gh api "repos/$GITHUB_REPOSITORY/git/tags/$live_tag_ref" \
+            > "$RUNNER_TEMP/live-tag-object.json"
+          python3 tools/release_identity.py verify-live-tag \
+            --ref-json "$RUNNER_TEMP/live-tag-ref.json" \
+            --tag-json "$RUNNER_TEMP/live-tag-object.json" \
+            --tag "$RELEASE_TAG" \
+            --tag-ref "$RELEASE_TAG_REF" \
+            --commit "$RELEASE_COMMIT"
+      - name: Publish through PyPI trusted publishing
+        uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b # v1.14.0
+        with:
+          packages-dir: release/python
+          attestations: true
+          skip-existing: false
+          verbose: true
+
+      - name: Record PyPI delivery evidence
+        env:
+          RELEASE_COMMIT: ${{ needs.verify.outputs.commit }}
+          RELEASE_TAG: ${{ needs.verify.outputs.tag }}
+          RELEASE_VERSION: ${{ needs.verify.outputs.version }}
+        run: |
+          {
+            echo "## PyPI publication"
+            echo
+            echo "Published \`velocitron==$RELEASE_VERSION\` from tag \`$RELEASE_TAG\` at commit \`$RELEASE_COMMIT\`."
+            echo "The pinned publish action requested OIDC trusted publishing and attestations; independent registry readback remains a separate ticket."
+          } >> "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,18 @@
+net crossing_window "Read a sample window unless an alert is already open"
+
+@arrival: (arrival) -arrival-> [detect_crossing]
+@latest: (latest_sample) -sample->? [detect_crossing]
+@previous: (previous_sample) -sample->? [detect_crossing]
+@no_open_alert: (open_alert) -alert->0 [detect_crossing]
+[detect_crossing] -alert-> (alert_out)
+
+[detect_crossing] handler "detect_crossing@ingest"
+@arrival predicate cel "source == \"co2mon\""
+
+marking initial (arrival) <- $arrival
+marking initial (latest_sample) <- $latest
+marking initial (previous_sample) <- $previous
+
+$arrival: arrival {"source": "co2mon"}
+$latest: sample {"source": "co2mon", "ppm": 1200}
+$previous: sample {"source": "co2mon", "ppm": 900}

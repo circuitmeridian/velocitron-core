@@ -1,0 +1,6 @@
+net pulse_sink "Pulse sink"
+
+(pulse_in) -pulse-> [receive] -receipt-> (received)
+
+[receive] handler "receive@sink"
+(pulse_in) port input pulse

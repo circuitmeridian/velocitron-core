@@ -1,0 +1,420 @@
+{
+  "contributions": [
+    {
+      "id": {
+        "part": 0,
+        "source": "batch-gate.petrinet",
+        "statement": 0
+      },
+      "kind": "document.net-header",
+      "ordinal": 0,
+      "span": {
+        "end": {
+          "byteOffset": 83,
+          "column": 84,
+          "line": 1
+        },
+        "source": "batch-gate.petrinet",
+        "start": {
+          "byteOffset": 0,
+          "column": 1,
+          "line": 1
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "description": "Consume two items; verify, but do not gate, per-key batch capacity",
+        "name": "batch_gate"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "batch-gate.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.handle",
+      "ordinal": 1,
+      "span": {
+        "end": {
+          "byteOffset": 140,
+          "column": 56,
+          "line": 3
+        },
+        "source": "batch-gate.petrinet",
+        "start": {
+          "byteOffset": 85,
+          "column": 1,
+          "line": 3
+        }
+      },
+      "target": {
+        "name": "items",
+        "type": "arcHandle"
+      },
+      "value": {
+        "arcIds": [
+          {
+            "document": "batch-gate.petrinet",
+            "part": 1,
+            "statement": 1
+          },
+          {
+            "document": "batch-gate.petrinet",
+            "part": 2,
+            "statement": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "batch-gate.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.declare",
+      "ordinal": 2,
+      "span": {
+        "end": {
+          "byteOffset": 121,
+          "column": 37,
+          "line": 3
+        },
+        "source": "batch-gate.petrinet",
+        "start": {
+          "byteOffset": 93,
+          "column": 9,
+          "line": 3
+        }
+      },
+      "target": {
+        "id": {
+          "document": "batch-gate.petrinet",
+          "part": 1,
+          "statement": 1
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "item"
+        },
+        "from": {
+          "name": "items",
+          "type": "place"
+        },
+        "mode": "consume",
+        "to": {
+          "name": "form_batch",
+          "type": "transition"
+        },
+        "transitionNameSpan": {
+          "end": {
+            "byteOffset": 120,
+            "column": 36,
+            "line": 3
+          },
+          "source": "batch-gate.petrinet",
+          "start": {
+            "byteOffset": 110,
+            "column": 26,
+            "line": 3
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 2,
+        "source": "batch-gate.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.declare",
+      "ordinal": 3,
+      "span": {
+        "end": {
+          "byteOffset": 140,
+          "column": 56,
+          "line": 3
+        },
+        "source": "batch-gate.petrinet",
+        "start": {
+          "byteOffset": 109,
+          "column": 25,
+          "line": 3
+        }
+      },
+      "target": {
+        "id": {
+          "document": "batch-gate.petrinet",
+          "part": 2,
+          "statement": 1
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "batch"
+        },
+        "from": {
+          "name": "form_batch",
+          "type": "transition"
+        },
+        "mode": "produce",
+        "to": {
+          "name": "batches",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "batch-gate.petrinet",
+        "statement": 2
+      },
+      "kind": "transition.handler",
+      "ordinal": 4,
+      "span": {
+        "end": {
+          "byteOffset": 175,
+          "column": 34,
+          "line": 5
+        },
+        "source": "batch-gate.petrinet",
+        "start": {
+          "byteOffset": 142,
+          "column": 1,
+          "line": 5
+        }
+      },
+      "target": {
+        "name": "form_batch",
+        "type": "transition"
+      },
+      "value": {
+        "handler": "form_batch"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "batch-gate.petrinet",
+        "statement": 3
+      },
+      "kind": "place.capacity-per-color-key",
+      "ordinal": 5,
+      "span": {
+        "end": {
+          "byteOffset": 236,
+          "column": 60,
+          "line": 7
+        },
+        "source": "batch-gate.petrinet",
+        "start": {
+          "byteOffset": 177,
+          "column": 1,
+          "line": 7
+        }
+      },
+      "target": {
+        "name": "batches",
+        "type": "place"
+      },
+      "value": {
+        "key": "batch_id",
+        "max": 1
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "batch-gate.petrinet",
+        "statement": 4
+      },
+      "kind": "arc.weight",
+      "ordinal": 6,
+      "span": {
+        "end": {
+          "byteOffset": 253,
+          "column": 16,
+          "line": 9
+        },
+        "source": "batch-gate.petrinet",
+        "start": {
+          "byteOffset": 238,
+          "column": 1,
+          "line": 9
+        }
+      },
+      "target": {
+        "name": "items",
+        "type": "arcHandle"
+      },
+      "value": {
+        "weight": 2
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "batch-gate.petrinet",
+        "statement": 5
+      },
+      "kind": "marking.append",
+      "ordinal": 7,
+      "span": {
+        "end": {
+          "byteOffset": 293,
+          "column": 39,
+          "line": 11
+        },
+        "source": "batch-gate.petrinet",
+        "start": {
+          "byteOffset": 255,
+          "column": 1,
+          "line": 11
+        }
+      },
+      "target": {
+        "name": "items",
+        "type": "place"
+      },
+      "value": {
+        "count": 2,
+        "token": {
+          "template": {
+            "name": "item_a",
+            "type": "template"
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "batch-gate.petrinet",
+        "statement": 6
+      },
+      "kind": "marking.append",
+      "ordinal": 8,
+      "span": {
+        "end": {
+          "byteOffset": 331,
+          "column": 38,
+          "line": 12
+        },
+        "source": "batch-gate.petrinet",
+        "start": {
+          "byteOffset": 294,
+          "column": 1,
+          "line": 12
+        }
+      },
+      "target": {
+        "name": "batches",
+        "type": "place"
+      },
+      "value": {
+        "count": 1,
+        "token": {
+          "template": {
+            "name": "batch_a",
+            "type": "template"
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "batch-gate.petrinet",
+        "statement": 7
+      },
+      "kind": "template.define",
+      "ordinal": 9,
+      "span": {
+        "end": {
+          "byteOffset": 364,
+          "column": 32,
+          "line": 14
+        },
+        "source": "batch-gate.petrinet",
+        "start": {
+          "byteOffset": 333,
+          "column": 1,
+          "line": 14
+        }
+      },
+      "target": {
+        "name": "item_a",
+        "type": "template"
+      },
+      "value": {
+        "value": {
+          "entries": [
+            {
+              "key": "batch_id",
+              "value": {
+                "type": "string",
+                "value": "A"
+              }
+            }
+          ],
+          "type": "object"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "batch-gate.petrinet",
+        "statement": 8
+      },
+      "kind": "template.define",
+      "ordinal": 10,
+      "span": {
+        "end": {
+          "byteOffset": 398,
+          "column": 34,
+          "line": 15
+        },
+        "source": "batch-gate.petrinet",
+        "start": {
+          "byteOffset": 365,
+          "column": 1,
+          "line": 15
+        }
+      },
+      "target": {
+        "name": "batch_a",
+        "type": "template"
+      },
+      "value": {
+        "value": {
+          "entries": [
+            {
+              "key": "batch_id",
+              "value": {
+                "type": "string",
+                "value": "A"
+              }
+            }
+          ],
+          "type": "object"
+        }
+      }
+    }
+  ],
+  "document": {
+    "id": "batch-gate.petrinet"
+  },
+  "documentKind": "net",
+  "format": "velocitron.petrinet/contribution-ir",
+  "version": 1
+}

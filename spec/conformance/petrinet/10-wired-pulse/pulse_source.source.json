@@ -1,0 +1,4 @@
+{
+  "sourceId": "pulse_source.petrinet",
+  "text": "net pulse_source \"One-shot pulse source\"\n\n(seed) -seed-> [emit] -pulse-> (pulse_out)\n\n[emit] handler \"emit@source\"\n(pulse_out) port output pulse\n\nmarking initial (seed) <- $ready\n$ready: seed {}\n"
+}

@@ -1,0 +1,27 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 22,
+    "file": "speaks-window.unknown-view-place.petrinet",
+    "help": "declare the place in topology before positioning it",
+    "line": 5,
+    "message": "view 'window' references unknown place 'ghost'; presentation facts cannot declare semantic objects",
+    "span": {
+      "end": {
+        "byteOffset": 141,
+        "column": 29,
+        "line": 5
+      },
+      "source": "speaks-window.unknown-view-place.petrinet",
+      "start": {
+        "byteOffset": 134,
+        "column": 22,
+        "line": 5
+      }
+    }
+  },
+  "source": {
+    "sourceId": "speaks-window.unknown-view-place.petrinet",
+    "text": "net bad_window\n\n(request_in) -speak_req-> [start] -speak_token-> (in_flight)\n[start] handler \"chip_start@speaks\"\nview window position (ghost) at {\"x\": 20, \"y\": 20}\n"
+  }
+}

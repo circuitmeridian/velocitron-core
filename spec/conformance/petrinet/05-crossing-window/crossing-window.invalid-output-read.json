@@ -1,0 +1,26 @@
+{
+  "diagnostic": {
+    "code": "PN101",
+    "column": 26,
+    "file": "crossing_window_invalid_read.petrinet",
+    "line": 3,
+    "message": "->? is only allowed on place-to-transition arcs",
+    "span": {
+      "end": {
+        "byteOffset": 62,
+        "column": 29,
+        "line": 3
+      },
+      "source": "crossing_window_invalid_read.petrinet",
+      "start": {
+        "byteOffset": 59,
+        "column": 26,
+        "line": 3
+      }
+    }
+  },
+  "source": {
+    "sourceId": "crossing_window_invalid_read.petrinet",
+    "text": "net crossing_window_invalid_read\n\n[detect_crossing] -sample->? (snapshot)\n"
+  }
+}

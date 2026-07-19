@@ -1,0 +1,45 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 1,
+    "file": "speaks_window.conflicting-annotation.petrinet",
+    "help": "remove one declaration or make both annotation values identical",
+    "line": 6,
+    "message": "conflicting annotation fusion facts for place (in_flight)",
+    "related": [
+      {
+        "message": "first annotation value was declared here",
+        "span": {
+          "end": {
+            "byteOffset": 115,
+            "column": 35,
+            "line": 5
+          },
+          "source": "speaks_window.conflicting-annotation.petrinet",
+          "start": {
+            "byteOffset": 81,
+            "column": 1,
+            "line": 5
+          }
+        }
+      }
+    ],
+    "span": {
+      "end": {
+        "byteOffset": 151,
+        "column": 36,
+        "line": 6
+      },
+      "source": "speaks_window.conflicting-annotation.petrinet",
+      "start": {
+        "byteOffset": 116,
+        "column": 1,
+        "line": 6
+      }
+    }
+  },
+  "source": {
+    "sourceId": "speaks_window.conflicting-annotation.petrinet",
+    "text": "net conflicting_annotation\n\n(in_flight) -token-> [go]\n[go] handler \"go@metadata\"\n(in_flight) annotation fusion true\n(in_flight) annotation fusion false\n"
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "cases": [
+    {
+      "bdd": {
+        "given": "the explicitly selected queued named marking and two clean internal places",
+        "then": "the request becomes one utterance and both internal work tokens are consumed",
+        "when": "the engine fires start and then finish"
+      },
+      "expectedEnabledTransitions": [
+        "start"
+      ],
+      "expectedFinalMarking": {
+        "utterance_out": [
+          {
+            "data": {
+              "text": "Status?"
+            },
+            "type": "utterance"
+          }
+        ]
+      },
+      "expectedFiringSequence": [
+        {
+          "status": "completed",
+          "transition": "start"
+        },
+        {
+          "status": "completed",
+          "transition": "finish"
+        }
+      ],
+      "expectedJournalSequence": [
+        {
+          "sequence": 0,
+          "transition": "start"
+        },
+        {
+          "sequence": 1,
+          "transition": "finish"
+        }
+      ],
+      "maxSteps": 2,
+      "name": "queued named marking completes one speech window",
+      "selectedMarking": "queued"
+    },
+    {
+      "bdd": {
+        "given": "a queued request and a stale judge request without an in-flight token",
+        "then": "judge_clear inhibits start and finish lacks its in-flight input",
+        "when": "the engine evaluates both transitions"
+      },
+      "expectedEnabledTransitions": [],
+      "expectedFinalMarking": {
+        "judge_requested": [
+          {
+            "data": {
+              "text": "Stale"
+            },
+            "type": "judge_req"
+          }
+        ],
+        "request_in": [
+          {
+            "data": {
+              "text": "Next?"
+            },
+            "type": "speak_req"
+          }
+        ]
+      },
+      "expectedFiringSequence": [],
+      "initialMarking": {
+        "judge_requested": [
+          {
+            "data": {
+              "text": "Stale"
+            },
+            "type": "judge_req"
+          }
+        ],
+        "request_in": [
+          {
+            "data": {
+              "text": "Next?"
+            },
+            "type": "speak_req"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "stale judge work blocks a clean start"
+    },
+    {
+      "bdd": {
+        "given": "a queued request and a stale in-flight token without judge work",
+        "then": "in_flight_clear inhibits start and finish lacks its judge input",
+        "when": "the engine evaluates both transitions"
+      },
+      "expectedEnabledTransitions": [],
+      "expectedFinalMarking": {
+        "in_flight": [
+          {
+            "data": {
+              "text": "Stale"
+            },
+            "type": "speak_token"
+          }
+        ],
+        "request_in": [
+          {
+            "data": {
+              "text": "Next?"
+            },
+            "type": "speak_req"
+          }
+        ]
+      },
+      "expectedFiringSequence": [],
+      "initialMarking": {
+        "in_flight": [
+          {
+            "data": {
+              "text": "Stale"
+            },
+            "type": "speak_token"
+          }
+        ],
+        "request_in": [
+          {
+            "data": {
+              "text": "Next?"
+            },
+            "type": "speak_req"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "stale in-flight token blocks a clean start"
+    }
+  ],
+  "description": "The clean-start Speaks window preserves metadata while runtime behavior remains purely structural",
+  "dslVariants": [
+    "speaks_window.petrinet"
+  ]
+}

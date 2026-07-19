@@ -1,0 +1,28 @@
+net "cookie-vending"
+
+(coin_slot) -coin-> [accept_coin]
+(coin_slot) -coin-> [return_coin]
+[accept_coin] -coin-> (cash_box)
+@vend_signal: [accept_coin] -signal-> (signal)
+(signal) -signal-> [vend_packet]
+(storage) -packet-> [vend_packet]
+[vend_packet] -packet-> (compartment)
+(compartment) -packet-> [take_packet]
+
+[accept_coin] handler "accept_coin"
+[vend_packet] handler "vend_packet"
+[return_coin] handler "return_coin"
+[take_packet] handler "take_packet"
+
+[accept_coin] order 1
+[vend_packet] order 2
+[return_coin] order 3
+[take_packet] order 4
+
+@vend_signal data {}
+
+marking initial (coin_slot) <- $inserted_coin
+marking initial (storage) <- 5 * $packet
+
+$inserted_coin: coin {}
+$packet: packet {}

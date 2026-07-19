@@ -1,0 +1,400 @@
+{
+  "contributions": [
+    {
+      "id": {
+        "part": 0,
+        "source": "coin-choice.order-free.petrinet",
+        "statement": 0
+      },
+      "kind": "document.net-header",
+      "ordinal": 0,
+      "span": {
+        "end": {
+          "byteOffset": 29,
+          "column": 30,
+          "line": 1
+        },
+        "source": "coin-choice.order-free.petrinet",
+        "start": {
+          "byteOffset": 0,
+          "column": 1,
+          "line": 1
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "description": "Coin choice",
+        "name": "coin_choice"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "coin-choice.order-free.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.handle",
+      "ordinal": 1,
+      "span": {
+        "end": {
+          "byteOffset": 73,
+          "column": 43,
+          "line": 3
+        },
+        "source": "coin-choice.order-free.petrinet",
+        "start": {
+          "byteOffset": 31,
+          "column": 1,
+          "line": 3
+        }
+      },
+      "target": {
+        "name": "return",
+        "type": "arcHandle"
+      },
+      "value": {
+        "arcIds": [
+          {
+            "document": "coin-choice.order-free.petrinet",
+            "part": 1,
+            "statement": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "coin-choice.order-free.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.declare",
+      "ordinal": 2,
+      "span": {
+        "end": {
+          "byteOffset": 73,
+          "column": 43,
+          "line": 3
+        },
+        "source": "coin-choice.order-free.petrinet",
+        "start": {
+          "byteOffset": 40,
+          "column": 10,
+          "line": 3
+        }
+      },
+      "target": {
+        "id": {
+          "document": "coin-choice.order-free.petrinet",
+          "part": 1,
+          "statement": 1
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "coin"
+        },
+        "from": {
+          "name": "coin_slot",
+          "type": "place"
+        },
+        "mode": "consume",
+        "to": {
+          "name": "return_coin",
+          "type": "transition"
+        },
+        "transitionNameSpan": {
+          "end": {
+            "byteOffset": 72,
+            "column": 42,
+            "line": 3
+          },
+          "source": "coin-choice.order-free.petrinet",
+          "start": {
+            "byteOffset": 61,
+            "column": 31,
+            "line": 3
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "coin-choice.order-free.petrinet",
+        "statement": 2
+      },
+      "kind": "arc.handle",
+      "ordinal": 3,
+      "span": {
+        "end": {
+          "byteOffset": 135,
+          "column": 62,
+          "line": 4
+        },
+        "source": "coin-choice.order-free.petrinet",
+        "start": {
+          "byteOffset": 74,
+          "column": 1,
+          "line": 4
+        }
+      },
+      "target": {
+        "name": "accept",
+        "type": "arcHandle"
+      },
+      "value": {
+        "arcIds": [
+          {
+            "document": "coin-choice.order-free.petrinet",
+            "part": 1,
+            "statement": 2
+          },
+          {
+            "document": "coin-choice.order-free.petrinet",
+            "part": 2,
+            "statement": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "coin-choice.order-free.petrinet",
+        "statement": 2
+      },
+      "kind": "arc.declare",
+      "ordinal": 4,
+      "span": {
+        "end": {
+          "byteOffset": 116,
+          "column": 43,
+          "line": 4
+        },
+        "source": "coin-choice.order-free.petrinet",
+        "start": {
+          "byteOffset": 83,
+          "column": 10,
+          "line": 4
+        }
+      },
+      "target": {
+        "id": {
+          "document": "coin-choice.order-free.petrinet",
+          "part": 1,
+          "statement": 2
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "coin"
+        },
+        "from": {
+          "name": "coin_slot",
+          "type": "place"
+        },
+        "mode": "consume",
+        "to": {
+          "name": "accept_coin",
+          "type": "transition"
+        },
+        "transitionNameSpan": {
+          "end": {
+            "byteOffset": 115,
+            "column": 42,
+            "line": 4
+          },
+          "source": "coin-choice.order-free.petrinet",
+          "start": {
+            "byteOffset": 104,
+            "column": 31,
+            "line": 4
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 2,
+        "source": "coin-choice.order-free.petrinet",
+        "statement": 2
+      },
+      "kind": "arc.declare",
+      "ordinal": 5,
+      "span": {
+        "end": {
+          "byteOffset": 135,
+          "column": 62,
+          "line": 4
+        },
+        "source": "coin-choice.order-free.petrinet",
+        "start": {
+          "byteOffset": 103,
+          "column": 30,
+          "line": 4
+        }
+      },
+      "target": {
+        "id": {
+          "document": "coin-choice.order-free.petrinet",
+          "part": 2,
+          "statement": 2
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "coin"
+        },
+        "from": {
+          "name": "accept_coin",
+          "type": "transition"
+        },
+        "mode": "produce",
+        "to": {
+          "name": "cash_box",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "coin-choice.order-free.petrinet",
+        "statement": 3
+      },
+      "kind": "transition.handler",
+      "ordinal": 6,
+      "span": {
+        "end": {
+          "byteOffset": 172,
+          "column": 36,
+          "line": 6
+        },
+        "source": "coin-choice.order-free.petrinet",
+        "start": {
+          "byteOffset": 137,
+          "column": 1,
+          "line": 6
+        }
+      },
+      "target": {
+        "name": "accept_coin",
+        "type": "transition"
+      },
+      "value": {
+        "handler": "accept_coin"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "coin-choice.order-free.petrinet",
+        "statement": 4
+      },
+      "kind": "transition.handler",
+      "ordinal": 7,
+      "span": {
+        "end": {
+          "byteOffset": 208,
+          "column": 36,
+          "line": 7
+        },
+        "source": "coin-choice.order-free.petrinet",
+        "start": {
+          "byteOffset": 173,
+          "column": 1,
+          "line": 7
+        }
+      },
+      "target": {
+        "name": "return_coin",
+        "type": "transition"
+      },
+      "value": {
+        "handler": "return_coin"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "coin-choice.order-free.petrinet",
+        "statement": 5
+      },
+      "kind": "marking.append",
+      "ordinal": 8,
+      "span": {
+        "end": {
+          "byteOffset": 255,
+          "column": 46,
+          "line": 9
+        },
+        "source": "coin-choice.order-free.petrinet",
+        "start": {
+          "byteOffset": 210,
+          "column": 1,
+          "line": 9
+        }
+      },
+      "target": {
+        "name": "coin_slot",
+        "type": "place"
+      },
+      "value": {
+        "count": 1,
+        "token": {
+          "template": {
+            "name": "inserted_coin",
+            "type": "template"
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "coin-choice.order-free.petrinet",
+        "statement": 6
+      },
+      "kind": "template.define",
+      "ordinal": 9,
+      "span": {
+        "end": {
+          "byteOffset": 279,
+          "column": 24,
+          "line": 10
+        },
+        "source": "coin-choice.order-free.petrinet",
+        "start": {
+          "byteOffset": 256,
+          "column": 1,
+          "line": 10
+        }
+      },
+      "target": {
+        "name": "inserted_coin",
+        "type": "template"
+      },
+      "value": {
+        "value": {
+          "entries": [],
+          "type": "object"
+        }
+      }
+    }
+  ],
+  "document": {
+    "id": "coin-choice.order-free.petrinet"
+  },
+  "documentKind": "net",
+  "format": "velocitron.petrinet/contribution-ir",
+  "version": 1
+}

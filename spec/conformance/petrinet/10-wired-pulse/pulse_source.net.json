@@ -1,0 +1,61 @@
+{
+  "arcs": [
+    {
+      "consume": {
+        "type": "seed"
+      },
+      "from": {
+        "place": "seed"
+      },
+      "to": {
+        "transition": "emit"
+      }
+    },
+    {
+      "from": {
+        "transition": "emit"
+      },
+      "produce": {
+        "destination": "pulse_out",
+        "type": "pulse"
+      },
+      "to": {
+        "place": "pulse_out"
+      }
+    }
+  ],
+  "description": "One-shot pulse source",
+  "initialMarking": {
+    "seed": [
+      {
+        "data": {},
+        "type": "seed"
+      }
+    ]
+  },
+  "name": "pulse_source",
+  "places": [
+    {
+      "accepts": [
+        "seed"
+      ],
+      "name": "seed"
+    },
+    {
+      "accepts": [
+        "pulse"
+      ],
+      "name": "pulse_out",
+      "port": {
+        "direction": "output",
+        "type": "pulse"
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "handler": "emit@source",
+      "name": "emit"
+    }
+  ]
+}

@@ -1,0 +1,201 @@
+{
+  "contributions": [
+    {
+      "id": {
+        "part": 0,
+        "source": "pulse_sink.petrinet",
+        "statement": 0
+      },
+      "kind": "document.net-header",
+      "ordinal": 0,
+      "span": {
+        "end": {
+          "byteOffset": 27,
+          "column": 28,
+          "line": 1
+        },
+        "source": "pulse_sink.petrinet",
+        "start": {
+          "byteOffset": 0,
+          "column": 1,
+          "line": 1
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "description": "Pulse sink",
+        "name": "pulse_sink"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "pulse_sink.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.declare",
+      "ordinal": 1,
+      "span": {
+        "end": {
+          "byteOffset": 58,
+          "column": 30,
+          "line": 3
+        },
+        "source": "pulse_sink.petrinet",
+        "start": {
+          "byteOffset": 29,
+          "column": 1,
+          "line": 3
+        }
+      },
+      "target": {
+        "id": {
+          "document": "pulse_sink.petrinet",
+          "part": 0,
+          "statement": 1
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "pulse"
+        },
+        "from": {
+          "name": "pulse_in",
+          "type": "place"
+        },
+        "mode": "consume",
+        "to": {
+          "name": "receive",
+          "type": "transition"
+        },
+        "transitionNameSpan": {
+          "end": {
+            "byteOffset": 57,
+            "column": 29,
+            "line": 3
+          },
+          "source": "pulse_sink.petrinet",
+          "start": {
+            "byteOffset": 50,
+            "column": 22,
+            "line": 3
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "pulse_sink.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.declare",
+      "ordinal": 2,
+      "span": {
+        "end": {
+          "byteOffset": 80,
+          "column": 52,
+          "line": 3
+        },
+        "source": "pulse_sink.petrinet",
+        "start": {
+          "byteOffset": 49,
+          "column": 21,
+          "line": 3
+        }
+      },
+      "target": {
+        "id": {
+          "document": "pulse_sink.petrinet",
+          "part": 1,
+          "statement": 1
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "receipt"
+        },
+        "from": {
+          "name": "receive",
+          "type": "transition"
+        },
+        "mode": "produce",
+        "to": {
+          "name": "received",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "pulse_sink.petrinet",
+        "statement": 2
+      },
+      "kind": "transition.handler",
+      "ordinal": 3,
+      "span": {
+        "end": {
+          "byteOffset": 114,
+          "column": 33,
+          "line": 5
+        },
+        "source": "pulse_sink.petrinet",
+        "start": {
+          "byteOffset": 82,
+          "column": 1,
+          "line": 5
+        }
+      },
+      "target": {
+        "name": "receive",
+        "type": "transition"
+      },
+      "value": {
+        "handler": "receive@sink"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "pulse_sink.petrinet",
+        "statement": 3
+      },
+      "kind": "place.port",
+      "ordinal": 4,
+      "span": {
+        "end": {
+          "byteOffset": 142,
+          "column": 28,
+          "line": 6
+        },
+        "source": "pulse_sink.petrinet",
+        "start": {
+          "byteOffset": 115,
+          "column": 1,
+          "line": 6
+        }
+      },
+      "target": {
+        "name": "pulse_in",
+        "type": "place"
+      },
+      "value": {
+        "color": "pulse",
+        "direction": "input"
+      }
+    }
+  ],
+  "document": {
+    "id": "pulse_sink.petrinet"
+  },
+  "documentKind": "net",
+  "format": "velocitron.petrinet/contribution-ir",
+  "version": 1
+}

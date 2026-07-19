@@ -1,0 +1,27 @@
+{
+  "diagnostic": {
+    "code": "PN203",
+    "column": 1,
+    "file": "per-key-suppression.malformed-cel.petrinet",
+    "help": "fix the CEL expression syntax",
+    "line": 8,
+    "message": "invalid CEL correlate for arc @not_suppressed",
+    "span": {
+      "end": {
+        "byteOffset": 258,
+        "column": 72,
+        "line": 8
+      },
+      "source": "per-key-suppression.malformed-cel.petrinet",
+      "start": {
+        "byteOffset": 187,
+        "column": 1,
+        "line": 8
+      }
+    }
+  },
+  "source": {
+    "sourceId": "per-key-suppression.malformed-cel.petrinet",
+    "text": "net per_key_suppression_malformed\n\n@request: (requests) -request-> [admit] -request-> (admitted)\n@not_suppressed: (suppressions) -suppression->0 [admit]\n\n[admit] handler \"admit_request\"\n\n@not_suppressed correlate cel \"token.key == == binding.requests[0].key\"\n"
+  }
+}

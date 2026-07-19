@@ -1,0 +1,144 @@
+{
+  "arcs": [
+    {
+      "consume": {
+        "type": "speak_req"
+      },
+      "from": {
+        "place": "request_in"
+      },
+      "to": {
+        "transition": "start"
+      }
+    },
+    {
+      "from": {
+        "transition": "start"
+      },
+      "produce": {
+        "destination": "in_flight",
+        "type": "speak_token"
+      },
+      "to": {
+        "place": "in_flight"
+      }
+    },
+    {
+      "consume": {
+        "mode": "inhibit",
+        "type": "speak_token"
+      },
+      "from": {
+        "place": "in_flight"
+      },
+      "to": {
+        "transition": "start"
+      }
+    },
+    {
+      "consume": {
+        "mode": "inhibit",
+        "type": "speak_work"
+      },
+      "from": {
+        "place": "work"
+      },
+      "to": {
+        "transition": "start"
+      }
+    },
+    {
+      "from": {
+        "transition": "start"
+      },
+      "produce": {
+        "destination": "work",
+        "type": "speak_work"
+      },
+      "to": {
+        "place": "work"
+      }
+    },
+    {
+      "consume": {
+        "type": "speak_work"
+      },
+      "from": {
+        "place": "work"
+      },
+      "to": {
+        "transition": "finish"
+      }
+    },
+    {
+      "from": {
+        "transition": "finish"
+      },
+      "produce": {
+        "destination": "utterance_out",
+        "type": "utterance"
+      },
+      "to": {
+        "place": "utterance_out"
+      }
+    },
+    {
+      "consume": {
+        "type": "speak_token"
+      },
+      "from": {
+        "place": "in_flight"
+      },
+      "to": {
+        "transition": "finish"
+      }
+    }
+  ],
+  "description": "Speaks graduation fragment",
+  "initialMarking": {},
+  "name": "graduation_speaks",
+  "places": [
+    {
+      "accepts": [
+        "speak_req"
+      ],
+      "name": "request_in",
+      "port": {
+        "direction": "input",
+        "type": "speak_req"
+      }
+    },
+    {
+      "accepts": [
+        "speak_token"
+      ],
+      "name": "in_flight"
+    },
+    {
+      "accepts": [
+        "speak_work"
+      ],
+      "name": "work"
+    },
+    {
+      "accepts": [
+        "utterance"
+      ],
+      "name": "utterance_out",
+      "port": {
+        "direction": "output",
+        "type": "utterance"
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "handler": "start@speaks",
+      "name": "start"
+    },
+    {
+      "handler": "finish@speaks",
+      "name": "finish"
+    }
+  ]
+}

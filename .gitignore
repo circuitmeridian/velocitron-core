@@ -1,0 +1,42 @@
+# Operating systems and editors
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# Python caches and environments
+__pycache__/
+*.py[cod]
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.pyright/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.venv/
+venv/
+*.egg-info/
+
+# Python build output
+build/
+dist/
+
+# Node dependencies, caches, and build output
+node_modules/
+.pnpm-store/
+.npm/
+coverage/
+*.tsbuildinfo
+
+# Logs and temporary files
+*.log
+*.tmp
+.cache/

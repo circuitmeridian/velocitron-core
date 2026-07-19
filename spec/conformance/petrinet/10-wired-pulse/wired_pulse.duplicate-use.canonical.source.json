@@ -1,0 +1,4 @@
+{
+  "sourceId": "wired_pulse.duplicate-use.petrinet",
+  "text": "composition composition\n\nuse \"pulse_source.petrinet\" as source\nuse \"pulse_sink.petrinet\" as sink\nwire source.(pulse_out) -> sink.(pulse_in)\n"
+}

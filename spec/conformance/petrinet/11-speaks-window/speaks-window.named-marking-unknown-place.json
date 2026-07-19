@@ -1,0 +1,27 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 1,
+    "file": "speaks-window.named-marking-unknown-place.petrinet",
+    "help": "declare the place in topology before marking it",
+    "line": 5,
+    "message": "named marking 'queued' references unknown place 'ghost'; marking facts cannot declare semantic objects",
+    "span": {
+      "end": {
+        "byteOffset": 147,
+        "column": 35,
+        "line": 5
+      },
+      "source": "speaks-window.named-marking-unknown-place.petrinet",
+      "start": {
+        "byteOffset": 113,
+        "column": 1,
+        "line": 5
+      }
+    }
+  },
+  "source": {
+    "sourceId": "speaks-window.named-marking-unknown-place.petrinet",
+    "text": "net bad_window\n\n(request_in) -speak_req-> [start] -speak_token-> (in_flight)\n[start] handler \"chip_start@speaks\"\nmarking queued (ghost) <- $request\n$request: speak_req {}\n"
+  }
+}

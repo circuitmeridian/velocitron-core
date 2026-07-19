@@ -1,0 +1,4 @@
+{
+  "sourceId": "source-router-predicate-handlers.petrinet",
+  "text": "net source_router \"Source router\"\n\n@co2_route: (sample_in) -sample-> [route_co2mon] -sample-> (co2mon_samples)\n@weather_route: (sample_in) -sample-> [route_weather] -sample-> (weather_samples)\n\n[route_co2mon] handler \"route_co2mon\"\n[route_weather] handler \"route_weather\"\n\n@co2_route predicate handler \"is_co2mon\"\n@weather_route predicate handler \"is_weather\"\n\nmarking initial (sample_in) <- $co2_reading\n\n$co2_reading: sample {\"source\": \"co2mon\", \"co2_ppm\": 602, \"temp_c\": 28.9, \"humidity_pct\": 51.0, \"timestamp_ms\": 1234567890000, \"error\": null}\n"
+}

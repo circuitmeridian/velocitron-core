@@ -1,0 +1,27 @@
+{
+  "diagnostic": {
+    "code": "PN201",
+    "column": 1,
+    "file": "cadence-tick.unresolved-clock.petrinet",
+    "help": "declare the clock place in topology before using it in a timer",
+    "line": 5,
+    "message": "timer clock place (missing_clock) for transition [on_tick] is not declared",
+    "span": {
+      "end": {
+        "byteOffset": 193,
+        "column": 59,
+        "line": 5
+      },
+      "source": "cadence-tick.unresolved-clock.petrinet",
+      "start": {
+        "byteOffset": 135,
+        "column": 1,
+        "line": 5
+      }
+    }
+  },
+  "source": {
+    "sourceId": "cadence-tick.unresolved-clock.petrinet",
+    "text": "net cadence_tick_unresolved_clock\n\n(tick_latch) -tick_latch-> [on_tick] -tick_latch-> (tick_latch)\n[on_tick] handler \"on_tick@cadence\"\n[on_tick] timer clock (missing_clock) cel \"clock.now >= 0\"\n"
+  }
+}

@@ -1,0 +1,5 @@
+composition wired_pulse
+
+use "pulse_source.petrinet" as source
+use "pulse_sink.petrinet" as sink
+wire source.(pulse_out) -> sink.(pulse_in)

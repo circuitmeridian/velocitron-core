@@ -1,0 +1,14 @@
+net graduation_speaks "Speaks graduation fragment"
+
+(request_in) -speak_req-> [start] -speak_token-> (in_flight)
+@in_flight_clear: (in_flight) -speak_token->0 [start]
+@work_clear: (work) -speak_work->0 [start]
+[start] -speak_work-> (work)
+
+(work) -speak_work-> [finish] -utterance-> (utterance_out)
+(in_flight) -speak_token-> [finish]
+
+[start] handler "start@speaks"
+[finish] handler "finish@speaks"
+(request_in) port input speak_req
+(utterance_out) port output utterance

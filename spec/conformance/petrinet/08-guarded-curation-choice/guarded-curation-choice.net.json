@@ -1,0 +1,94 @@
+{
+  "arcs": [
+    {
+      "consume": {
+        "type": "curation"
+      },
+      "from": {
+        "place": "curation_token"
+      },
+      "to": {
+        "transition": "speak_gate_speak"
+      }
+    },
+    {
+      "from": {
+        "transition": "speak_gate_speak"
+      },
+      "produce": {
+        "destination": "speak_request",
+        "type": "speak_req"
+      },
+      "to": {
+        "place": "speak_request"
+      }
+    },
+    {
+      "consume": {
+        "type": "curation"
+      },
+      "from": {
+        "place": "curation_token"
+      },
+      "to": {
+        "transition": "speak_gate_skip"
+      }
+    },
+    {
+      "from": {
+        "transition": "speak_gate_skip"
+      },
+      "produce": {
+        "destination": "final_utterance",
+        "type": "utterance"
+      },
+      "to": {
+        "place": "final_utterance"
+      }
+    }
+  ],
+  "description": "Choose the speak or silent curation branch with complementary guards",
+  "initialMarking": {
+    "curation_token": [
+      {
+        "data": {
+          "should_speak": true
+        },
+        "type": "curation"
+      }
+    ]
+  },
+  "name": "guarded_curation_choice",
+  "places": [
+    {
+      "accepts": [
+        "curation"
+      ],
+      "name": "curation_token"
+    },
+    {
+      "accepts": [
+        "speak_req"
+      ],
+      "name": "speak_request"
+    },
+    {
+      "accepts": [
+        "utterance"
+      ],
+      "name": "final_utterance"
+    }
+  ],
+  "transitions": [
+    {
+      "guard": "speak_eligible@curate",
+      "handler": "request_speak@curate",
+      "name": "speak_gate_speak"
+    },
+    {
+      "guard": "speak_skip@curate",
+      "handler": "skip_speak@curate",
+      "name": "speak_gate_skip"
+    }
+  ]
+}

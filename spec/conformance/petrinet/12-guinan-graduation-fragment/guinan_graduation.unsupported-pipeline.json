@@ -1,0 +1,26 @@
+{
+  "diagnostic": {
+    "code": "PN101",
+    "column": 1,
+    "file": "bad_graduation.petrinet",
+    "line": 7,
+    "message": "extraneous input 'pipeline' expecting {<EOF>, 'use', 'wire'}",
+    "span": {
+      "end": {
+        "byteOffset": 168,
+        "column": 9,
+        "line": 7
+      },
+      "source": "bad_graduation.petrinet",
+      "start": {
+        "byteOffset": 160,
+        "column": 1,
+        "line": 7
+      }
+    }
+  },
+  "source": {
+    "sourceId": "bad_graduation.petrinet",
+    "text": "composition bad_graduation\n\nuse \"graduation_cadence.petrinet\" as cadence\nuse \"graduation_curate.petrinet\" as curate\nuse \"graduation_speaks.petrinet\" as speaks\n\npipeline cadence -> curate -> speaks\n"
+  }
+}

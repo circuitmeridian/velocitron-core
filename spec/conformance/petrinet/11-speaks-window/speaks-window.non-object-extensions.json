@@ -1,0 +1,27 @@
+{
+  "diagnostic": {
+    "code": "PN101",
+    "column": 12,
+    "file": "speaks-window.non-object-extensions.petrinet",
+    "help": "replace the value with a JSON object",
+    "line": 5,
+    "message": "extensions requires a JSON object",
+    "span": {
+      "end": {
+        "byteOffset": 126,
+        "column": 14,
+        "line": 5
+      },
+      "source": "speaks-window.non-object-extensions.petrinet",
+      "start": {
+        "byteOffset": 124,
+        "column": 12,
+        "line": 5
+      }
+    }
+  },
+  "source": {
+    "sourceId": "speaks-window.non-object-extensions.petrinet",
+    "text": "net bad_window\n\n(request_in) -speak_req-> [start] -speak_token-> (in_flight)\n[start] handler \"chip_start@speaks\"\nextensions []\n"
+  }
+}

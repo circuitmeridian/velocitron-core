@@ -1,0 +1,45 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 1,
+    "file": "per-key-suppression.invalid-non-inhibit-target.petrinet",
+    "help": "move correlate to a named ->0 inhibit arc",
+    "line": 7,
+    "message": "correlate is only allowed on ->0 inhibit arcs; @request uses -> (consume)",
+    "related": [
+      {
+        "message": "arc @request was declared here",
+        "span": {
+          "end": {
+            "byteOffset": 72,
+            "column": 40,
+            "line": 3
+          },
+          "source": "per-key-suppression.invalid-non-inhibit-target.petrinet",
+          "start": {
+            "byteOffset": 33,
+            "column": 1,
+            "line": 3
+          }
+        }
+      }
+    ],
+    "span": {
+      "end": {
+        "byteOffset": 168,
+        "column": 62,
+        "line": 7
+      },
+      "source": "per-key-suppression.invalid-non-inhibit-target.petrinet",
+      "start": {
+        "byteOffset": 107,
+        "column": 1,
+        "line": 7
+      }
+    }
+  },
+  "source": {
+    "sourceId": "per-key-suppression.invalid-non-inhibit-target.petrinet",
+    "text": "net per_key_suppression_invalid\n\n@request: (requests) -request-> [admit]\n\n[admit] handler \"admit_request\"\n\n@request correlate cel \"token.key == binding.requests[0].key\"\n"
+  }
+}

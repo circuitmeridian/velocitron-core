@@ -1,0 +1,4 @@
+{
+  "sourceId": "long-chain.petrinet",
+  "text": "net long_chain\n\n(a) -red->? [b] -blue-> (c) ->0 [d] -green-> (e)\n"
+}

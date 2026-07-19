@@ -1,0 +1,9 @@
+net pulse_source "One-shot pulse source"
+
+(seed) -seed-> [emit] -pulse-> (pulse_out)
+
+[emit] handler "emit@source"
+(pulse_out) port output pulse
+
+marking initial (seed) <- $ready
+$ready: seed {}

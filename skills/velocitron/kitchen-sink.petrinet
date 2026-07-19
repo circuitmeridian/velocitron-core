@@ -1,0 +1,185 @@
+// ============================================================================
+// velocitron kitchen-sink net
+// ----------------------------------------------------------------------------
+// A single `.petrinet` DOCUMENT is exactly one net (or one composition) — the
+// grammar does not allow several `net` headers in one file. So this "kitchen
+// sink" is one net whose THREE disconnected regions each model a realistic
+// domain, and together exercise every construct the .petrinet DSL offers:
+//
+//   Region A — order fulfilment: choice/conflict, consume/produce arcs,
+//     predicate cel + predicate handler, arc weight, read arc (->?),
+//     correlated inhibit arc (->0 + correlate), guard, priority, ports,
+//     capacityPerColorKey, literal arc data, a source transition, a sink
+//     transition, place `accepts`.
+//   Region B — CI pipeline: an arbitrary-length chain, chain handles, the
+//     compact bare `->` arc.
+//   Region C — document-review SLA: a timed transition (timer clock + bind +
+//     maturity) over a clock place, plus a named (non-initial) marking.
+//
+// Plus document-level metadata: net/place/transition/handle descriptions and
+// annotations, `extensions`, and a `view` (positions + a route).
+//
+// Composition (`use` / `wire`) is a SEPARATE document kind and cannot appear
+// in a net document — see structure-library.md for a composition example.
+//
+// Validate with:  velocitron validate skills/velocitron/kitchen-sink.petrinet
+// ============================================================================
+
+net kitchen_sink "Every .petrinet construct in one validating net"
+
+
+// ── Region A: order fulfilment ──────────────────────────────────────────────
+//
+// A CHOICE (OR-split) is two transitions sharing one input place, each with a
+// mutually exclusive arc predicate — never one transition with two outputs
+// (that is an AND-split that deposits to both). `accept_order` takes any order
+// with a positive total (inline CEL); `reject_order` takes any flagged by a
+// named pure predicate handler.
+@screen_ok:  (incoming_orders) -sales_order-> [accept_order] -accepted_order-> (accepted_orders)
+@screen_bad: (incoming_orders) -sales_order-> [reject_order] -rejected_order-> (rejected_orders)
+
+@screen_ok  predicate cel "total_cents > 0"
+@screen_bad predicate handler "order_is_fraudulent@fulfil"
+
+[accept_order] handler "accept_order@fulfil"
+[reject_order] handler "reject_order@fulfil"
+
+// A sink transition: consumes a rejected order, produces nothing. Legal (it is
+// a lint finding, never a validation error).
+(rejected_orders) -rejected_order-> [archive_rejection]
+[archive_rejection] handler "archive_rejection@fulfil"
+
+// form_shipment batches TWO accepted orders (arc weight 2), READS available
+// inventory without consuming it (->? read arc), and is suppressed per-customer
+// by a CORRELATED inhibit arc (->0 + correlate): it may not fire while an open
+// shipment already exists for the SAME customerId. A guard gates it on the
+// warehouse being open; priority 10 lets it win conflicts by declared priority.
+@batch_orders:    (accepted_orders) -accepted_order-> [form_shipment] -shipment-> (shipments)
+@inventory_ok:    (inventory) -stock->? [form_shipment]
+@no_dup_shipment: (open_shipments) -shipment->0 [form_shipment]
+
+@batch_orders weight 2
+@no_dup_shipment correlate cel "token.customerId == binding.accepted_orders[0].customerId"
+
+// The chain's produce end carries a COMPUTED fallback (data cel, ADR 0023):
+// when the handler returns no shipment token, the engine emits one whose data
+// is computed from the consumed binding — the counterpart of @restock_arc's
+// literal data below (the two are mutually exclusive on one arc).
+@batch_orders data cel "{\"customerId\": binding.accepted_orders[0].customerId}"
+
+[form_shipment] handler "form_shipment@fulfil"
+[form_shipment] guard "warehouse_open@fulfil"
+[form_shipment] priority 10
+
+// dispatch moves a formed shipment out through the net's output port.
+(shipments) -shipment-> [dispatch] -shipment-> (dispatch_out)
+[dispatch] handler "dispatch@fulfil"
+
+// A SOURCE transition (no input arcs) restocks inventory. Its produce arc
+// carries LITERAL data, so it can emit a fixed `stock` token without the
+// handler shaping one.
+@restock_arc: [restock] -stock-> (inventory)
+@restock_arc data {"sku": "WIDGET-1", "qty": 100}
+[restock] handler "restock@fulfil"
+
+// Boundary ports (composition interface, declared as a facet on a place) and a
+// per-color-key capacity check (advisory; never gates enablement or deposit).
+(incoming_orders) port input sales_order
+(dispatch_out) port output shipment
+(open_shipments) capacityPerColorKey {"key": "customerId", "max": 1}
+
+// Initial marking: two accepted orders ready to batch (multiplicity), one
+// in-flight order to screen, one open shipment for suppression, some stock.
+marking initial (incoming_orders) <- $order_ready
+marking initial (accepted_orders) <- 2 * $accepted
+marking initial (open_shipments)  <- $open_shipment
+marking initial (inventory)       <- $stock
+
+$order_ready:    sales_order {"customerId": "cust-1", "total_cents": 4999}
+$accepted:       accepted_order {"customerId": "cust-2"}
+$open_shipment:  shipment {"customerId": "cust-9"}
+$stock:          stock {"sku": "WIDGET-1", "qty": 100}
+
+
+// ── Region B: CI pipeline ───────────────────────────────────────────────────
+//
+// A straight-line pipeline. The `@compile` chain handle names a two-arc run
+// for later elaboration. The second statement is an ARBITRARY-LENGTH chain:
+// a chain may run through any number of alternating place/transition
+// endpoints, expanding left to right into one arc per segment (read/inhibit
+// operators stay place-to-transition, enforced per segment). Canonical source
+// spells every token color explicitly; an authored bare `->` would mean the
+// ordinary core color `token`.
+@compile: (commits) -commit-> [compile] -build-> (builds)
+(builds) -build-> [run_tests] -test_result-> (test_results) -test_result-> [gate_merge] -merge_record-> (merged)
+
+(merged) accepts [merge_record]
+
+[compile]    handler "compile@ci"
+[run_tests]  handler "run_tests@ci"
+[gate_merge] handler "gate_merge@ci"
+
+marking initial (commits) <- $commit
+$commit: commit {"sha": "abc123", "branch": "main"}
+
+
+// ── Region C: document-review SLA (timed transition) ────────────────────────
+//
+// assign_review pulls a queued doc into an assignment carrying a `dueAt`
+// deadline. escalate_review is a TIMED transition: it becomes enabled only when
+// the injected clock place's `clock.now` reaches the bound assignment's
+// deadline. `timer bind assignment (assignments)` aliases the consumed token as
+// `assignment` inside the timer CEL; `timer maturity` returns the next future
+// timestamp so a Runtime scheduler can sleep until exactly then (the
+// synchronous Engine ignores maturity and just re-checks on each `tick`).
+(review_queue) -doc-> [assign_review] -assignment-> (assignments)
+(assignments) -assignment-> [escalate_review] -escalation-> (escalations)
+// A timer clock place must be declared through topology (timer facts never
+// synthesize a place); this read arc gives (review_clock) its `tick` color and
+// binds the current clock token without consuming it.
+@review_sla_clock: (review_clock) -tick->? [escalate_review]
+
+[assign_review]   handler "assign_review@review"
+[escalate_review] handler "escalate_review@review"
+[escalate_review] timer clock (review_clock) cel "clock.now >= assignment.dueAt"
+[escalate_review] timer bind assignment (assignments)
+[escalate_review] timer maturity cel "assignment.dueAt"
+
+// The clock place holds a singleton `tick` token advanced through the injection
+// seam (inject_token(..., replace=True)); an empty clock place disables the
+// timed transition.
+marking initial (review_clock) <- $clock_zero
+marking initial (review_queue) <- $queued_doc
+
+// A NAMED (non-initial) marking: a reusable scenario where an assignment is
+// already past due. Named markings are metadata (no runtime effect); load one
+// explicitly to drive a test.
+marking overdue (assignments)  <- $overdue_assignment
+marking overdue (review_clock) <- $clock_late
+
+$clock_zero:          tick {"now": 0}
+$clock_late:          tick {"now": 5000}
+$queued_doc:          doc {"docId": "doc-1"}
+$overdue_assignment:  assignment {"docId": "doc-1", "dueAt": 1000}
+
+
+// ── Document-level metadata & presentation ──────────────────────────────────
+// (The net's own description is the header string above; a redundant `net
+// description` fact would conflict with it. Place/transition/handle
+// descriptions below show the `<target> description` metadata fact.)
+net annotation domain "reference"
+
+(incoming_orders) description "Externally supplied orders awaiting screening."
+(incoming_orders) annotation interface "order-intake"
+[form_shipment] description "Batches two accepted orders into a shipment, per-customer suppressed."
+[form_shipment] annotation phase "fulfilment"
+@no_dup_shipment description "Anti-join: blocks a second open shipment for the same customer."
+
+extensions {"skill": "velocitron", "purpose": "kitchen-sink"}
+
+// A named view positions two nodes and routes one arc handle orthogonally.
+view default position (incoming_orders) at {"x": 0, "y": 0}
+view default position [accept_order] at {"x": 160, "y": 0}
+// A route must name a handle covering exactly one arc; @restock_arc is a single
+// transition-to-place arc (whereas @screen_ok spans a consume+produce run).
+view default route @restock_arc orthogonal [{"x": 80, "y": 0}, {"x": 80, "y": 20}]

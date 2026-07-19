@@ -1,0 +1,4 @@
+{
+  "sourceId": "per-key-suppression.petrinet",
+  "text": "net per_key_suppression \"Pass the first request with no same-key suppression\"\n\n@request: (requests) -request-> [admit] -request-> (admitted)\n@not_suppressed: (suppressions) -suppression->0 [admit]\n\n[admit] handler \"admit_request\"\n\n@not_suppressed correlate cel \"token.key == binding.requests[0].key\"\n\nmarking initial (requests) <- $request_a\nmarking initial (requests) <- $request_b\nmarking initial (suppressions) <- $suppress_a\n\n$request_a: request {\"key\": \"A\"}\n$request_b: request {\"key\": \"B\"}\n$suppress_a: suppression {\"key\": \"A\"}\n"
+}

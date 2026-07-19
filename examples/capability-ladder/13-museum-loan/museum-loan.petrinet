@@ -1,0 +1,69 @@
+net museum_loan
+
+// The desk source deliberately has no input arc: reopening is a source-transition
+// property, while its literal outputs establish the desk state and clock seam.
+@desk_open_state: [open_loan_desk] -desk_status-> (desk_status)
+@opening_clock_tick: [open_loan_desk] -clock_tick-> (museum_clock)
+
+@screenable_request: (loan_requests) -loan_request-> [screen_request]
+@loanable_catalog: (catalog_entries) -catalog_entry->? [screen_request]
+@desk_is_open: (desk_status) -desk_status->? [screen_request]
+@intake_not_paused: (intake_pause) -intake_pause->0 [screen_request]
+@no_active_reservation: (active_reservations) -active_reservation->0 [screen_request]
+[screen_request] -curation_case-> (curation_cases)
+
+(curation_cases) -curation_case-> [curate_request] -curation_decision-> (curation_decisions)
+@approved_decision: (curation_decisions) -curation_decision-> [approve_loan] -active_reservation-> (active_reservations)
+@declined_decision: (curation_decisions) -curation_decision-> [decline_loan]
+
+@confirmation_reservation: (active_reservations) -active_reservation-> [confirm_reservation]
+(confirmation_receipts) -confirmation_receipt-> [confirm_reservation] -confirmed_reservation-> (confirmed_reservations)
+@expiry_reservation: (active_reservations) -active_reservation-> [expire_reservation] -expired_reservation-> (expired_reservations)
+(expired_reservations) -expired_reservation-> [close_expired_reservation]
+
+(confirmed_reservations) -confirmed_reservation-> [collect_artifact] -dispatch_ready-> (dispatch_ready)
+[collect_artifact] -condition_report-> (condition_reports)
+(dispatch_ready) -dispatch_ready-> [dispatch_loan] -dispatch_handoff-> (dispatch_handoff)
+@two_condition_reports: (condition_reports) -condition_report-> [dispatch_loan]
+
+[open_loan_desk] handler "open_loan_desk@museum_loan"
+[screen_request] handler "screen_request@museum_loan"
+[curate_request] handler "curator_decide@museum_loan"
+[approve_loan] handler "approve_loan@museum_loan"
+[decline_loan] handler "decline_loan@museum_loan"
+[confirm_reservation] handler "confirm_reservation@museum_loan"
+[expire_reservation] handler "expire_reservation@museum_loan"
+[close_expired_reservation] handler "close_expired_reservation@museum_loan"
+[collect_artifact] handler "collect_artifact@museum_loan"
+[dispatch_loan] handler "dispatch_loan@museum_loan"
+
+[screen_request] priority 20
+[confirm_reservation] guard "receipt_matches_reservation@museum_loan"
+[dispatch_loan] guard "reports_match_reservation@museum_loan"
+[expire_reservation] timer clock (museum_clock) cel "clock.now >= reservation.expiresAt"
+[expire_reservation] timer bind reservation (active_reservations)
+
+@screenable_request predicate handler "request_is_complete@museum_loan"
+@loanable_catalog predicate cel "loanable == true"
+@no_active_reservation correlate cel "token.artifactId == binding.loan_requests[0].artifactId"
+@approved_decision predicate cel "approved == true"
+@declined_decision predicate cel "approved == false"
+@two_condition_reports weight 2
+@desk_open_state data {"state": "desk_open"}
+@opening_clock_tick data {"now": 0}
+
+(loan_requests) port input loan_request
+(dispatch_handoff) port output dispatch_handoff
+(active_reservations) capacityPerColorKey {"key": "artifactId", "max": 1}
+
+marking initial (catalog_entries) <- $loanable_catalog_entry
+$loanable_catalog_entry: catalog_entry {"artifactId": "artifact-001", "loanable": true, "title": "Bronze Statuette"}
+
+net description "A concurrent loan desk that suppresses duplicate active reservations by artifact identifier."
+net annotation domain "museum-loan"
+(loan_requests) description "Externally supplied loan requests awaiting intake screening."
+(loan_requests) annotation interface "loan-intake"
+[screen_request] description "Screens an incoming request against catalog, desk state, and reservation suppression."
+[screen_request] annotation phase "intake"
+@screenable_request description "Consumes only requests accepted by the named screening predicate handler."
+@screenable_request annotation role "request-filter"

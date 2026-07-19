@@ -1,0 +1,4 @@
+{
+  "sourceId": "graduation_speaks.petrinet",
+  "text": "net graduation_speaks \"Speaks graduation fragment\"\n\n(request_in) -speak_req-> [start] -speak_token-> (in_flight)\n(in_flight) -speak_token->0 [start]\n(work) -speak_work->0 [start]\n[start] -speak_work-> (work)\n(work) -speak_work-> [finish] -utterance-> (utterance_out)\n(in_flight) -speak_token-> [finish]\n\n(request_in) port input speak_req\n(utterance_out) port output utterance\n\n[start] handler \"start@speaks\"\n[finish] handler \"finish@speaks\"\n"
+}

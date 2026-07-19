@@ -1,0 +1,626 @@
+{
+  "contributions": [
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_speaks.petrinet",
+        "statement": 0
+      },
+      "kind": "document.net-header",
+      "ordinal": 0,
+      "span": {
+        "end": {
+          "byteOffset": 50,
+          "column": 51,
+          "line": 1
+        },
+        "source": "graduation_speaks.petrinet",
+        "start": {
+          "byteOffset": 0,
+          "column": 1,
+          "line": 1
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "description": "Speaks graduation fragment",
+        "name": "graduation_speaks"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_speaks.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.declare",
+      "ordinal": 1,
+      "span": {
+        "end": {
+          "byteOffset": 85,
+          "column": 34,
+          "line": 3
+        },
+        "source": "graduation_speaks.petrinet",
+        "start": {
+          "byteOffset": 52,
+          "column": 1,
+          "line": 3
+        }
+      },
+      "target": {
+        "id": {
+          "document": "graduation_speaks.petrinet",
+          "part": 0,
+          "statement": 1
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "speak_req"
+        },
+        "from": {
+          "name": "request_in",
+          "type": "place"
+        },
+        "mode": "consume",
+        "to": {
+          "name": "start",
+          "type": "transition"
+        },
+        "transitionNameSpan": {
+          "end": {
+            "byteOffset": 84,
+            "column": 33,
+            "line": 3
+          },
+          "source": "graduation_speaks.petrinet",
+          "start": {
+            "byteOffset": 79,
+            "column": 28,
+            "line": 3
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "graduation_speaks.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.declare",
+      "ordinal": 2,
+      "span": {
+        "end": {
+          "byteOffset": 112,
+          "column": 61,
+          "line": 3
+        },
+        "source": "graduation_speaks.petrinet",
+        "start": {
+          "byteOffset": 78,
+          "column": 27,
+          "line": 3
+        }
+      },
+      "target": {
+        "id": {
+          "document": "graduation_speaks.petrinet",
+          "part": 1,
+          "statement": 1
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "speak_token"
+        },
+        "from": {
+          "name": "start",
+          "type": "transition"
+        },
+        "mode": "produce",
+        "to": {
+          "name": "in_flight",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_speaks.petrinet",
+        "statement": 2
+      },
+      "kind": "arc.handle",
+      "ordinal": 3,
+      "span": {
+        "end": {
+          "byteOffset": 166,
+          "column": 54,
+          "line": 4
+        },
+        "source": "graduation_speaks.petrinet",
+        "start": {
+          "byteOffset": 113,
+          "column": 1,
+          "line": 4
+        }
+      },
+      "target": {
+        "name": "in_flight_clear",
+        "type": "arcHandle"
+      },
+      "value": {
+        "arcIds": [
+          {
+            "document": "graduation_speaks.petrinet",
+            "part": 1,
+            "statement": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "graduation_speaks.petrinet",
+        "statement": 2
+      },
+      "kind": "arc.declare",
+      "ordinal": 4,
+      "span": {
+        "end": {
+          "byteOffset": 166,
+          "column": 54,
+          "line": 4
+        },
+        "source": "graduation_speaks.petrinet",
+        "start": {
+          "byteOffset": 131,
+          "column": 19,
+          "line": 4
+        }
+      },
+      "target": {
+        "id": {
+          "document": "graduation_speaks.petrinet",
+          "part": 1,
+          "statement": 2
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "speak_token"
+        },
+        "from": {
+          "name": "in_flight",
+          "type": "place"
+        },
+        "mode": "inhibit",
+        "to": {
+          "name": "start",
+          "type": "transition"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_speaks.petrinet",
+        "statement": 3
+      },
+      "kind": "arc.handle",
+      "ordinal": 5,
+      "span": {
+        "end": {
+          "byteOffset": 209,
+          "column": 43,
+          "line": 5
+        },
+        "source": "graduation_speaks.petrinet",
+        "start": {
+          "byteOffset": 167,
+          "column": 1,
+          "line": 5
+        }
+      },
+      "target": {
+        "name": "work_clear",
+        "type": "arcHandle"
+      },
+      "value": {
+        "arcIds": [
+          {
+            "document": "graduation_speaks.petrinet",
+            "part": 1,
+            "statement": 3
+          }
+        ]
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "graduation_speaks.petrinet",
+        "statement": 3
+      },
+      "kind": "arc.declare",
+      "ordinal": 6,
+      "span": {
+        "end": {
+          "byteOffset": 209,
+          "column": 43,
+          "line": 5
+        },
+        "source": "graduation_speaks.petrinet",
+        "start": {
+          "byteOffset": 180,
+          "column": 14,
+          "line": 5
+        }
+      },
+      "target": {
+        "id": {
+          "document": "graduation_speaks.petrinet",
+          "part": 1,
+          "statement": 3
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "speak_work"
+        },
+        "from": {
+          "name": "work",
+          "type": "place"
+        },
+        "mode": "inhibit",
+        "to": {
+          "name": "start",
+          "type": "transition"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_speaks.petrinet",
+        "statement": 4
+      },
+      "kind": "arc.declare",
+      "ordinal": 7,
+      "span": {
+        "end": {
+          "byteOffset": 238,
+          "column": 29,
+          "line": 6
+        },
+        "source": "graduation_speaks.petrinet",
+        "start": {
+          "byteOffset": 210,
+          "column": 1,
+          "line": 6
+        }
+      },
+      "target": {
+        "id": {
+          "document": "graduation_speaks.petrinet",
+          "part": 0,
+          "statement": 4
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "speak_work"
+        },
+        "from": {
+          "name": "start",
+          "type": "transition"
+        },
+        "mode": "produce",
+        "to": {
+          "name": "work",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_speaks.petrinet",
+        "statement": 5
+      },
+      "kind": "arc.declare",
+      "ordinal": 8,
+      "span": {
+        "end": {
+          "byteOffset": 269,
+          "column": 30,
+          "line": 8
+        },
+        "source": "graduation_speaks.petrinet",
+        "start": {
+          "byteOffset": 240,
+          "column": 1,
+          "line": 8
+        }
+      },
+      "target": {
+        "id": {
+          "document": "graduation_speaks.petrinet",
+          "part": 0,
+          "statement": 5
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "speak_work"
+        },
+        "from": {
+          "name": "work",
+          "type": "place"
+        },
+        "mode": "consume",
+        "to": {
+          "name": "finish",
+          "type": "transition"
+        },
+        "transitionNameSpan": {
+          "end": {
+            "byteOffset": 268,
+            "column": 29,
+            "line": 8
+          },
+          "source": "graduation_speaks.petrinet",
+          "start": {
+            "byteOffset": 262,
+            "column": 23,
+            "line": 8
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "graduation_speaks.petrinet",
+        "statement": 5
+      },
+      "kind": "arc.declare",
+      "ordinal": 9,
+      "span": {
+        "end": {
+          "byteOffset": 298,
+          "column": 59,
+          "line": 8
+        },
+        "source": "graduation_speaks.petrinet",
+        "start": {
+          "byteOffset": 261,
+          "column": 22,
+          "line": 8
+        }
+      },
+      "target": {
+        "id": {
+          "document": "graduation_speaks.petrinet",
+          "part": 1,
+          "statement": 5
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "utterance"
+        },
+        "from": {
+          "name": "finish",
+          "type": "transition"
+        },
+        "mode": "produce",
+        "to": {
+          "name": "utterance_out",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_speaks.petrinet",
+        "statement": 6
+      },
+      "kind": "arc.declare",
+      "ordinal": 10,
+      "span": {
+        "end": {
+          "byteOffset": 334,
+          "column": 36,
+          "line": 9
+        },
+        "source": "graduation_speaks.petrinet",
+        "start": {
+          "byteOffset": 299,
+          "column": 1,
+          "line": 9
+        }
+      },
+      "target": {
+        "id": {
+          "document": "graduation_speaks.petrinet",
+          "part": 0,
+          "statement": 6
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "speak_token"
+        },
+        "from": {
+          "name": "in_flight",
+          "type": "place"
+        },
+        "mode": "consume",
+        "to": {
+          "name": "finish",
+          "type": "transition"
+        },
+        "transitionNameSpan": {
+          "end": {
+            "byteOffset": 333,
+            "column": 35,
+            "line": 9
+          },
+          "source": "graduation_speaks.petrinet",
+          "start": {
+            "byteOffset": 327,
+            "column": 29,
+            "line": 9
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_speaks.petrinet",
+        "statement": 7
+      },
+      "kind": "transition.handler",
+      "ordinal": 11,
+      "span": {
+        "end": {
+          "byteOffset": 366,
+          "column": 31,
+          "line": 11
+        },
+        "source": "graduation_speaks.petrinet",
+        "start": {
+          "byteOffset": 336,
+          "column": 1,
+          "line": 11
+        }
+      },
+      "target": {
+        "name": "start",
+        "type": "transition"
+      },
+      "value": {
+        "handler": "start@speaks"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_speaks.petrinet",
+        "statement": 8
+      },
+      "kind": "transition.handler",
+      "ordinal": 12,
+      "span": {
+        "end": {
+          "byteOffset": 399,
+          "column": 33,
+          "line": 12
+        },
+        "source": "graduation_speaks.petrinet",
+        "start": {
+          "byteOffset": 367,
+          "column": 1,
+          "line": 12
+        }
+      },
+      "target": {
+        "name": "finish",
+        "type": "transition"
+      },
+      "value": {
+        "handler": "finish@speaks"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_speaks.petrinet",
+        "statement": 9
+      },
+      "kind": "place.port",
+      "ordinal": 13,
+      "span": {
+        "end": {
+          "byteOffset": 433,
+          "column": 34,
+          "line": 13
+        },
+        "source": "graduation_speaks.petrinet",
+        "start": {
+          "byteOffset": 400,
+          "column": 1,
+          "line": 13
+        }
+      },
+      "target": {
+        "name": "request_in",
+        "type": "place"
+      },
+      "value": {
+        "color": "speak_req",
+        "direction": "input"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_speaks.petrinet",
+        "statement": 10
+      },
+      "kind": "place.port",
+      "ordinal": 14,
+      "span": {
+        "end": {
+          "byteOffset": 471,
+          "column": 38,
+          "line": 14
+        },
+        "source": "graduation_speaks.petrinet",
+        "start": {
+          "byteOffset": 434,
+          "column": 1,
+          "line": 14
+        }
+      },
+      "target": {
+        "name": "utterance_out",
+        "type": "place"
+      },
+      "value": {
+        "color": "utterance",
+        "direction": "output"
+      }
+    }
+  ],
+  "document": {
+    "id": "graduation_speaks.petrinet"
+  },
+  "documentKind": "net",
+  "format": "velocitron.petrinet/contribution-ir",
+  "version": 1
+}

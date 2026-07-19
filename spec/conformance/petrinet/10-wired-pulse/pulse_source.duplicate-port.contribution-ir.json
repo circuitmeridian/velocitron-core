@@ -1,0 +1,298 @@
+{
+  "contributions": [
+    {
+      "id": {
+        "part": 0,
+        "source": "pulse_source.duplicate-port.petrinet",
+        "statement": 0
+      },
+      "kind": "document.net-header",
+      "ordinal": 0,
+      "span": {
+        "end": {
+          "byteOffset": 40,
+          "column": 41,
+          "line": 1
+        },
+        "source": "pulse_source.duplicate-port.petrinet",
+        "start": {
+          "byteOffset": 0,
+          "column": 1,
+          "line": 1
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "description": "One-shot pulse source",
+        "name": "pulse_source"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "pulse_source.duplicate-port.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.declare",
+      "ordinal": 1,
+      "span": {
+        "end": {
+          "byteOffset": 63,
+          "column": 22,
+          "line": 3
+        },
+        "source": "pulse_source.duplicate-port.petrinet",
+        "start": {
+          "byteOffset": 42,
+          "column": 1,
+          "line": 3
+        }
+      },
+      "target": {
+        "id": {
+          "document": "pulse_source.duplicate-port.petrinet",
+          "part": 0,
+          "statement": 1
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "seed"
+        },
+        "from": {
+          "name": "seed",
+          "type": "place"
+        },
+        "mode": "consume",
+        "to": {
+          "name": "emit",
+          "type": "transition"
+        },
+        "transitionNameSpan": {
+          "end": {
+            "byteOffset": 62,
+            "column": 21,
+            "line": 3
+          },
+          "source": "pulse_source.duplicate-port.petrinet",
+          "start": {
+            "byteOffset": 58,
+            "column": 17,
+            "line": 3
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "pulse_source.duplicate-port.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.declare",
+      "ordinal": 2,
+      "span": {
+        "end": {
+          "byteOffset": 84,
+          "column": 43,
+          "line": 3
+        },
+        "source": "pulse_source.duplicate-port.petrinet",
+        "start": {
+          "byteOffset": 57,
+          "column": 16,
+          "line": 3
+        }
+      },
+      "target": {
+        "id": {
+          "document": "pulse_source.duplicate-port.petrinet",
+          "part": 1,
+          "statement": 1
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "pulse"
+        },
+        "from": {
+          "name": "emit",
+          "type": "transition"
+        },
+        "mode": "produce",
+        "to": {
+          "name": "pulse_out",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "pulse_source.duplicate-port.petrinet",
+        "statement": 2
+      },
+      "kind": "transition.handler",
+      "ordinal": 3,
+      "span": {
+        "end": {
+          "byteOffset": 114,
+          "column": 29,
+          "line": 5
+        },
+        "source": "pulse_source.duplicate-port.petrinet",
+        "start": {
+          "byteOffset": 86,
+          "column": 1,
+          "line": 5
+        }
+      },
+      "target": {
+        "name": "emit",
+        "type": "transition"
+      },
+      "value": {
+        "handler": "emit@source"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "pulse_source.duplicate-port.petrinet",
+        "statement": 3
+      },
+      "kind": "place.port",
+      "ordinal": 4,
+      "span": {
+        "end": {
+          "byteOffset": 144,
+          "column": 30,
+          "line": 6
+        },
+        "source": "pulse_source.duplicate-port.petrinet",
+        "start": {
+          "byteOffset": 115,
+          "column": 1,
+          "line": 6
+        }
+      },
+      "target": {
+        "name": "pulse_out",
+        "type": "place"
+      },
+      "value": {
+        "color": "pulse",
+        "direction": "output"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "pulse_source.duplicate-port.petrinet",
+        "statement": 4
+      },
+      "kind": "place.port",
+      "ordinal": 5,
+      "span": {
+        "end": {
+          "byteOffset": 174,
+          "column": 30,
+          "line": 7
+        },
+        "source": "pulse_source.duplicate-port.petrinet",
+        "start": {
+          "byteOffset": 145,
+          "column": 1,
+          "line": 7
+        }
+      },
+      "target": {
+        "name": "pulse_out",
+        "type": "place"
+      },
+      "value": {
+        "color": "pulse",
+        "direction": "output"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "pulse_source.duplicate-port.petrinet",
+        "statement": 5
+      },
+      "kind": "marking.append",
+      "ordinal": 6,
+      "span": {
+        "end": {
+          "byteOffset": 208,
+          "column": 33,
+          "line": 9
+        },
+        "source": "pulse_source.duplicate-port.petrinet",
+        "start": {
+          "byteOffset": 176,
+          "column": 1,
+          "line": 9
+        }
+      },
+      "target": {
+        "name": "seed",
+        "type": "place"
+      },
+      "value": {
+        "count": 1,
+        "token": {
+          "template": {
+            "name": "ready",
+            "type": "template"
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "pulse_source.duplicate-port.petrinet",
+        "statement": 6
+      },
+      "kind": "template.define",
+      "ordinal": 7,
+      "span": {
+        "end": {
+          "byteOffset": 224,
+          "column": 16,
+          "line": 10
+        },
+        "source": "pulse_source.duplicate-port.petrinet",
+        "start": {
+          "byteOffset": 209,
+          "column": 1,
+          "line": 10
+        }
+      },
+      "target": {
+        "name": "ready",
+        "type": "template"
+      },
+      "value": {
+        "value": {
+          "entries": [],
+          "type": "object"
+        }
+      }
+    }
+  ],
+  "document": {
+    "id": "pulse_source.duplicate-port.petrinet"
+  },
+  "documentKind": "net",
+  "format": "velocitron.petrinet/contribution-ir",
+  "version": 1
+}

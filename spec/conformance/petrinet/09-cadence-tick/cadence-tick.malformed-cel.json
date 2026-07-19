@@ -1,0 +1,27 @@
+{
+  "diagnostic": {
+    "code": "PN203",
+    "column": 1,
+    "file": "cadence-tick.malformed-cel.petrinet",
+    "help": "fix the CEL expression syntax",
+    "line": 6,
+    "message": "invalid CEL timer for transition [on_tick]",
+    "span": {
+      "end": {
+        "byteOffset": 239,
+        "column": 67,
+        "line": 6
+      },
+      "source": "cadence-tick.malformed-cel.petrinet",
+      "start": {
+        "byteOffset": 173,
+        "column": 1,
+        "line": 6
+      }
+    }
+  },
+  "source": {
+    "sourceId": "cadence-tick.malformed-cel.petrinet",
+    "text": "net cadence_tick_malformed_cel\n\n(tick_latch) -tick_latch-> [on_tick] -tick_latch-> (tick_latch)\n@tick_clock: (clock) -clock->? [on_tick]\n[on_tick] handler \"on_tick@cadence\"\n[on_tick] timer clock (clock) cel \"clock.now >= >= latch.fired_at\"\n[on_tick] timer bind latch (tick_latch)\n"
+  }
+}

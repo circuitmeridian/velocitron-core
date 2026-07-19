@@ -1,0 +1,4 @@
+{
+  "sourceId": "cookie-vending.petrinet",
+  "text": "net \"cookie-vending\"\n\n(coin_slot) -coin-> [accept_coin]\n(coin_slot) -coin-> [return_coin]\n[accept_coin] -coin-> (cash_box)\n@vend_signal: [accept_coin] -signal-> (signal)\n(signal) -signal-> [vend_packet]\n(storage) -packet-> [vend_packet]\n[vend_packet] -packet-> (compartment)\n(compartment) -packet-> [take_packet]\n\n[accept_coin] handler \"accept_coin\"\n[vend_packet] handler \"vend_packet\"\n[return_coin] handler \"return_coin\"\n[take_packet] handler \"take_packet\"\n\n[accept_coin] order 1\n[vend_packet] order 2\n[return_coin] order 3\n[take_packet] order 4\n\n@vend_signal data {}\n\nmarking initial (coin_slot) <- $inserted_coin\nmarking initial (storage) <- 5 * $packet\n\n$inserted_coin: coin {}\n$packet: packet {}\n"
+}

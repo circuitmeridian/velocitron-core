@@ -1,0 +1,45 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 1,
+    "file": "wired_pulse.conflicting-wire.petrinet",
+    "help": "remove the reversed wire; wires run output to input",
+    "line": 6,
+    "message": "conflicting wire facts reverse the same endpoints",
+    "related": [
+      {
+        "message": "first wire between these endpoints was declared here",
+        "span": {
+          "end": {
+            "byteOffset": 156,
+            "column": 43,
+            "line": 5
+          },
+          "source": "wired_pulse.conflicting-wire.petrinet",
+          "start": {
+            "byteOffset": 114,
+            "column": 1,
+            "line": 5
+          }
+        }
+      }
+    ],
+    "span": {
+      "end": {
+        "byteOffset": 199,
+        "column": 43,
+        "line": 6
+      },
+      "source": "wired_pulse.conflicting-wire.petrinet",
+      "start": {
+        "byteOffset": 157,
+        "column": 1,
+        "line": 6
+      }
+    }
+  },
+  "source": {
+    "sourceId": "wired_pulse.conflicting-wire.petrinet",
+    "text": "composition wired_pulse_conflicting_wire\n\nuse \"pulse_source.petrinet\" as source\nuse \"pulse_sink.petrinet\" as sink\nwire source.(pulse_out) -> sink.(pulse_in)\nwire sink.(pulse_in) -> source.(pulse_out)\n"
+  }
+}

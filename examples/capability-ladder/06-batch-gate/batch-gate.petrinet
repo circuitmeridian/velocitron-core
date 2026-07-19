@@ -1,0 +1,15 @@
+net batch_gate "Consume two items; verify, but do not gate, per-key batch capacity"
+
+@items: (items) -item-> [form_batch] -batch-> (batches)
+
+[form_batch] handler "form_batch"
+
+(batches) capacityPerColorKey {"key": "batch_id", "max": 1}
+
+@items weight 2
+
+marking initial (items) <- 2 * $item_a
+marking initial (batches) <- $batch_a
+
+$item_a: item {"batch_id": "A"}
+$batch_a: batch {"batch_id": "A"}

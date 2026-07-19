@@ -1,0 +1,27 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 1,
+    "file": "cadence-tick.reserved-clock-bind.petrinet",
+    "help": "choose a bind name other than 'clock'",
+    "line": 7,
+    "message": "timer bind name 'clock' is reserved on transition [on_tick]",
+    "span": {
+      "end": {
+        "byteOffset": 269,
+        "column": 40,
+        "line": 7
+      },
+      "source": "cadence-tick.reserved-clock-bind.petrinet",
+      "start": {
+        "byteOffset": 230,
+        "column": 1,
+        "line": 7
+      }
+    }
+  },
+  "source": {
+    "sourceId": "cadence-tick.reserved-clock-bind.petrinet",
+    "text": "net cadence_tick_reserved_clock_bind\n\n(tick_latch) -tick_latch-> [on_tick] -tick_latch-> (tick_latch)\n@tick_clock: (clock) -clock->? [on_tick]\n[on_tick] handler \"on_tick@cadence\"\n[on_tick] timer clock (clock) cel \"clock.now >= 0\"\n[on_tick] timer bind clock (tick_latch)\n"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "engines": {
+    "node": ">=24.15.0",
+    "pnpm": ">=11.13.1"
+  },
+  "name": "velocitron-core-workspace",
+  "packageManager": "pnpm@11.13.1",
+  "private": true,
+  "scripts": {
+    "audit:browser": "pnpm --filter @velocitron/core run audit:browser",
+    "build": "pnpm --filter @velocitron/core run build",
+    "check:generated": "pnpm --filter @velocitron/core run check:generated",
+    "test": "pnpm --filter @velocitron/core run test",
+    "typecheck": "pnpm --filter @velocitron/core run typecheck"
+  }
+}

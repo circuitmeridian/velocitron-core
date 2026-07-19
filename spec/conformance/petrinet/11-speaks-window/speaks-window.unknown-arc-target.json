@@ -1,0 +1,27 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 1,
+    "file": "speaks-window.unknown-arc-target.petrinet",
+    "help": "declare and name the arc before describing it",
+    "line": 5,
+    "message": "description references unknown arc handle @ghost",
+    "span": {
+      "end": {
+        "byteOffset": 145,
+        "column": 33,
+        "line": 5
+      },
+      "source": "speaks-window.unknown-arc-target.petrinet",
+      "start": {
+        "byteOffset": 113,
+        "column": 1,
+        "line": 5
+      }
+    }
+  },
+  "source": {
+    "sourceId": "speaks-window.unknown-arc-target.petrinet",
+    "text": "net bad_window\n\n(request_in) -speak_req-> [start] -speak_token-> (in_flight)\n[start] handler \"chip_start@speaks\"\n@ghost description \"No such arc\"\n"
+  }
+}

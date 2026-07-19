@@ -1,0 +1,83 @@
+{
+  "arcs": [
+    {
+      "consume": {
+        "mode": "read",
+        "type": "red"
+      },
+      "from": {
+        "place": "a"
+      },
+      "to": {
+        "transition": "b"
+      }
+    },
+    {
+      "from": {
+        "transition": "b"
+      },
+      "produce": {
+        "destination": "c",
+        "type": "blue"
+      },
+      "to": {
+        "place": "c"
+      }
+    },
+    {
+      "consume": {
+        "mode": "inhibit",
+        "type": "token"
+      },
+      "from": {
+        "place": "c"
+      },
+      "to": {
+        "transition": "d"
+      }
+    },
+    {
+      "from": {
+        "transition": "d"
+      },
+      "produce": {
+        "destination": "e",
+        "type": "green"
+      },
+      "to": {
+        "place": "e"
+      }
+    }
+  ],
+  "initialMarking": {},
+  "name": "handled_long_chain",
+  "places": [
+    {
+      "accepts": [
+        "red"
+      ],
+      "name": "a"
+    },
+    {
+      "accepts": [
+        "blue",
+        "token"
+      ],
+      "name": "c"
+    },
+    {
+      "accepts": [
+        "green"
+      ],
+      "name": "e"
+    }
+  ],
+  "transitions": [
+    {
+      "name": "b"
+    },
+    {
+      "name": "d"
+    }
+  ]
+}

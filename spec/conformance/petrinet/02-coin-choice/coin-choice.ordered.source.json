@@ -1,0 +1,4 @@
+{
+  "sourceId": "coin-choice.ordered.petrinet",
+  "text": "net coin_choice \"Coin choice\"\n\n@return: (coin_slot) -coin-> [return_coin]\n@accept: (coin_slot) -coin-> [accept_coin] -coin-> (cash_box)\n\n[accept_coin] handler \"accept_coin\"\n[return_coin] handler \"return_coin\"\n\n\n[accept_coin] order 1\n[return_coin] order 2\n@accept order 1\n@return order 2\n\nmarking initial (coin_slot) <- $inserted_coin\n$inserted_coin: coin {}\n"
+}

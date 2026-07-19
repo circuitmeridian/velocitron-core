@@ -1,0 +1,27 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 28,
+    "file": "wired_pulse.wire-type-mismatch.petrinet",
+    "help": "connect ports that declare the same color",
+    "line": 5,
+    "message": "wire port colors differ: source.(pulse_out) carries 'pulse' but sink.(pulse_in) carries 'alert'",
+    "span": {
+      "end": {
+        "byteOffset": 159,
+        "column": 43,
+        "line": 5
+      },
+      "source": "wired_pulse.wire-type-mismatch.petrinet",
+      "start": {
+        "byteOffset": 144,
+        "column": 28,
+        "line": 5
+      }
+    }
+  },
+  "source": {
+    "sourceId": "wired_pulse.wire-type-mismatch.petrinet",
+    "text": "composition wired_pulse_type_mismatch\n\nuse \"pulse_source.petrinet\" as source\nuse \"pulse_sink_alert.petrinet\" as sink\nwire source.(pulse_out) -> sink.(pulse_in)\n"
+  }
+}

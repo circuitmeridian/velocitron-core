@@ -1,0 +1,4 @@
+{
+  "sourceId": "guinan_graduation.petrinet",
+  "text": "composition guinan_graduation\n\nuse \"graduation_cadence.petrinet\" as cadence\nuse \"graduation_curate.petrinet\" as curate\nuse \"graduation_speaks.petrinet\" as speaks\n\nwire cadence.(refresh_due_out) -> curate.(refresh_due_in)\nwire curate.(speak_request) -> speaks.(request_in)\n"
+}

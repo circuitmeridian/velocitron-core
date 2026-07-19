@@ -1,0 +1,27 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 1,
+    "file": "speaks-window.unknown-place-target.petrinet",
+    "help": "declare the place in topology before describing it",
+    "line": 5,
+    "message": "description references unknown place 'ghost'; metadata facts cannot declare semantic objects",
+    "span": {
+      "end": {
+        "byteOffset": 157,
+        "column": 45,
+        "line": 5
+      },
+      "source": "speaks-window.unknown-place-target.petrinet",
+      "start": {
+        "byteOffset": 113,
+        "column": 1,
+        "line": 5
+      }
+    }
+  },
+  "source": {
+    "sourceId": "speaks-window.unknown-place-target.petrinet",
+    "text": "net bad_window\n\n(request_in) -speak_req-> [start] -speak_token-> (in_flight)\n[start] handler \"chip_start@speaks\"\n(ghost) description \"Never declares a place\"\n"
+  }
+}

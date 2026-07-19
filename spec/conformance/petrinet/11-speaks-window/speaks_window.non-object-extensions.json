@@ -1,0 +1,26 @@
+{
+  "diagnostic": {
+    "code": "PN101",
+    "column": 12,
+    "file": "speaks_window.non-object-extensions.petrinet",
+    "line": 2,
+    "message": "mismatched input '[' expecting '{'",
+    "span": {
+      "end": {
+        "byteOffset": 31,
+        "column": 13,
+        "line": 2
+      },
+      "source": "speaks_window.non-object-extensions.petrinet",
+      "start": {
+        "byteOffset": 30,
+        "column": 12,
+        "line": 2
+      }
+    }
+  },
+  "source": {
+    "sourceId": "speaks_window.non-object-extensions.petrinet",
+    "text": "net bad_extensions\nextensions []\n"
+  }
+}

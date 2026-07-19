@@ -1,0 +1,4 @@
+{
+  "sourceId": "progressive-shorthand.petrinet",
+  "text": "// net progressive_shorthand\n(a)\n[b]\n(a) -> [b] -> (c)\n"
+}

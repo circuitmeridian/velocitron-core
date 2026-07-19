@@ -1,0 +1,90 @@
+{
+  "arcs": [
+    {
+      "consume": {
+        "mode": "read",
+        "type": "power_flag"
+      },
+      "description": "Read the power flag without consuming it.",
+      "from": {
+        "place": "power"
+      },
+      "to": {
+        "transition": "admit"
+      }
+    },
+    {
+      "consume": {
+        "mode": "inhibit",
+        "type": "fault_flag"
+      },
+      "description": "Inhibit on a fault: no admission while faulted.",
+      "from": {
+        "place": "fault"
+      },
+      "to": {
+        "transition": "admit"
+      }
+    },
+    {
+      "consume": {
+        "type": "ticket"
+      },
+      "from": {
+        "place": "tickets"
+      },
+      "to": {
+        "transition": "admit"
+      }
+    },
+    {
+      "from": {
+        "transition": "admit"
+      },
+      "produce": {
+        "destination": "entries",
+        "type": "entry"
+      },
+      "to": {
+        "place": "entries"
+      }
+    }
+  ],
+  "description": "A turnstile admits a ticket-holder only while power is present and no fault is raised. Power is a READ arc (require present, do not consume) and fault is an INHIBIT arc (require absent) on distinct places, so read and inhibit compose: the power token survives each admission.",
+  "name": "turnstile-gate",
+  "places": [
+    {
+      "accepts": [
+        "power_flag"
+      ],
+      "description": "Holds one power_flag token iff the gate has power.",
+      "name": "power"
+    },
+    {
+      "accepts": [
+        "fault_flag"
+      ],
+      "description": "Holds a fault_flag token iff the gate is faulted.",
+      "name": "fault"
+    },
+    {
+      "accepts": [
+        "ticket"
+      ],
+      "name": "tickets"
+    },
+    {
+      "accepts": [
+        "entry"
+      ],
+      "name": "entries"
+    }
+  ],
+  "transitions": [
+    {
+      "description": "Admit a ticket-holder when powered and unfaulted.",
+      "handler": "gate.admit",
+      "name": "admit"
+    }
+  ]
+}

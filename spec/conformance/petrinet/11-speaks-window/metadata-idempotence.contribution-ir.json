@@ -1,0 +1,490 @@
+{
+  "contributions": [
+    {
+      "id": {
+        "part": 0,
+        "source": "metadata-idempotence.petrinet",
+        "statement": 0
+      },
+      "kind": "document.net-header",
+      "ordinal": 0,
+      "span": {
+        "end": {
+          "byteOffset": 24,
+          "column": 25,
+          "line": 1
+        },
+        "source": "metadata-idempotence.petrinet",
+        "start": {
+          "byteOffset": 0,
+          "column": 1,
+          "line": 1
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "name": "metadata_idempotence"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "metadata-idempotence.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.declare",
+      "ordinal": 1,
+      "span": {
+        "end": {
+          "byteOffset": 47,
+          "column": 22,
+          "line": 3
+        },
+        "source": "metadata-idempotence.petrinet",
+        "start": {
+          "byteOffset": 26,
+          "column": 1,
+          "line": 3
+        }
+      },
+      "target": {
+        "id": {
+          "document": "metadata-idempotence.petrinet",
+          "part": 0,
+          "statement": 1
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "token"
+        },
+        "from": {
+          "name": "input",
+          "type": "place"
+        },
+        "mode": "consume",
+        "to": {
+          "name": "go",
+          "type": "transition"
+        },
+        "transitionNameSpan": {
+          "end": {
+            "byteOffset": 46,
+            "column": 21,
+            "line": 3
+          },
+          "source": "metadata-idempotence.petrinet",
+          "start": {
+            "byteOffset": 44,
+            "column": 19,
+            "line": 3
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "metadata-idempotence.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.declare",
+      "ordinal": 2,
+      "span": {
+        "end": {
+          "byteOffset": 64,
+          "column": 39,
+          "line": 3
+        },
+        "source": "metadata-idempotence.petrinet",
+        "start": {
+          "byteOffset": 43,
+          "column": 18,
+          "line": 3
+        }
+      },
+      "target": {
+        "id": {
+          "document": "metadata-idempotence.petrinet",
+          "part": 1,
+          "statement": 1
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "done"
+        },
+        "from": {
+          "name": "go",
+          "type": "transition"
+        },
+        "mode": "produce",
+        "to": {
+          "name": "output",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "metadata-idempotence.petrinet",
+        "statement": 2
+      },
+      "kind": "transition.handler",
+      "ordinal": 3,
+      "span": {
+        "end": {
+          "byteOffset": 91,
+          "column": 27,
+          "line": 4
+        },
+        "source": "metadata-idempotence.petrinet",
+        "start": {
+          "byteOffset": 65,
+          "column": 1,
+          "line": 4
+        }
+      },
+      "target": {
+        "name": "go",
+        "type": "transition"
+      },
+      "value": {
+        "handler": "go@metadata"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "metadata-idempotence.petrinet",
+        "statement": 3
+      },
+      "kind": "documentation.description",
+      "ordinal": 4,
+      "span": {
+        "end": {
+          "byteOffset": 127,
+          "column": 35,
+          "line": 6
+        },
+        "source": "metadata-idempotence.petrinet",
+        "start": {
+          "byteOffset": 93,
+          "column": 1,
+          "line": 6
+        }
+      },
+      "target": {
+        "name": "input",
+        "type": "place"
+      },
+      "value": {
+        "text": "Stable input"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "metadata-idempotence.petrinet",
+        "statement": 4
+      },
+      "kind": "documentation.description",
+      "ordinal": 5,
+      "span": {
+        "end": {
+          "byteOffset": 162,
+          "column": 35,
+          "line": 7
+        },
+        "source": "metadata-idempotence.petrinet",
+        "start": {
+          "byteOffset": 128,
+          "column": 1,
+          "line": 7
+        }
+      },
+      "target": {
+        "name": "input",
+        "type": "place"
+      },
+      "value": {
+        "text": "Stable input"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "metadata-idempotence.petrinet",
+        "statement": 5
+      },
+      "kind": "documentation.annotation",
+      "ordinal": 6,
+      "span": {
+        "end": {
+          "byteOffset": 193,
+          "column": 31,
+          "line": 8
+        },
+        "source": "metadata-idempotence.petrinet",
+        "start": {
+          "byteOffset": 163,
+          "column": 1,
+          "line": 8
+        }
+      },
+      "target": {
+        "name": "input",
+        "type": "place"
+      },
+      "value": {
+        "key": "fusion",
+        "value": {
+          "type": "boolean",
+          "value": true
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "metadata-idempotence.petrinet",
+        "statement": 6
+      },
+      "kind": "documentation.annotation",
+      "ordinal": 7,
+      "span": {
+        "end": {
+          "byteOffset": 224,
+          "column": 31,
+          "line": 9
+        },
+        "source": "metadata-idempotence.petrinet",
+        "start": {
+          "byteOffset": 194,
+          "column": 1,
+          "line": 9
+        }
+      },
+      "target": {
+        "name": "input",
+        "type": "place"
+      },
+      "value": {
+        "key": "fusion",
+        "value": {
+          "type": "boolean",
+          "value": true
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "metadata-idempotence.petrinet",
+        "statement": 7
+      },
+      "kind": "view.position",
+      "ordinal": 8,
+      "span": {
+        "end": {
+          "byteOffset": 275,
+          "column": 51,
+          "line": 10
+        },
+        "source": "metadata-idempotence.petrinet",
+        "start": {
+          "byteOffset": 225,
+          "column": 1,
+          "line": 10
+        }
+      },
+      "target": {
+        "name": "layout",
+        "type": "view"
+      },
+      "value": {
+        "position": {
+          "entries": [
+            {
+              "key": "x",
+              "value": {
+                "lexeme": "10",
+                "type": "number"
+              }
+            },
+            {
+              "key": "y",
+              "value": {
+                "lexeme": "20",
+                "type": "number"
+              }
+            }
+          ],
+          "type": "object"
+        },
+        "subject": {
+          "name": "input",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "metadata-idempotence.petrinet",
+        "statement": 8
+      },
+      "kind": "view.position",
+      "ordinal": 9,
+      "span": {
+        "end": {
+          "byteOffset": 326,
+          "column": 51,
+          "line": 11
+        },
+        "source": "metadata-idempotence.petrinet",
+        "start": {
+          "byteOffset": 276,
+          "column": 1,
+          "line": 11
+        }
+      },
+      "target": {
+        "name": "layout",
+        "type": "view"
+      },
+      "value": {
+        "position": {
+          "entries": [
+            {
+              "key": "x",
+              "value": {
+                "lexeme": "10",
+                "type": "number"
+              }
+            },
+            {
+              "key": "y",
+              "value": {
+                "lexeme": "20",
+                "type": "number"
+              }
+            }
+          ],
+          "type": "object"
+        },
+        "subject": {
+          "name": "input",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "metadata-idempotence.petrinet",
+        "statement": 9
+      },
+      "kind": "document.extensions",
+      "ordinal": 10,
+      "span": {
+        "end": {
+          "byteOffset": 366,
+          "column": 40,
+          "line": 12
+        },
+        "source": "metadata-idempotence.petrinet",
+        "start": {
+          "byteOffset": 327,
+          "column": 1,
+          "line": 12
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "extensions": {
+          "entries": [
+            {
+              "key": "vendor",
+              "value": {
+                "entries": [
+                  {
+                    "key": "mode",
+                    "value": {
+                      "type": "string",
+                      "value": "safe"
+                    }
+                  }
+                ],
+                "type": "object"
+              }
+            }
+          ],
+          "type": "object"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "metadata-idempotence.petrinet",
+        "statement": 10
+      },
+      "kind": "document.extensions",
+      "ordinal": 11,
+      "span": {
+        "end": {
+          "byteOffset": 406,
+          "column": 40,
+          "line": 13
+        },
+        "source": "metadata-idempotence.petrinet",
+        "start": {
+          "byteOffset": 367,
+          "column": 1,
+          "line": 13
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "extensions": {
+          "entries": [
+            {
+              "key": "vendor",
+              "value": {
+                "entries": [
+                  {
+                    "key": "mode",
+                    "value": {
+                      "type": "string",
+                      "value": "safe"
+                    }
+                  }
+                ],
+                "type": "object"
+              }
+            }
+          ],
+          "type": "object"
+        }
+      }
+    }
+  ],
+  "document": {
+    "id": "metadata-idempotence.petrinet"
+  },
+  "documentKind": "net",
+  "format": "velocitron.petrinet/contribution-ir",
+  "version": 1
+}

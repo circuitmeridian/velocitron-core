@@ -1,0 +1,113 @@
+{
+  "arcs": [
+    {
+      "consume": {
+        "type": "job"
+      },
+      "from": {
+        "place": "locked"
+      },
+      "to": {
+        "transition": "unlock"
+      }
+    },
+    {
+      "from": {
+        "transition": "unlock"
+      },
+      "produce": {
+        "destination": "unlocked",
+        "type": "job"
+      },
+      "to": {
+        "place": "unlocked"
+      }
+    },
+    {
+      "consume": {
+        "type": "job"
+      },
+      "from": {
+        "place": "waiting"
+      },
+      "to": {
+        "transition": "run"
+      }
+    },
+    {
+      "consume": {
+        "mode": "inhibit",
+        "type": "job"
+      },
+      "from": {
+        "place": "locked"
+      },
+      "to": {
+        "transition": "run"
+      }
+    },
+    {
+      "from": {
+        "transition": "run"
+      },
+      "produce": {
+        "destination": "done",
+        "type": "job"
+      },
+      "to": {
+        "place": "done"
+      }
+    }
+  ],
+  "initialMarking": {
+    "locked": [
+      {
+        "data": {},
+        "type": "job"
+      }
+    ],
+    "waiting": [
+      {
+        "data": {},
+        "type": "job"
+      }
+    ]
+  },
+  "name": "inhibitor-arc",
+  "places": [
+    {
+      "accepts": [
+        "job"
+      ],
+      "name": "waiting"
+    },
+    {
+      "accepts": [
+        "job"
+      ],
+      "name": "locked"
+    },
+    {
+      "accepts": [
+        "job"
+      ],
+      "name": "unlocked"
+    },
+    {
+      "accepts": [
+        "job"
+      ],
+      "name": "done"
+    }
+  ],
+  "transitions": [
+    {
+      "handler": "unlock",
+      "name": "unlock"
+    },
+    {
+      "handler": "run",
+      "name": "run"
+    }
+  ]
+}

@@ -1,0 +1,155 @@
+{
+  "cases": [
+    {
+      "expectedEnabledTransitions": [
+        "route_co2mon"
+      ],
+      "expectedFinalMarking": {
+        "co2mon_samples": [
+          {
+            "data": {
+              "co2_ppm": 602,
+              "error": null,
+              "humidity_pct": 51.0,
+              "source": "co2mon",
+              "temp_c": 28.9,
+              "timestamp_ms": 1234567890000
+            },
+            "type": "sample"
+          }
+        ]
+      },
+      "expectedFiringSequence": [
+        {
+          "status": "completed",
+          "transition": "route_co2mon"
+        }
+      ],
+      "initialMarking": {
+        "sample_in": [
+          {
+            "data": {
+              "co2_ppm": 602,
+              "error": null,
+              "humidity_pct": 51.0,
+              "source": "co2mon",
+              "temp_c": 28.9,
+              "timestamp_ms": 1234567890000
+            },
+            "type": "sample"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "co2mon"
+    },
+    {
+      "expectedEnabledTransitions": [
+        "route_weather"
+      ],
+      "expectedFinalMarking": {
+        "weather_samples": [
+          {
+            "data": {
+              "error": null,
+              "humidity_pct": 68.0,
+              "source": "weather",
+              "temp_c": 16.25,
+              "timestamp_ms": 1234567891000
+            },
+            "type": "sample"
+          }
+        ]
+      },
+      "expectedFiringSequence": [
+        {
+          "status": "completed",
+          "transition": "route_weather"
+        }
+      ],
+      "initialMarking": {
+        "sample_in": [
+          {
+            "data": {
+              "error": null,
+              "humidity_pct": 68.0,
+              "source": "weather",
+              "temp_c": 16.25,
+              "timestamp_ms": 1234567891000
+            },
+            "type": "sample"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "weather"
+    },
+    {
+      "expectedEnabledTransitions": [],
+      "expectedFinalMarking": {
+        "sample_in": [
+          {
+            "data": {
+              "error": null,
+              "source": "air-quality-v2",
+              "timestamp_ms": 1234567892000,
+              "value": 7
+            },
+            "type": "sample"
+          }
+        ]
+      },
+      "expectedFiringSequence": [],
+      "initialMarking": {
+        "sample_in": [
+          {
+            "data": {
+              "error": null,
+              "source": "air-quality-v2",
+              "timestamp_ms": 1234567892000,
+              "value": 7
+            },
+            "type": "sample"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "unsupported source"
+    },
+    {
+      "expectedEnabledTransitions": [],
+      "expectedFinalMarking": {
+        "sample_in": [
+          {
+            "data": {
+              "error": "source field omitted",
+              "timestamp_ms": 1234567893000,
+              "value": 0
+            },
+            "type": "sample"
+          }
+        ]
+      },
+      "expectedFiringSequence": [],
+      "initialMarking": {
+        "sample_in": [
+          {
+            "data": {
+              "error": "source field omitted",
+              "timestamp_ms": 1234567893000,
+              "value": 0
+            },
+            "type": "sample"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "missing source"
+    }
+  ],
+  "description": "Source router",
+  "dslVariants": [
+    "source-router.petrinet",
+    "source-router-predicate-handlers.petrinet"
+  ]
+}

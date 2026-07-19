@@ -1,0 +1,27 @@
+{
+  "diagnostic": {
+    "code": "PN201",
+    "column": 22,
+    "file": "coin-deposit.petrinet",
+    "help": "add `[accept_coin] handler \"...\"`",
+    "line": 3,
+    "message": "transition [accept_coin] is incomplete: required handler fact is missing",
+    "span": {
+      "end": {
+        "byteOffset": 65,
+        "column": 33,
+        "line": 3
+      },
+      "source": "coin-deposit.petrinet",
+      "start": {
+        "byteOffset": 54,
+        "column": 22,
+        "line": 3
+      }
+    }
+  },
+  "source": {
+    "sourceId": "coin-deposit.petrinet",
+    "text": "net coin_deposit \"Coin deposit\"\n\n(coin_slot) -coin-> [accept_coin] -coin-> (cash_box)\nmarking initial (coin_slot) <- $inserted_coin\n$inserted_coin: coin {}\n"
+  }
+}

@@ -1,0 +1,8 @@
+# Opt-in pre-run handler validation seam (`Engine.validate(net)`)
+
+Net-declared handler refs (transition `handler`, transition `guard`, consume-arc named predicate `handler`) are validated by a public, opt-in `Engine.validate(net)` instance method that raises `HandlerNotFound` on the first unresolvable ref, before any `run`. The engine is net-agnostic at construction (`Engine(registry, *, policy, …)` takes no `net`), so the net meets the registry for the first time at `run`/`validate`; `validate(net)` is the earliest boundary where the net exists.
+
+**Considered options:**
+- Required `net` at `Engine.__init__` (validate at construction). Rejected: ties the engine to one net (~30-test blast radius), contradicts the spec's net-agnostic `Engine`.
+- Auto-validate at `run` entry. Rejected: amends the locked run-path resolve-miss contract (a missing transition handler yields `failed` records and may spin to `max_steps`, not a raise — locked in `test_firing_engine.py` F9/F12 / `test_enablement.py`); also burdens `run` with a whole-net walk per call.
+- Opt-in `validate(net)` (chosen): the caller invokes `validate(net)` at a time of their choosing (or not at all). `run` and `__init__` are byte-identical to pre-feature; the net-agnostic engine and the graceful-degradation contract on the run path are both retained. Zero blast radius. The trade: a caller who never calls `validate` gets the existing degradation on the run path. Future dynamism (a dynamic-lookup engine) may defer this validation entirely; the default engine validates early when asked. Full prose: `spec/firing-semantics.md` (e).

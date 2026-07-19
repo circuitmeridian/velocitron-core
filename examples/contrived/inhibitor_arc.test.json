@@ -1,0 +1,28 @@
+{
+  "description": "A 'run' transition inhibited by a lock token is blocked until 'unlock' drains the lock; then it fires and the net quiesces.",
+  "expectedFinalMarking": {
+    "done": [
+      {
+        "data": {},
+        "type": "job"
+      }
+    ],
+    "unlocked": [
+      {
+        "data": {},
+        "type": "job"
+      }
+    ]
+  },
+  "expectedFiringSequence": [
+    {
+      "status": "completed",
+      "transition": "unlock"
+    },
+    {
+      "status": "completed",
+      "transition": "run"
+    }
+  ],
+  "maxSteps": 10
+}

@@ -1,0 +1,1843 @@
+{
+  "$comment": "This schema validates the v1 wire shape only. Consumers MUST reject an unsupported format or version before resolution. Semantic resolution additionally enforces that contribution IDs are source-derived and unique and that ordinal values are contiguous zero-based integers in source order; JSON Schema cannot express either cross-item invariant.",
+  "$defs": {
+    "annotationContribution": {
+      "properties": {
+        "kind": {
+          "const": "documentation.annotation"
+        },
+        "target": {
+          "$ref": "#/$defs/elementTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "key": {
+              "$ref": "#/$defs/name"
+            },
+            "value": {
+              "$ref": "#/$defs/taggedJsonValue"
+            }
+          },
+          "required": [
+            "key",
+            "value"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "arcColor": {
+      "$comment": "Both explicit-color syntax and bare -> lower to an explicitly chosen core color. Bare -> uses the generic core color token.",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "explicit"
+        },
+        "value": {
+          "$ref": "#/$defs/name"
+        }
+      },
+      "required": [
+        "kind",
+        "value"
+      ],
+      "type": "object"
+    },
+    "arcCorrelateContribution": {
+      "properties": {
+        "kind": {
+          "const": "arc.correlate"
+        },
+        "target": {
+          "$ref": "#/$defs/arcHandleTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "cel": {
+              "$ref": "#/$defs/name"
+            }
+          },
+          "required": [
+            "cel"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "arcDeclareContribution": {
+      "properties": {
+        "kind": {
+          "const": "arc.declare"
+        },
+        "target": {
+          "$ref": "#/$defs/arcTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "else": {
+                "not": {
+                  "required": [
+                    "transitionNameSpan"
+                  ]
+                }
+              },
+              "if": {
+                "properties": {
+                  "from": {
+                    "$ref": "#/$defs/placeTarget"
+                  },
+                  "mode": {
+                    "const": "consume"
+                  },
+                  "to": {
+                    "$ref": "#/$defs/transitionTarget"
+                  }
+                },
+                "required": [
+                  "from",
+                  "to",
+                  "mode"
+                ]
+              },
+              "then": {
+                "required": [
+                  "transitionNameSpan"
+                ]
+              }
+            }
+          ],
+          "properties": {
+            "color": {
+              "$ref": "#/$defs/arcColor"
+            },
+            "from": {
+              "$ref": "#/$defs/endpoint"
+            },
+            "mode": {
+              "$ref": "#/$defs/arcMode"
+            },
+            "to": {
+              "$ref": "#/$defs/endpoint"
+            },
+            "transitionNameSpan": {
+              "$comment": "Required only for a consumed place-to-transition declaration; identifies the exact lexical transition-name token.",
+              "$ref": "#/$defs/span"
+            }
+          },
+          "required": [
+            "from",
+            "to",
+            "color",
+            "mode"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "arcHandleContribution": {
+      "properties": {
+        "kind": {
+          "const": "arc.handle"
+        },
+        "target": {
+          "$ref": "#/$defs/arcHandleTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "arcIds": {
+              "$comment": "Ordered source ArcIds in the handle's consecutive expansion run.",
+              "items": {
+                "$ref": "#/$defs/arcId"
+              },
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "arcIds"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "arcHandleTarget": {
+      "$comment": "A typed local source @handle reference. It may precede its topology declaration; the resolver later resolves its ordered ArcId mapping and requires exactly one compatible concrete arc when an elaboration needs one.",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/name"
+        },
+        "type": {
+          "const": "arcHandle"
+        }
+      },
+      "required": [
+        "type",
+        "name"
+      ],
+      "type": "object"
+    },
+    "arcId": {
+      "$comment": "The deterministic source-derived identity of an arc.declare contribution. It is never a canonical JSON arc index.",
+      "additionalProperties": false,
+      "properties": {
+        "document": {
+          "$ref": "#/$defs/relativeSourceId"
+        },
+        "part": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "statement": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "document",
+        "statement",
+        "part"
+      ],
+      "type": "object"
+    },
+    "arcMode": {
+      "enum": [
+        "consume",
+        "read",
+        "inhibit",
+        "produce"
+      ]
+    },
+    "arcPredicateContribution": {
+      "properties": {
+        "kind": {
+          "const": "arc.predicate"
+        },
+        "target": {
+          "$ref": "#/$defs/arcHandleTarget"
+        },
+        "value": {
+          "$ref": "#/$defs/predicateValue"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "arcProduceCelContribution": {
+      "properties": {
+        "kind": {
+          "const": "arc.produce-cel"
+        },
+        "target": {
+          "$ref": "#/$defs/arcHandleTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "cel": {
+              "$ref": "#/$defs/name"
+            }
+          },
+          "required": [
+            "cel"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "arcProduceDataContribution": {
+      "properties": {
+        "kind": {
+          "const": "arc.produce-data"
+        },
+        "target": {
+          "$ref": "#/$defs/arcHandleTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "data": {
+              "$ref": "#/$defs/taggedJsonValue"
+            }
+          },
+          "required": [
+            "data"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "arcRunOrderContribution": {
+      "properties": {
+        "kind": {
+          "const": "order.arc-run"
+        },
+        "target": {
+          "$ref": "#/$defs/arcHandleTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "rank": {
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "rank"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "arcTarget": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/arcId"
+        },
+        "type": {
+          "const": "arc"
+        }
+      },
+      "required": [
+        "type",
+        "id"
+      ],
+      "type": "object"
+    },
+    "arcWeightContribution": {
+      "properties": {
+        "kind": {
+          "const": "arc.weight"
+        },
+        "target": {
+          "$ref": "#/$defs/arcHandleTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "weight": {
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "weight"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "capacityKey": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/name"
+        },
+        {
+          "items": {
+            "$ref": "#/$defs/name"
+          },
+          "minItems": 1,
+          "type": "array"
+        }
+      ]
+    },
+    "compositionHeaderContribution": {
+      "properties": {
+        "kind": {
+          "const": "document.composition-header"
+        },
+        "target": {
+          "$ref": "#/$defs/documentTarget"
+        },
+        "value": {
+          "$comment": "The namespace is DSL-local source identity only. It MUST NOT lower to a core composition name, description, annotations, or other composition metadata.",
+          "additionalProperties": false,
+          "properties": {
+            "namespace": {
+              "$ref": "#/$defs/name"
+            }
+          },
+          "required": [
+            "namespace"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "compositionUseContribution": {
+      "$comment": "Resolver accepts this kind only for composition documents and resolves ref relative to the containing source.",
+      "properties": {
+        "kind": {
+          "const": "composition.use"
+        },
+        "target": {
+          "$ref": "#/$defs/documentTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "alias": {
+              "$ref": "#/$defs/name"
+            },
+            "ref": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "ref",
+            "alias"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "compositionWireContribution": {
+      "$comment": "Resolver accepts this kind only for composition documents and validates output-to-input direction and equal port colors.",
+      "properties": {
+        "kind": {
+          "const": "composition.wire"
+        },
+        "target": {
+          "$ref": "#/$defs/documentTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "from": {
+              "$ref": "#/$defs/wireEndpoint"
+            },
+            "to": {
+              "$ref": "#/$defs/wireEndpoint"
+            }
+          },
+          "required": [
+            "from",
+            "to"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "contribution": {
+      "$comment": "The oneOf is deliberately closed: every kind has an exact typed target and exact value structure. No generic target or arbitrary host-language value is permitted.",
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "$ref": "#/$defs/netHeaderContribution"
+        },
+        {
+          "$ref": "#/$defs/compositionHeaderContribution"
+        },
+        {
+          "$ref": "#/$defs/arcDeclareContribution"
+        },
+        {
+          "$ref": "#/$defs/placeDeclareContribution"
+        },
+        {
+          "$ref": "#/$defs/transitionDeclareContribution"
+        },
+        {
+          "$ref": "#/$defs/arcHandleContribution"
+        },
+        {
+          "$ref": "#/$defs/transitionHandlerContribution"
+        },
+        {
+          "$ref": "#/$defs/transitionGuardContribution"
+        },
+        {
+          "$ref": "#/$defs/transitionPriorityContribution"
+        },
+        {
+          "$ref": "#/$defs/transitionTimerContribution"
+        },
+        {
+          "$ref": "#/$defs/transitionTimerBindContribution"
+        },
+        {
+          "$ref": "#/$defs/transitionTimerMaturityContribution"
+        },
+        {
+          "$ref": "#/$defs/transitionOrderContribution"
+        },
+        {
+          "$ref": "#/$defs/arcRunOrderContribution"
+        },
+        {
+          "$ref": "#/$defs/arcPredicateContribution"
+        },
+        {
+          "$ref": "#/$defs/arcWeightContribution"
+        },
+        {
+          "$ref": "#/$defs/arcCorrelateContribution"
+        },
+        {
+          "$ref": "#/$defs/arcProduceCelContribution"
+        },
+        {
+          "$ref": "#/$defs/arcProduceDataContribution"
+        },
+        {
+          "$ref": "#/$defs/placeAcceptsContribution"
+        },
+        {
+          "$ref": "#/$defs/placePortContribution"
+        },
+        {
+          "$ref": "#/$defs/placeCapacityContribution"
+        },
+        {
+          "$ref": "#/$defs/templateDefineContribution"
+        },
+        {
+          "$ref": "#/$defs/markingAppendContribution"
+        },
+        {
+          "$ref": "#/$defs/descriptionContribution"
+        },
+        {
+          "$ref": "#/$defs/annotationContribution"
+        },
+        {
+          "$ref": "#/$defs/extensionsContribution"
+        },
+        {
+          "$ref": "#/$defs/namedMarkingContribution"
+        },
+        {
+          "$ref": "#/$defs/viewPositionContribution"
+        },
+        {
+          "$ref": "#/$defs/viewRouteContribution"
+        },
+        {
+          "$ref": "#/$defs/compositionUseContribution"
+        },
+        {
+          "$ref": "#/$defs/compositionWireContribution"
+        }
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/contributionIdentity"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "ordinal": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "span": {
+          "$ref": "#/$defs/span"
+        },
+        "target": {
+          "$ref": "#/$defs/typedReference"
+        },
+        "value": {}
+      },
+      "required": [
+        "id",
+        "ordinal",
+        "span",
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "contributionIdentity": {
+      "$comment": "Deterministically derived from the source document, source statement, and expanded statement part. It is not a runtime-generated UUID.",
+      "additionalProperties": false,
+      "properties": {
+        "part": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "source": {
+          "$ref": "#/$defs/relativeSourceId"
+        },
+        "statement": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "source",
+        "statement",
+        "part"
+      ],
+      "type": "object"
+    },
+    "coordinatePoint": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/taggedObject"
+        },
+        {
+          "properties": {
+            "entries": {
+              "allOf": [
+                {
+                  "contains": {
+                    "$ref": "#/$defs/coordinateXEntry"
+                  }
+                },
+                {
+                  "contains": {
+                    "$ref": "#/$defs/coordinateYEntry"
+                  }
+                }
+              ],
+              "items": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/coordinateXEntry"
+                  },
+                  {
+                    "$ref": "#/$defs/coordinateYEntry"
+                  }
+                ]
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array"
+            }
+          }
+        }
+      ]
+    },
+    "coordinateXEntry": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/taggedObjectEntry"
+        },
+        {
+          "properties": {
+            "key": {
+              "const": "x"
+            },
+            "value": {
+              "$ref": "#/$defs/taggedNumber"
+            }
+          }
+        }
+      ]
+    },
+    "coordinateYEntry": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/taggedObjectEntry"
+        },
+        {
+          "properties": {
+            "key": {
+              "const": "y"
+            },
+            "value": {
+              "$ref": "#/$defs/taggedNumber"
+            }
+          }
+        }
+      ]
+    },
+    "descriptionContribution": {
+      "properties": {
+        "kind": {
+          "const": "documentation.description"
+        },
+        "target": {
+          "$ref": "#/$defs/elementTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "text": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "text"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "documentIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/relativeSourceId"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "type": "object"
+    },
+    "documentTarget": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "document"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "elementTarget": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/netDocumentTarget"
+        },
+        {
+          "$ref": "#/$defs/placeTarget"
+        },
+        {
+          "$ref": "#/$defs/transitionTarget"
+        },
+        {
+          "$ref": "#/$defs/arcHandleTarget"
+        }
+      ]
+    },
+    "endpoint": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/placeTarget"
+        },
+        {
+          "$ref": "#/$defs/transitionTarget"
+        }
+      ]
+    },
+    "extensionsContribution": {
+      "$comment": "Resolver accepts this kind only for net documents, where it lowers below annotations['petrinet.dsl/v1'].extensions.",
+      "properties": {
+        "kind": {
+          "const": "document.extensions"
+        },
+        "target": {
+          "$ref": "#/$defs/documentTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "extensions": {
+              "$ref": "#/$defs/taggedObject"
+            }
+          },
+          "required": [
+            "extensions"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "markingAppendContribution": {
+      "properties": {
+        "kind": {
+          "const": "marking.append"
+        },
+        "target": {
+          "$ref": "#/$defs/placeTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "count": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "token": {
+              "$ref": "#/$defs/markingToken"
+            }
+          },
+          "required": [
+            "token",
+            "count"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "markingToken": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/tokenLiteral"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "template": {
+              "$ref": "#/$defs/templateTarget"
+            }
+          },
+          "required": [
+            "template"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "name": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "namedMarkingContribution": {
+      "$comment": "Resolver accepts this kind only for net documents, where it lowers below annotations['petrinet.dsl/v1'].markings.",
+      "properties": {
+        "kind": {
+          "const": "metadata.named-marking"
+        },
+        "target": {
+          "$ref": "#/$defs/documentTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "entries": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "count": {
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "place": {
+                    "$ref": "#/$defs/placeTarget"
+                  },
+                  "token": {
+                    "$ref": "#/$defs/markingToken"
+                  }
+                },
+                "required": [
+                  "place",
+                  "token",
+                  "count"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "name": {
+              "$ref": "#/$defs/name"
+            }
+          },
+          "required": [
+            "name",
+            "entries"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "netDocumentTarget": {
+      "$comment": "The typed top-level net target for ordinary net description and annotation facts. Composition has no corresponding ordinary core metadata target.",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "net"
+        },
+        "type": {
+          "const": "document"
+        }
+      },
+      "required": [
+        "type",
+        "kind"
+      ],
+      "type": "object"
+    },
+    "netHeaderContribution": {
+      "properties": {
+        "kind": {
+          "const": "document.net-header"
+        },
+        "target": {
+          "$ref": "#/$defs/documentTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "description": {
+              "type": "string"
+            },
+            "name": {
+              "$ref": "#/$defs/name"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "placeAcceptsContribution": {
+      "properties": {
+        "kind": {
+          "const": "place.accepts"
+        },
+        "target": {
+          "$ref": "#/$defs/placeTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "colors": {
+              "items": {
+                "$ref": "#/$defs/name"
+              },
+              "minItems": 1,
+              "type": "array"
+            }
+          },
+          "required": [
+            "colors"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "placeCapacityContribution": {
+      "properties": {
+        "kind": {
+          "const": "place.capacity-per-color-key"
+        },
+        "target": {
+          "$ref": "#/$defs/placeTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "key": {
+              "$ref": "#/$defs/capacityKey"
+            },
+            "max": {
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "key",
+            "max"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "placeDeclareContribution": {
+      "properties": {
+        "kind": {
+          "const": "place.declare"
+        },
+        "target": {
+          "$ref": "#/$defs/placeTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "placePortContribution": {
+      "properties": {
+        "kind": {
+          "const": "place.port"
+        },
+        "target": {
+          "$ref": "#/$defs/placeTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "color": {
+              "$ref": "#/$defs/name"
+            },
+            "direction": {
+              "enum": [
+                "input",
+                "output"
+              ]
+            }
+          },
+          "required": [
+            "direction",
+            "color"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "placeTarget": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/name"
+        },
+        "type": {
+          "const": "place"
+        }
+      },
+      "required": [
+        "type",
+        "name"
+      ],
+      "type": "object"
+    },
+    "position": {
+      "additionalProperties": false,
+      "properties": {
+        "byteOffset": {
+          "description": "Zero-based UTF-8 byte offset.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "column": {
+          "description": "One-based Unicode-scalar column number.",
+          "minimum": 1,
+          "type": "integer"
+        },
+        "line": {
+          "description": "One-based Unicode-scalar line number.",
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "byteOffset",
+        "line",
+        "column"
+      ],
+      "type": "object"
+    },
+    "predicateValue": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "cel": {
+              "$ref": "#/$defs/name"
+            },
+            "kind": {
+              "const": "cel"
+            }
+          },
+          "required": [
+            "kind",
+            "cel"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "handler": {
+              "$ref": "#/$defs/name"
+            },
+            "kind": {
+              "const": "handler"
+            }
+          },
+          "required": [
+            "kind",
+            "handler"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "relativeSourceId": {
+      "$comment": "A logical source-relative identifier. The resolver, not this schema, verifies that it is relative to the loading root and identifies an available source.",
+      "minLength": 1,
+      "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?![A-Za-z][A-Za-z0-9+.-]*:).+$",
+      "type": "string"
+    },
+    "span": {
+      "$comment": "A half-open source span. start and end refer to the same UTF-8 source; end MUST NOT precede start. Equality with the containing contribution id.source is enforced by the resolver.",
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "$ref": "#/$defs/position"
+        },
+        "source": {
+          "$ref": "#/$defs/relativeSourceId"
+        },
+        "start": {
+          "$ref": "#/$defs/position"
+        }
+      },
+      "required": [
+        "source",
+        "start",
+        "end"
+      ],
+      "type": "object"
+    },
+    "taggedArray": {
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/$defs/taggedJsonValue"
+          },
+          "type": "array"
+        },
+        "type": {
+          "const": "array"
+        }
+      },
+      "required": [
+        "type",
+        "items"
+      ],
+      "type": "object"
+    },
+    "taggedBoolean": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "boolean"
+        },
+        "value": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ],
+      "type": "object"
+    },
+    "taggedJsonValue": {
+      "description": "A closed lossless representation of an RFC 8259 JSON value. Objects use ordered entries so object-entry order and number lexemes survive target-neutral reconstruction.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/taggedNull"
+        },
+        {
+          "$ref": "#/$defs/taggedBoolean"
+        },
+        {
+          "$ref": "#/$defs/taggedNumber"
+        },
+        {
+          "$ref": "#/$defs/taggedString"
+        },
+        {
+          "$ref": "#/$defs/taggedArray"
+        },
+        {
+          "$ref": "#/$defs/taggedObject"
+        }
+      ]
+    },
+    "taggedNull": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "null"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "taggedNumber": {
+      "$comment": "The resolver MUST parse lexeme as a finite IEEE-754 binary64 value. Integer lexemes MUST be in [-9007199254740991, 9007199254740991]. These numeric-profile checks cannot be expressed portably in JSON Schema.",
+      "additionalProperties": false,
+      "properties": {
+        "lexeme": {
+          "description": "Original RFC 8259 number lexeme.",
+          "pattern": "^-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?$",
+          "type": "string"
+        },
+        "type": {
+          "const": "number"
+        }
+      },
+      "required": [
+        "type",
+        "lexeme"
+      ],
+      "type": "object"
+    },
+    "taggedObject": {
+      "additionalProperties": false,
+      "properties": {
+        "entries": {
+          "$comment": "Entries are retained in source order. The resolver rejects duplicate keys.",
+          "items": {
+            "$ref": "#/$defs/taggedObjectEntry"
+          },
+          "type": "array"
+        },
+        "type": {
+          "const": "object"
+        }
+      },
+      "required": [
+        "type",
+        "entries"
+      ],
+      "type": "object"
+    },
+    "taggedObjectEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/taggedJsonValue"
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ],
+      "type": "object"
+    },
+    "taggedString": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ],
+      "type": "object"
+    },
+    "templateDefineContribution": {
+      "properties": {
+        "kind": {
+          "const": "template.define"
+        },
+        "target": {
+          "$ref": "#/$defs/templateTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {
+              "$ref": "#/$defs/taggedJsonValue"
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "templateTarget": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/name"
+        },
+        "type": {
+          "const": "template"
+        }
+      },
+      "required": [
+        "type",
+        "name"
+      ],
+      "type": "object"
+    },
+    "tokenLiteral": {
+      "additionalProperties": false,
+      "properties": {
+        "color": {
+          "$ref": "#/$defs/name"
+        },
+        "data": {
+          "$ref": "#/$defs/taggedJsonValue"
+        }
+      },
+      "required": [
+        "color",
+        "data"
+      ],
+      "type": "object"
+    },
+    "transitionDeclareContribution": {
+      "properties": {
+        "kind": {
+          "const": "transition.declare"
+        },
+        "target": {
+          "$ref": "#/$defs/transitionTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "transitionGuardContribution": {
+      "properties": {
+        "kind": {
+          "const": "transition.guard"
+        },
+        "target": {
+          "$ref": "#/$defs/transitionTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "guard": {
+              "$ref": "#/$defs/name"
+            }
+          },
+          "required": [
+            "guard"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "transitionHandlerContribution": {
+      "properties": {
+        "kind": {
+          "const": "transition.handler"
+        },
+        "target": {
+          "$ref": "#/$defs/transitionTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "handler": {
+              "$ref": "#/$defs/name"
+            }
+          },
+          "required": [
+            "handler"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "transitionOrderContribution": {
+      "properties": {
+        "kind": {
+          "const": "order.transition"
+        },
+        "target": {
+          "$ref": "#/$defs/transitionTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "rank": {
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "rank"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "transitionPriorityContribution": {
+      "properties": {
+        "kind": {
+          "const": "transition.priority"
+        },
+        "target": {
+          "$ref": "#/$defs/transitionTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "priority": {
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "priority"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "transitionTarget": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/name"
+        },
+        "type": {
+          "const": "transition"
+        }
+      },
+      "required": [
+        "type",
+        "name"
+      ],
+      "type": "object"
+    },
+    "transitionTimerBindContribution": {
+      "properties": {
+        "kind": {
+          "const": "transition.timer-bind"
+        },
+        "target": {
+          "$ref": "#/$defs/transitionTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "$ref": "#/$defs/name"
+            },
+            "place": {
+              "$ref": "#/$defs/placeTarget"
+            }
+          },
+          "required": [
+            "name",
+            "place"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "transitionTimerContribution": {
+      "properties": {
+        "kind": {
+          "const": "transition.timer"
+        },
+        "target": {
+          "$ref": "#/$defs/transitionTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "cel": {
+              "$ref": "#/$defs/name"
+            },
+            "clock": {
+              "$ref": "#/$defs/placeTarget"
+            }
+          },
+          "required": [
+            "clock",
+            "cel"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "transitionTimerMaturityContribution": {
+      "properties": {
+        "kind": {
+          "const": "transition.timer-maturity"
+        },
+        "target": {
+          "$ref": "#/$defs/transitionTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "maturity": {
+              "$ref": "#/$defs/name"
+            }
+          },
+          "required": [
+            "maturity"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "typedReference": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/documentTarget"
+        },
+        {
+          "$ref": "#/$defs/netDocumentTarget"
+        },
+        {
+          "$ref": "#/$defs/placeTarget"
+        },
+        {
+          "$ref": "#/$defs/transitionTarget"
+        },
+        {
+          "$ref": "#/$defs/arcHandleTarget"
+        },
+        {
+          "$ref": "#/$defs/arcTarget"
+        },
+        {
+          "$ref": "#/$defs/templateTarget"
+        },
+        {
+          "$ref": "#/$defs/viewTarget"
+        }
+      ]
+    },
+    "viewPositionContribution": {
+      "$comment": "Resolver accepts this kind only for net documents and validates position as the v1 {x:number,y:number} value.",
+      "properties": {
+        "kind": {
+          "const": "view.position"
+        },
+        "target": {
+          "$ref": "#/$defs/viewTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "position": {
+              "$ref": "#/$defs/coordinatePoint"
+            },
+            "subject": {
+              "$ref": "#/$defs/viewPositionSubjectTarget"
+            }
+          },
+          "required": [
+            "subject",
+            "position"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "viewPositionSubjectTarget": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/placeTarget"
+        },
+        {
+          "$ref": "#/$defs/transitionTarget"
+        }
+      ]
+    },
+    "viewRouteContribution": {
+      "$comment": "Resolver accepts this kind only for net documents and validates each point as the v1 {x:number,y:number} value.",
+      "properties": {
+        "kind": {
+          "const": "view.route"
+        },
+        "target": {
+          "$ref": "#/$defs/arcHandleTarget"
+        },
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "points": {
+              "items": {
+                "$ref": "#/$defs/coordinatePoint"
+              },
+              "minItems": 1,
+              "type": "array"
+            },
+            "view": {
+              "$ref": "#/$defs/viewTarget"
+            }
+          },
+          "required": [
+            "view",
+            "points"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "target",
+        "value"
+      ],
+      "type": "object"
+    },
+    "viewTarget": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/name"
+        },
+        "type": {
+          "const": "view"
+        }
+      },
+      "required": [
+        "type",
+        "name"
+      ],
+      "type": "object"
+    },
+    "wireEndpoint": {
+      "additionalProperties": false,
+      "properties": {
+        "alias": {
+          "$ref": "#/$defs/name"
+        },
+        "place": {
+          "$ref": "#/$defs/name"
+        },
+        "span": {
+          "$comment": "The exact half-open span of the authored alias-dot-place endpoint.",
+          "$ref": "#/$defs/span"
+        }
+      },
+      "required": [
+        "alias",
+        "place",
+        "span"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://velocitron.dev/spec/petrinet-contribution-ir.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "A portable, progressive, target-neutral intermediate representation for .petrinet source documents.",
+  "properties": {
+    "contributions": {
+      "$comment": "Items MUST have unique source-derived id values and ordinal values 0..length-1 without gaps, ordered by ordinal.",
+      "items": {
+        "$ref": "#/$defs/contribution"
+      },
+      "type": "array"
+    },
+    "document": {
+      "$ref": "#/$defs/documentIdentity"
+    },
+    "documentKind": {
+      "description": "The source document's explicit kind.",
+      "enum": [
+        "net",
+        "composition"
+      ]
+    },
+    "format": {
+      "const": "velocitron.petrinet/contribution-ir",
+      "description": "The only supported IR format identifier."
+    },
+    "version": {
+      "const": 1,
+      "description": "The only supported IR format version."
+    }
+  },
+  "required": [
+    "format",
+    "version",
+    "documentKind",
+    "document",
+    "contributions"
+  ],
+  "title": "Velocitron Petri Net Contribution IR v1",
+  "type": "object"
+}

@@ -1,0 +1,549 @@
+{
+  "contributions": [
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_cadence.petrinet",
+        "statement": 0
+      },
+      "kind": "document.net-header",
+      "ordinal": 0,
+      "span": {
+        "end": {
+          "byteOffset": 52,
+          "column": 53,
+          "line": 1
+        },
+        "source": "graduation_cadence.petrinet",
+        "start": {
+          "byteOffset": 0,
+          "column": 1,
+          "line": 1
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "description": "Cadence graduation fragment",
+        "name": "graduation_cadence"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_cadence.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.declare",
+      "ordinal": 1,
+      "span": {
+        "end": {
+          "byteOffset": 90,
+          "column": 37,
+          "line": 3
+        },
+        "source": "graduation_cadence.petrinet",
+        "start": {
+          "byteOffset": 54,
+          "column": 1,
+          "line": 3
+        }
+      },
+      "target": {
+        "id": {
+          "document": "graduation_cadence.petrinet",
+          "part": 0,
+          "statement": 1
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "tick_latch"
+        },
+        "from": {
+          "name": "tick_latch",
+          "type": "place"
+        },
+        "mode": "consume",
+        "to": {
+          "name": "on_tick",
+          "type": "transition"
+        },
+        "transitionNameSpan": {
+          "end": {
+            "byteOffset": 89,
+            "column": 36,
+            "line": 3
+          },
+          "source": "graduation_cadence.petrinet",
+          "start": {
+            "byteOffset": 82,
+            "column": 29,
+            "line": 3
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "graduation_cadence.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.declare",
+      "ordinal": 2,
+      "span": {
+        "end": {
+          "byteOffset": 117,
+          "column": 64,
+          "line": 3
+        },
+        "source": "graduation_cadence.petrinet",
+        "start": {
+          "byteOffset": 81,
+          "column": 28,
+          "line": 3
+        }
+      },
+      "target": {
+        "id": {
+          "document": "graduation_cadence.petrinet",
+          "part": 1,
+          "statement": 1
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "tick_latch"
+        },
+        "from": {
+          "name": "on_tick",
+          "type": "transition"
+        },
+        "mode": "produce",
+        "to": {
+          "name": "tick_latch",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_cadence.petrinet",
+        "statement": 2
+      },
+      "kind": "arc.handle",
+      "ordinal": 3,
+      "span": {
+        "end": {
+          "byteOffset": 161,
+          "column": 44,
+          "line": 4
+        },
+        "source": "graduation_cadence.petrinet",
+        "start": {
+          "byteOffset": 118,
+          "column": 1,
+          "line": 4
+        }
+      },
+      "target": {
+        "name": "cadence_clock",
+        "type": "arcHandle"
+      },
+      "value": {
+        "arcIds": [
+          {
+            "document": "graduation_cadence.petrinet",
+            "part": 1,
+            "statement": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "graduation_cadence.petrinet",
+        "statement": 2
+      },
+      "kind": "arc.declare",
+      "ordinal": 4,
+      "span": {
+        "end": {
+          "byteOffset": 161,
+          "column": 44,
+          "line": 4
+        },
+        "source": "graduation_cadence.petrinet",
+        "start": {
+          "byteOffset": 134,
+          "column": 17,
+          "line": 4
+        }
+      },
+      "target": {
+        "id": {
+          "document": "graduation_cadence.petrinet",
+          "part": 1,
+          "statement": 2
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "clock"
+        },
+        "from": {
+          "name": "clock",
+          "type": "place"
+        },
+        "mode": "read",
+        "to": {
+          "name": "on_tick",
+          "type": "transition"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_cadence.petrinet",
+        "statement": 3
+      },
+      "kind": "arc.declare",
+      "ordinal": 5,
+      "span": {
+        "end": {
+          "byteOffset": 204,
+          "column": 43,
+          "line": 5
+        },
+        "source": "graduation_cadence.petrinet",
+        "start": {
+          "byteOffset": 162,
+          "column": 1,
+          "line": 5
+        }
+      },
+      "target": {
+        "id": {
+          "document": "graduation_cadence.petrinet",
+          "part": 0,
+          "statement": 3
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "refresh_due"
+        },
+        "from": {
+          "name": "on_tick",
+          "type": "transition"
+        },
+        "mode": "produce",
+        "to": {
+          "name": "refresh_due_out",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_cadence.petrinet",
+        "statement": 4
+      },
+      "kind": "transition.handler",
+      "ordinal": 6,
+      "span": {
+        "end": {
+          "byteOffset": 241,
+          "column": 36,
+          "line": 7
+        },
+        "source": "graduation_cadence.petrinet",
+        "start": {
+          "byteOffset": 206,
+          "column": 1,
+          "line": 7
+        }
+      },
+      "target": {
+        "name": "on_tick",
+        "type": "transition"
+      },
+      "value": {
+        "handler": "on_tick@cadence"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_cadence.petrinet",
+        "statement": 5
+      },
+      "kind": "transition.timer",
+      "ordinal": 7,
+      "span": {
+        "end": {
+          "byteOffset": 323,
+          "column": 82,
+          "line": 8
+        },
+        "source": "graduation_cadence.petrinet",
+        "start": {
+          "byteOffset": 242,
+          "column": 1,
+          "line": 8
+        }
+      },
+      "target": {
+        "name": "on_tick",
+        "type": "transition"
+      },
+      "value": {
+        "cel": "clock.now >= latch.fired_at + latch.cadence_s",
+        "clock": {
+          "name": "clock",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_cadence.petrinet",
+        "statement": 6
+      },
+      "kind": "transition.timer-bind",
+      "ordinal": 8,
+      "span": {
+        "end": {
+          "byteOffset": 363,
+          "column": 40,
+          "line": 9
+        },
+        "source": "graduation_cadence.petrinet",
+        "start": {
+          "byteOffset": 324,
+          "column": 1,
+          "line": 9
+        }
+      },
+      "target": {
+        "name": "on_tick",
+        "type": "transition"
+      },
+      "value": {
+        "name": "latch",
+        "place": {
+          "name": "tick_latch",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_cadence.petrinet",
+        "statement": 7
+      },
+      "kind": "place.port",
+      "ordinal": 9,
+      "span": {
+        "end": {
+          "byteOffset": 406,
+          "column": 42,
+          "line": 11
+        },
+        "source": "graduation_cadence.petrinet",
+        "start": {
+          "byteOffset": 365,
+          "column": 1,
+          "line": 11
+        }
+      },
+      "target": {
+        "name": "refresh_due_out",
+        "type": "place"
+      },
+      "value": {
+        "color": "refresh_due",
+        "direction": "output"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_cadence.petrinet",
+        "statement": 8
+      },
+      "kind": "marking.append",
+      "ordinal": 10,
+      "span": {
+        "end": {
+          "byteOffset": 446,
+          "column": 39,
+          "line": 13
+        },
+        "source": "graduation_cadence.petrinet",
+        "start": {
+          "byteOffset": 408,
+          "column": 1,
+          "line": 13
+        }
+      },
+      "target": {
+        "name": "clock",
+        "type": "place"
+      },
+      "value": {
+        "count": 1,
+        "token": {
+          "template": {
+            "name": "clock_zero",
+            "type": "template"
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_cadence.petrinet",
+        "statement": 9
+      },
+      "kind": "marking.append",
+      "ordinal": 11,
+      "span": {
+        "end": {
+          "byteOffset": 485,
+          "column": 39,
+          "line": 14
+        },
+        "source": "graduation_cadence.petrinet",
+        "start": {
+          "byteOffset": 447,
+          "column": 1,
+          "line": 14
+        }
+      },
+      "target": {
+        "name": "tick_latch",
+        "type": "place"
+      },
+      "value": {
+        "count": 1,
+        "token": {
+          "template": {
+            "name": "latch",
+            "type": "template"
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_cadence.petrinet",
+        "statement": 10
+      },
+      "kind": "template.define",
+      "ordinal": 12,
+      "span": {
+        "end": {
+          "byteOffset": 515,
+          "column": 30,
+          "line": 15
+        },
+        "source": "graduation_cadence.petrinet",
+        "start": {
+          "byteOffset": 486,
+          "column": 1,
+          "line": 15
+        }
+      },
+      "target": {
+        "name": "clock_zero",
+        "type": "template"
+      },
+      "value": {
+        "value": {
+          "entries": [
+            {
+              "key": "now",
+              "value": {
+                "lexeme": "0",
+                "type": "number"
+              }
+            }
+          ],
+          "type": "object"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "graduation_cadence.petrinet",
+        "statement": 11
+      },
+      "kind": "template.define",
+      "ordinal": 13,
+      "span": {
+        "end": {
+          "byteOffset": 568,
+          "column": 53,
+          "line": 16
+        },
+        "source": "graduation_cadence.petrinet",
+        "start": {
+          "byteOffset": 516,
+          "column": 1,
+          "line": 16
+        }
+      },
+      "target": {
+        "name": "latch",
+        "type": "template"
+      },
+      "value": {
+        "value": {
+          "entries": [
+            {
+              "key": "fired_at",
+              "value": {
+                "lexeme": "0",
+                "type": "number"
+              }
+            },
+            {
+              "key": "cadence_s",
+              "value": {
+                "lexeme": "300",
+                "type": "number"
+              }
+            }
+          ],
+          "type": "object"
+        }
+      }
+    }
+  ],
+  "document": {
+    "id": "graduation_cadence.petrinet"
+  },
+  "documentKind": "net",
+  "format": "velocitron.petrinet/contribution-ir",
+  "version": 1
+}

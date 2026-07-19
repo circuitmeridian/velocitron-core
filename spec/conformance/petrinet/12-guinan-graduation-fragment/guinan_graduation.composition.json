@@ -1,0 +1,38 @@
+{
+  "nets": [
+    {
+      "alias": "cadence",
+      "ref": "graduation_cadence.petrinet"
+    },
+    {
+      "alias": "curate",
+      "ref": "graduation_curate.petrinet"
+    },
+    {
+      "alias": "speaks",
+      "ref": "graduation_speaks.petrinet"
+    }
+  ],
+  "wires": [
+    {
+      "from": {
+        "net": "cadence",
+        "port": "refresh_due_out"
+      },
+      "to": {
+        "net": "curate",
+        "port": "refresh_due_in"
+      }
+    },
+    {
+      "from": {
+        "net": "curate",
+        "port": "speak_request"
+      },
+      "to": {
+        "net": "speaks",
+        "port": "request_in"
+      }
+    }
+  ]
+}

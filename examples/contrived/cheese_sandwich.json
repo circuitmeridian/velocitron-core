@@ -1,0 +1,231 @@
+{
+  "arcs": [
+    {
+      "consume": {
+        "type": "sandwich"
+      },
+      "from": {
+        "place": "cheese_sandwich"
+      },
+      "to": {
+        "transition": "eat_cheese_sandwich"
+      }
+    },
+    {
+      "consume": {
+        "type": "bread",
+        "weight": 2
+      },
+      "from": {
+        "place": "edible_bread_slices"
+      },
+      "to": {
+        "transition": "layer_cheese_between_bread"
+      }
+    },
+    {
+      "consume": {
+        "type": "cheese_slice",
+        "weight": 3
+      },
+      "from": {
+        "place": "cheese_slices"
+      },
+      "to": {
+        "transition": "layer_cheese_between_bread"
+      }
+    },
+    {
+      "consume": {
+        "type": "bread"
+      },
+      "from": {
+        "place": "bread_slices"
+      },
+      "to": {
+        "transition": "see_mold_on_bread_slice"
+      }
+    },
+    {
+      "consume": {
+        "type": "bread"
+      },
+      "from": {
+        "place": "bread_slices"
+      },
+      "to": {
+        "transition": "see_no_mold_on_bread_slice"
+      }
+    },
+    {
+      "consume": {
+        "type": "bread"
+      },
+      "from": {
+        "place": "moldy_bread_slices"
+      },
+      "to": {
+        "transition": "compost_moldy_bread_slice"
+      }
+    },
+    {
+      "consume": {
+        "type": "cheese_block"
+      },
+      "from": {
+        "place": "cheese_block"
+      },
+      "to": {
+        "transition": "slice_cheese"
+      }
+    },
+    {
+      "from": {
+        "transition": "layer_cheese_between_bread"
+      },
+      "produce": {
+        "data": {},
+        "destination": "cheese_sandwich",
+        "type": "sandwich"
+      },
+      "to": {
+        "place": "cheese_sandwich"
+      }
+    },
+    {
+      "from": {
+        "transition": "see_mold_on_bread_slice"
+      },
+      "produce": {
+        "destination": "moldy_bread_slices",
+        "type": "bread"
+      },
+      "to": {
+        "place": "moldy_bread_slices"
+      }
+    },
+    {
+      "from": {
+        "transition": "see_no_mold_on_bread_slice"
+      },
+      "produce": {
+        "destination": "edible_bread_slices",
+        "type": "bread"
+      },
+      "to": {
+        "place": "edible_bread_slices"
+      }
+    },
+    {
+      "from": {
+        "transition": "slice_cheese"
+      },
+      "produce": {
+        "destination": "cheese_block",
+        "type": "cheese_block"
+      },
+      "to": {
+        "place": "cheese_block"
+      }
+    },
+    {
+      "from": {
+        "transition": "slice_cheese"
+      },
+      "produce": {
+        "data": {},
+        "destination": "cheese_slices",
+        "type": "cheese_slice"
+      },
+      "to": {
+        "place": "cheese_slices"
+      }
+    }
+  ],
+  "initialMarking": {
+    "cheese_block": [
+      {
+        "data": {
+          "thickness_mm": 6
+        },
+        "type": "cheese_block"
+      }
+    ],
+    "edible_bread_slices": [
+      {
+        "data": {},
+        "type": "bread"
+      },
+      {
+        "data": {},
+        "type": "bread"
+      }
+    ]
+  },
+  "name": "cheese-sandwich",
+  "places": [
+    {
+      "accepts": [
+        "bread"
+      ],
+      "name": "bread_slices"
+    },
+    {
+      "accepts": [
+        "cheese_block"
+      ],
+      "name": "cheese_block"
+    },
+    {
+      "accepts": [
+        "sandwich"
+      ],
+      "name": "cheese_sandwich"
+    },
+    {
+      "accepts": [
+        "cheese_slice"
+      ],
+      "name": "cheese_slices"
+    },
+    {
+      "accepts": [
+        "bread"
+      ],
+      "name": "edible_bread_slices"
+    },
+    {
+      "accepts": [
+        "bread"
+      ],
+      "name": "moldy_bread_slices"
+    }
+  ],
+  "transitions": [
+    {
+      "handler": "eat_cheese_sandwich",
+      "name": "eat_cheese_sandwich"
+    },
+    {
+      "handler": "layer",
+      "name": "layer_cheese_between_bread"
+    },
+    {
+      "handler": "see_mold",
+      "name": "see_mold_on_bread_slice"
+    },
+    {
+      "handler": "see_no_mold",
+      "name": "see_no_mold_on_bread_slice"
+    },
+    {
+      "handler": "compost",
+      "name": "compost_moldy_bread_slice"
+    },
+    {
+      "guard": "enough_cheese_left",
+      "handler": "slice_cheese",
+      "name": "slice_cheese"
+    }
+  ]
+}

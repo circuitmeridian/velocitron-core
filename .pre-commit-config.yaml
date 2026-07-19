@@ -1,0 +1,27 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.18
+    hooks:
+      - id: ruff
+        args: [--fix, --unsafe-fixes]
+      - id: ruff-format
+  - repo: https://github.com/DetachHead/basedpyright-prek-mirror
+    rev: 1.39.8
+    hooks:
+      - id: basedpyright
+        name: basedpyright (implementations/python)
+        files: ^implementations/python/
+        args: [--project, implementations/python/pyrightconfig.json]
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-json
+      - id: pretty-format-json
+        args: [--autofix, --indent=2]
+  - repo: local
+    hooks:
+      - id: velocitron-check
+        name: velocitron check (petrinet DSL syntax)
+        entry: uv run --project implementations/python velocitron check
+        language: system
+        files: \.(petrinet|md)$

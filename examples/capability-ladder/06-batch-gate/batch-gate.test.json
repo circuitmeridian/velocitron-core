@@ -1,0 +1,186 @@
+{
+  "cases": [
+    {
+      "expectedEnabledTransitions": [],
+      "expectedFinalMarking": {},
+      "expectedFiringSequence": [],
+      "initialMarking": {},
+      "maxSteps": 1,
+      "name": "zero items are below weight threshold"
+    },
+    {
+      "expectedEnabledTransitions": [],
+      "expectedFinalMarking": {
+        "items": [
+          {
+            "data": {
+              "batch_id": "A"
+            },
+            "type": "item"
+          }
+        ]
+      },
+      "expectedFiringSequence": [],
+      "initialMarking": {
+        "items": [
+          {
+            "data": {
+              "batch_id": "A"
+            },
+            "type": "item"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "one item is below weight threshold"
+    },
+    {
+      "expectedEnabledTransitions": [
+        "form_batch"
+      ],
+      "expectedFinalMarking": {
+        "batches": [
+          {
+            "data": {
+              "batch_id": "A"
+            },
+            "type": "batch"
+          }
+        ],
+        "items": [
+          {
+            "data": {
+              "batch_id": "B"
+            },
+            "type": "item"
+          }
+        ]
+      },
+      "expectedFiringSequence": [
+        {
+          "status": "completed",
+          "transition": "form_batch"
+        }
+      ],
+      "initialMarking": {
+        "items": [
+          {
+            "data": {
+              "batch_id": "A"
+            },
+            "type": "item"
+          },
+          {
+            "data": {
+              "batch_id": "A"
+            },
+            "type": "item"
+          },
+          {
+            "data": {
+              "batch_id": "B"
+            },
+            "type": "item"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "weighted firing consumes exactly two items"
+    },
+    {
+      "expectedEnabledTransitions": [
+        "form_batch"
+      ],
+      "expectedFinalMarking": {
+        "batches": [
+          {
+            "data": {
+              "batch_id": "A"
+            },
+            "type": "batch"
+          },
+          {
+            "data": {
+              "batch_id": "A"
+            },
+            "type": "batch"
+          }
+        ]
+      },
+      "expectedFiringSequence": [
+        {
+          "status": "completed",
+          "transition": "form_batch"
+        }
+      ],
+      "initialMarking": {
+        "batches": [
+          {
+            "data": {
+              "batch_id": "A"
+            },
+            "type": "batch"
+          }
+        ],
+        "items": [
+          {
+            "data": {
+              "batch_id": "A"
+            },
+            "type": "item"
+          },
+          {
+            "data": {
+              "batch_id": "A"
+            },
+            "type": "item"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "capacity is checker-only"
+    },
+    {
+      "expectedEnabledTransitions": [],
+      "expectedFinalMarking": {
+        "batches": [
+          {
+            "data": {
+              "batch_id": "A"
+            },
+            "type": "batch"
+          },
+          {
+            "data": {
+              "batch_id": "B"
+            },
+            "type": "batch"
+          }
+        ]
+      },
+      "expectedFiringSequence": [],
+      "initialMarking": {
+        "batches": [
+          {
+            "data": {
+              "batch_id": "A"
+            },
+            "type": "batch"
+          },
+          {
+            "data": {
+              "batch_id": "B"
+            },
+            "type": "batch"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "capacity partitions distinct batch ids"
+    }
+  ],
+  "description": "Batch gate weighted consumption and checker-only per-key capacity",
+  "dslVariants": [
+    "batch-gate.petrinet"
+  ]
+}

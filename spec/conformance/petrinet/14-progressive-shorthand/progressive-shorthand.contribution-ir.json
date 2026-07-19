@@ -1,0 +1,167 @@
+{
+  "contributions": [
+    {
+      "id": {
+        "part": 0,
+        "source": "progressive-shorthand.petrinet",
+        "statement": 0
+      },
+      "kind": "place.declare",
+      "ordinal": 0,
+      "span": {
+        "end": {
+          "byteOffset": 32,
+          "column": 4,
+          "line": 2
+        },
+        "source": "progressive-shorthand.petrinet",
+        "start": {
+          "byteOffset": 29,
+          "column": 1,
+          "line": 2
+        }
+      },
+      "target": {
+        "name": "a",
+        "type": "place"
+      },
+      "value": {}
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "progressive-shorthand.petrinet",
+        "statement": 1
+      },
+      "kind": "transition.declare",
+      "ordinal": 1,
+      "span": {
+        "end": {
+          "byteOffset": 36,
+          "column": 4,
+          "line": 3
+        },
+        "source": "progressive-shorthand.petrinet",
+        "start": {
+          "byteOffset": 33,
+          "column": 1,
+          "line": 3
+        }
+      },
+      "target": {
+        "name": "b",
+        "type": "transition"
+      },
+      "value": {}
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "progressive-shorthand.petrinet",
+        "statement": 2
+      },
+      "kind": "arc.declare",
+      "ordinal": 2,
+      "span": {
+        "end": {
+          "byteOffset": 47,
+          "column": 11,
+          "line": 4
+        },
+        "source": "progressive-shorthand.petrinet",
+        "start": {
+          "byteOffset": 37,
+          "column": 1,
+          "line": 4
+        }
+      },
+      "target": {
+        "id": {
+          "document": "progressive-shorthand.petrinet",
+          "part": 0,
+          "statement": 2
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "token"
+        },
+        "from": {
+          "name": "a",
+          "type": "place"
+        },
+        "mode": "consume",
+        "to": {
+          "name": "b",
+          "type": "transition"
+        },
+        "transitionNameSpan": {
+          "end": {
+            "byteOffset": 46,
+            "column": 10,
+            "line": 4
+          },
+          "source": "progressive-shorthand.petrinet",
+          "start": {
+            "byteOffset": 45,
+            "column": 9,
+            "line": 4
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "progressive-shorthand.petrinet",
+        "statement": 2
+      },
+      "kind": "arc.declare",
+      "ordinal": 3,
+      "span": {
+        "end": {
+          "byteOffset": 54,
+          "column": 18,
+          "line": 4
+        },
+        "source": "progressive-shorthand.petrinet",
+        "start": {
+          "byteOffset": 44,
+          "column": 8,
+          "line": 4
+        }
+      },
+      "target": {
+        "id": {
+          "document": "progressive-shorthand.petrinet",
+          "part": 1,
+          "statement": 2
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "token"
+        },
+        "from": {
+          "name": "b",
+          "type": "transition"
+        },
+        "mode": "produce",
+        "to": {
+          "name": "c",
+          "type": "place"
+        }
+      }
+    }
+  ],
+  "document": {
+    "id": "progressive-shorthand.petrinet"
+  },
+  "documentKind": "net",
+  "format": "velocitron.petrinet/contribution-ir",
+  "version": 1
+}

@@ -1,0 +1,27 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 6,
+    "file": "wired_pulse.unknown-wire-alias.petrinet",
+    "help": "declare the alias with use before wiring it",
+    "line": 5,
+    "message": "wire references unknown alias ghost",
+    "span": {
+      "end": {
+        "byteOffset": 133,
+        "column": 23,
+        "line": 5
+      },
+      "source": "wired_pulse.unknown-wire-alias.petrinet",
+      "start": {
+        "byteOffset": 116,
+        "column": 6,
+        "line": 5
+      }
+    }
+  },
+  "source": {
+    "sourceId": "wired_pulse.unknown-wire-alias.petrinet",
+    "text": "composition wired_pulse_unknown_alias\n\nuse \"pulse_source.petrinet\" as source\nuse \"pulse_sink.petrinet\" as sink\nwire ghost.(pulse_out) -> sink.(pulse_in)\n"
+  }
+}

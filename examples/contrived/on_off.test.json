@@ -1,0 +1,18 @@
+{
+  "description": "A status token in 'off' fires 'turn_on' once and lands in 'on'; the net quiesces.",
+  "expectedFinalMarking": {
+    "on": [
+      {
+        "data": {},
+        "type": "status"
+      }
+    ]
+  },
+  "expectedFiringSequence": [
+    {
+      "status": "completed",
+      "transition": "turn_on"
+    }
+  ],
+  "maxSteps": 10
+}

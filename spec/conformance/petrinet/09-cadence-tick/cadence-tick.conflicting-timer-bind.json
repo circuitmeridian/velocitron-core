@@ -1,0 +1,45 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 1,
+    "file": "cadence-tick.conflicting-timer-bind.petrinet",
+    "help": "remove one declaration or make both timer bind values identical",
+    "line": 8,
+    "message": "conflicting timer bind facts for 'latch' on transition [on_tick]",
+    "related": [
+      {
+        "message": "first timer bind was declared here",
+        "span": {
+          "end": {
+            "byteOffset": 285,
+            "column": 40,
+            "line": 7
+          },
+          "source": "cadence-tick.conflicting-timer-bind.petrinet",
+          "start": {
+            "byteOffset": 246,
+            "column": 1,
+            "line": 7
+          }
+        }
+      }
+    ],
+    "span": {
+      "end": {
+        "byteOffset": 320,
+        "column": 35,
+        "line": 8
+      },
+      "source": "cadence-tick.conflicting-timer-bind.petrinet",
+      "start": {
+        "byteOffset": 286,
+        "column": 1,
+        "line": 8
+      }
+    }
+  },
+  "source": {
+    "sourceId": "cadence-tick.conflicting-timer-bind.petrinet",
+    "text": "net cadence_tick_conflicting_timer_bind\n\n(tick_latch) -tick_latch-> [on_tick] -tick_latch-> (tick_latch)\n@tick_clock: (clock) -clock->? [on_tick]\n[on_tick] handler \"on_tick@cadence\"\n[on_tick] timer clock (clock) cel \"clock.now >= latch.fired_at\"\n[on_tick] timer bind latch (tick_latch)\n[on_tick] timer bind latch (clock)\n"
+  }
+}

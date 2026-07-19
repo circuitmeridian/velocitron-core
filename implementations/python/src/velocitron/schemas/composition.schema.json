@@ -1,0 +1,91 @@
+{
+  "$defs": {
+    "NetRef": {
+      "additionalProperties": false,
+      "description": "A reference to a net document, optionally aliased.",
+      "properties": {
+        "alias": {
+          "description": "Local name used by wires to refer to this net. A simple identifier (no '.') so that <alias>.<placeName> is unambiguous. If omitted, the alias defaults to the referenced net's `name` field.",
+          "minLength": 1,
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+          "type": "string"
+        },
+        "ref": {
+          "description": "Source-relative filesystem path to a net document conforming to spec/net-schema.md.",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "ref"
+      ],
+      "type": "object"
+    },
+    "PortEndpoint": {
+      "additionalProperties": false,
+      "description": "One end of a wire: an alias and a port name on the net referenced by that alias.",
+      "properties": {
+        "net": {
+          "description": "Alias of the referenced net (matches some nets[].alias, or the derived default).",
+          "minLength": 1,
+          "type": "string"
+        },
+        "port": {
+          "description": "Name of the port (a place declaring a `port` facet) on the referenced net.",
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "net",
+        "port"
+      ],
+      "type": "object"
+    },
+    "Wire": {
+      "additionalProperties": false,
+      "description": "A unidirectional cross-net arc from an output port to an input port.",
+      "properties": {
+        "from": {
+          "$ref": "#/$defs/PortEndpoint"
+        },
+        "to": {
+          "$ref": "#/$defs/PortEndpoint"
+        }
+      },
+      "required": [
+        "from",
+        "to"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://awesome-petri.dev/schemas/composition.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "A composition document: one or more referenced nets, aliased, joined by unidirectional wires between their ports.",
+  "properties": {
+    "nets": {
+      "description": "The nets to merge. At least one is required; composition is meaningful with two or more.",
+      "items": {
+        "$ref": "#/$defs/NetRef"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "wires": {
+      "description": "Unidirectional wires joining an output port to an input port. An empty array yields a disjoint union (no cross-net flow).",
+      "items": {
+        "$ref": "#/$defs/Wire"
+      },
+      "minItems": 0,
+      "type": "array"
+    }
+  },
+  "required": [
+    "nets",
+    "wires"
+  ],
+  "title": "Composition",
+  "type": "object"
+}

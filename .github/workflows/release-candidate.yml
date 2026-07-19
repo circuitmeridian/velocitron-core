@@ -1,0 +1,303 @@
+name: Build release candidate
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing annotated release tag; dispatch this workflow from that same tag
+        required: true
+        type: string
+
+permissions: {}
+
+concurrency:
+  group: release-candidate-${{ inputs.tag }}
+  cancel-in-progress: false
+
+env:
+  EXPECTED_REPOSITORY: circuitmeridian/velocitron-core
+  NODE_VERSION: "24.15.0"
+  PNPM_VERSION: "11.13.1"
+  PYTHON_VERSION: "3.12.11"
+  UV_VERSION: "0.11.29"
+  UV_CHECKSUM: "04f8b82f5d47f0512dcd32c67a4a6f16a0ea27c81537c338fd0ad6b23cebe829"
+  SYFT_VERSION: "1.48.0"
+  SYFT_SHA256: "6cef9a7f37220d9067eaf9cfaaa2fce986e9f320a8d42cbc36658c99af78ea04"
+
+jobs:
+  build:
+    name: Build and lock candidate bytes
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    outputs:
+      artifact-digest: ${{ steps.upload.outputs.artifact-digest }}
+      artifact-id: ${{ steps.upload.outputs.artifact-id }}
+      commit: ${{ steps.identity.outputs.commit }}
+      manifest-sha256: ${{ steps.manifest.outputs.sha256 }}
+      tag: ${{ steps.identity.outputs.tag }}
+      tag-ref: ${{ steps.identity.outputs.tag-ref }}
+      version: ${{ steps.identity.outputs.version }}
+    env:
+      RELEASE_TAG: ${{ inputs.tag }}
+      UV_PYTHON: "3.12.11"
+      PRE_COMMIT_HOME: ${{ github.workspace }}/.cache/pre-commit
+      VELOCITRON_ANTLR_CACHE: ${{ github.workspace }}/.cache/antlr
+    steps:
+      - name: Check out the exact tagged source
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          ref: refs/tags/${{ inputs.tag }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install pinned uv
+        uses: astral-sh/setup-uv@11f9893b081a58869d3b5fccaea48c9e9e46f990 # v8.3.2
+        with:
+          version: ${{ env.UV_VERSION }}
+          checksum: ${{ env.UV_CHECKSUM }}
+          enable-cache: true
+          cache-dependency-glob: implementations/python/uv.lock
+
+      - name: Install pinned Python and locked test dependencies
+        run: |
+          uv python install "$PYTHON_VERSION"
+          uv sync --locked --project implementations/python
+          echo "$GITHUB_WORKSPACE/implementations/python/.venv/bin" >> "$GITHUB_PATH"
+
+      - name: Install pinned pnpm
+        uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+        with:
+          version: ${{ env.PNPM_VERSION }}
+          run_install: false
+
+      - name: Install pinned Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install frozen TypeScript dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Bind tag, source, and package versions
+        id: identity
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REPOSITORY" = "$EXPECTED_REPOSITORY"
+          if [[ ! "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Invalid release tag: $RELEASE_TAG" >&2
+            exit 1
+          fi
+          tag_ref="$(git rev-parse "refs/tags/$RELEASE_TAG")"
+          commit="$(git rev-parse "refs/tags/$RELEASE_TAG^{commit}")"
+          python3 tools/release_identity.py verify-local-tag \
+            --repository "$GITHUB_WORKSPACE" \
+            --tag "$RELEASE_TAG" \
+            --tag-ref "$tag_ref" \
+            --commit "$commit"
+          test "$(git rev-parse HEAD)" = "$commit"
+          test "$GITHUB_REF" = "refs/tags/$RELEASE_TAG"
+          test "$GITHUB_SHA" = "$commit"
+          version="${RELEASE_TAG#v}"
+          python_version="$(python3 -c 'import tomllib; print(tomllib.load(open("implementations/python/pyproject.toml", "rb"))["project"]["version"])')"
+          npm_version="$(node -p 'require("./implementations/typescript/package.json").version')"
+          test "$version" = "$python_version"
+          test "$version" = "$npm_version"
+          {
+            echo "tag=$RELEASE_TAG"
+            echo "tag-ref=$tag_ref"
+            echo "commit=$commit"
+            echo "version=$version"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Check generated parsers and schemas
+        run: |
+          python3 tools/antlr.py check
+          pnpm check:generated
+
+      - name: Run candidate source gates
+        run: |
+          uv run --project implementations/python --no-sync pytest
+          uv run --project implementations/python --no-sync basedpyright --project implementations/python/pyrightconfig.json
+          pnpm typecheck
+          pnpm test
+          pnpm audit:browser
+
+      - name: Build npm package once
+        run: pnpm build
+
+      - name: Build Python distributions from locked build tools
+        run: |
+          set -euo pipefail
+          rm -rf release
+          mkdir -p release/python release/npm release/sbom
+          uv sync \
+            --locked \
+            --project implementations/python \
+            --no-default-groups \
+            --group release \
+            --no-install-project
+          uv run \
+            --project implementations/python \
+            --no-sync \
+            python -m build \
+            --no-isolation \
+            --outdir "$GITHUB_WORKSPACE/release/python" \
+            implementations/python
+
+      - name: Pack the already-built npm package
+        run: pnpm --filter @velocitron/core pack --pack-destination "$GITHUB_WORKSPACE/release/npm"
+
+      - name: Verify release artifacts with clean consumers
+        env:
+          RELEASE_TAG: ${{ steps.identity.outputs.tag }}
+          RELEASE_TAG_REF: ${{ steps.identity.outputs.tag-ref }}
+          RELEASE_COMMIT: ${{ steps.identity.outputs.commit }}
+          RELEASE_VERSION: ${{ steps.identity.outputs.version }}
+        run: |
+          set -euo pipefail
+          python3 tools/release_checks.py \
+            --root release \
+            --allowlist tools/release-allowlist.json \
+            --output release/artifact-checks.json \
+            --repository "$GITHUB_REPOSITORY" \
+            --tag "$RELEASE_TAG" \
+            --tag-ref "$RELEASE_TAG_REF" \
+            --commit "$RELEASE_COMMIT" \
+            --version "$RELEASE_VERSION" \
+            --run-id "$GITHUB_RUN_ID" \
+            --python-version "$PYTHON_VERSION"
+
+      - name: Generate per-artifact CycloneDX SBOMs with pinned Syft
+        env:
+          RELEASE_VERSION: ${{ steps.identity.outputs.version }}
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/syft.tar.gz"
+          curl --fail --silent --show-error --location \
+            "https://github.com/anchore/syft/releases/download/v${SYFT_VERSION}/syft_${SYFT_VERSION}_linux_amd64.tar.gz" \
+            --output "$archive"
+          echo "$SYFT_SHA256  $archive" | sha256sum --check --strict
+          tar -xzf "$archive" -C "$RUNNER_TEMP" syft
+          for artifact in \
+            "release/python/velocitron-${RELEASE_VERSION}.tar.gz" \
+            "release/python/velocitron-${RELEASE_VERSION}-py3-none-any.whl" \
+            "release/npm/velocitron-core-${RELEASE_VERSION}.tgz"; do
+            "$RUNNER_TEMP/syft" scan "file:$artifact" \
+              --output "cyclonedx-json=release/sbom/$(basename "$artifact").cdx.json"
+          done
+
+      - name: Create the closed candidate manifest
+        id: manifest
+        env:
+          RELEASE_COMMIT: ${{ steps.identity.outputs.commit }}
+          RELEASE_TAG_REF: ${{ steps.identity.outputs.tag-ref }}
+          RELEASE_VERSION: ${{ steps.identity.outputs.version }}
+        run: |
+          set -euo pipefail
+          python3 tools/release_manifest.py create \
+            --root release \
+            --source-root "$GITHUB_WORKSPACE" \
+            --output release/release-manifest.json \
+            --repository "$GITHUB_REPOSITORY" \
+            --tag "$RELEASE_TAG" \
+            --tag-ref "$RELEASE_TAG_REF" \
+            --commit "$RELEASE_COMMIT" \
+            --version "$RELEASE_VERSION" \
+            --run-id "$GITHUB_RUN_ID" \
+            --workflow-ref "$GITHUB_WORKFLOW_REF" \
+            --workflow-sha "$GITHUB_WORKFLOW_SHA"
+          sha256="$(sha256sum release/release-manifest.json | cut -d ' ' -f 1)"
+          echo "sha256=$sha256" >> "$GITHUB_OUTPUT"
+          python3 tools/release_manifest.py verify \
+            --root release \
+            --source-root "$GITHUB_WORKSPACE" \
+            --manifest release/release-manifest.json \
+            --expected-sha256 "$sha256" \
+            --repository "$GITHUB_REPOSITORY" \
+            --run-id "$GITHUB_RUN_ID" \
+            --workflow-sha "$GITHUB_WORKFLOW_SHA"
+
+      - name: Upload immutable candidate artifact
+        id: upload
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-candidate
+          path: release/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 30
+
+  attest:
+    name: Attest candidate provenance and SBOMs
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    steps:
+      - name: Download the exact candidate artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          artifact-ids: ${{ needs.build.outputs.artifact-id }}
+          path: release
+          digest-mismatch: error
+
+
+      - name: Attest Python sdist provenance
+        uses: actions/attest@f7c74d28b9d84cb8768d0b8ca14a4bac6ef463e6 # v4.2.0
+        with:
+          subject-path: release/python/velocitron-${{ needs.build.outputs.version }}.tar.gz
+
+      - name: Attest Python wheel provenance
+        uses: actions/attest@f7c74d28b9d84cb8768d0b8ca14a4bac6ef463e6 # v4.2.0
+        with:
+          subject-path: release/python/velocitron-${{ needs.build.outputs.version }}-py3-none-any.whl
+
+      - name: Attest npm package provenance
+        uses: actions/attest@f7c74d28b9d84cb8768d0b8ca14a4bac6ef463e6 # v4.2.0
+        with:
+          subject-path: release/npm/velocitron-core-${{ needs.build.outputs.version }}.tgz
+
+      - name: Attest Python sdist SBOM
+        uses: actions/attest@f7c74d28b9d84cb8768d0b8ca14a4bac6ef463e6 # v4.2.0
+        with:
+          subject-path: release/python/velocitron-${{ needs.build.outputs.version }}.tar.gz
+          sbom-path: release/sbom/velocitron-${{ needs.build.outputs.version }}.tar.gz.cdx.json
+
+      - name: Attest Python wheel SBOM
+        uses: actions/attest@f7c74d28b9d84cb8768d0b8ca14a4bac6ef463e6 # v4.2.0
+        with:
+          subject-path: release/python/velocitron-${{ needs.build.outputs.version }}-py3-none-any.whl
+          sbom-path: release/sbom/velocitron-${{ needs.build.outputs.version }}-py3-none-any.whl.cdx.json
+
+      - name: Attest npm package SBOM
+        uses: actions/attest@f7c74d28b9d84cb8768d0b8ca14a4bac6ef463e6 # v4.2.0
+        with:
+          subject-path: release/npm/velocitron-core-${{ needs.build.outputs.version }}.tgz
+          sbom-path: release/sbom/velocitron-core-${{ needs.build.outputs.version }}.tgz.cdx.json
+
+      - name: Publish candidate evidence summary
+        env:
+          ARTIFACT_DIGEST: ${{ needs.build.outputs.artifact-digest }}
+          ARTIFACT_ID: ${{ needs.build.outputs.artifact-id }}
+          MANIFEST_SHA256: ${{ needs.build.outputs.manifest-sha256 }}
+          RELEASE_COMMIT: ${{ needs.build.outputs.commit }}
+          RELEASE_TAG: ${{ needs.build.outputs.tag }}
+          RELEASE_TAG_REF: ${{ needs.build.outputs.tag-ref }}
+        run: |
+          {
+            echo "## Release candidate evidence"
+            echo
+            echo "- Tag: \`$RELEASE_TAG\`"
+            echo "- Tag ref object: \`$RELEASE_TAG_REF\`"
+            echo "- Source commit: \`$RELEASE_COMMIT\`"
+            echo "- Workflow run: \`$GITHUB_RUN_ID\`"
+            echo "- Artifact ID: \`$ARTIFACT_ID\`"
+            echo "- Artifact archive digest: \`$ARTIFACT_DIGEST\`"
+            echo "- Candidate manifest SHA-256: \`$MANIFEST_SHA256\`"
+            echo
+            echo "Publishing requires a separate manual workflow and environment approval for each registry."
+          } >> "$GITHUB_STEP_SUMMARY"

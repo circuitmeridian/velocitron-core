@@ -1,0 +1,174 @@
+{
+  "arcs": [
+    {
+      "consume": {
+        "type": "tick_latch"
+      },
+      "from": {
+        "place": "tick_latch"
+      },
+      "to": {
+        "transition": "on_tick"
+      }
+    },
+    {
+      "from": {
+        "transition": "on_tick"
+      },
+      "produce": {
+        "destination": "tick_latch",
+        "type": "tick_latch"
+      },
+      "to": {
+        "place": "tick_latch"
+      }
+    },
+    {
+      "consume": {
+        "mode": "read",
+        "type": "clock"
+      },
+      "from": {
+        "place": "clock"
+      },
+      "to": {
+        "transition": "on_tick"
+      }
+    },
+    {
+      "from": {
+        "transition": "on_tick"
+      },
+      "produce": {
+        "destination": "refresh_due",
+        "type": "refresh_due"
+      },
+      "to": {
+        "place": "refresh_due"
+      }
+    },
+    {
+      "consume": {
+        "type": "alert"
+      },
+      "from": {
+        "place": "alert"
+      },
+      "to": {
+        "transition": "on_alert"
+      }
+    },
+    {
+      "from": {
+        "transition": "on_alert"
+      },
+      "produce": {
+        "destination": "refresh_due",
+        "type": "refresh_due"
+      },
+      "to": {
+        "place": "refresh_due"
+      }
+    },
+    {
+      "consume": {
+        "type": "tick_latch"
+      },
+      "from": {
+        "place": "tick_latch"
+      },
+      "to": {
+        "transition": "on_alert"
+      }
+    },
+    {
+      "from": {
+        "transition": "on_alert"
+      },
+      "produce": {
+        "destination": "tick_latch",
+        "type": "tick_latch"
+      },
+      "to": {
+        "place": "tick_latch"
+      }
+    },
+    {
+      "consume": {
+        "mode": "read",
+        "type": "clock"
+      },
+      "from": {
+        "place": "clock"
+      },
+      "to": {
+        "transition": "on_alert"
+      }
+    }
+  ],
+  "description": "Timed cadence with alert reset",
+  "initialMarking": {
+    "clock": [
+      {
+        "data": {
+          "now": 0
+        },
+        "type": "clock"
+      }
+    ],
+    "tick_latch": [
+      {
+        "data": {
+          "cadence_s": 300,
+          "fired_at": 0
+        },
+        "type": "tick_latch"
+      }
+    ]
+  },
+  "name": "cadence_tick",
+  "places": [
+    {
+      "accepts": [
+        "tick_latch"
+      ],
+      "name": "tick_latch"
+    },
+    {
+      "accepts": [
+        "clock"
+      ],
+      "name": "clock"
+    },
+    {
+      "accepts": [
+        "refresh_due"
+      ],
+      "name": "refresh_due"
+    },
+    {
+      "accepts": [
+        "alert"
+      ],
+      "name": "alert"
+    }
+  ],
+  "transitions": [
+    {
+      "handler": "on_tick@cadence",
+      "name": "on_tick",
+      "timer": {
+        "bind": {
+          "latch": "tick_latch"
+        },
+        "cel": "clock.now >= latch.fired_at + latch.cadence_s",
+        "clock": "clock"
+      }
+    },
+    {
+      "handler": "on_alert@cadence",
+      "name": "on_alert",
+      "priority": 10
+    }
+  ]
+}

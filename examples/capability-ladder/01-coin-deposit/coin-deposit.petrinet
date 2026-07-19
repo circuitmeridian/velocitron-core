@@ -1,0 +1,8 @@
+net coin_deposit "Coin deposit"
+
+(coin_slot) -coin-> [accept_coin] -coin-> (cash_box)
+
+[accept_coin] handler "accept_coin"
+
+marking initial (coin_slot) <- $inserted_coin
+$inserted_coin: coin {}

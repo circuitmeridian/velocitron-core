@@ -1,0 +1,27 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 6,
+    "file": "wired_pulse.unknown-wire-port.petrinet",
+    "help": "wire only declared port places",
+    "line": 5,
+    "message": "wire references unknown port source.(missing)",
+    "span": {
+      "end": {
+        "byteOffset": 131,
+        "column": 22,
+        "line": 5
+      },
+      "source": "wired_pulse.unknown-wire-port.petrinet",
+      "start": {
+        "byteOffset": 115,
+        "column": 6,
+        "line": 5
+      }
+    }
+  },
+  "source": {
+    "sourceId": "wired_pulse.unknown-wire-port.petrinet",
+    "text": "composition wired_pulse_unknown_port\n\nuse \"pulse_source.petrinet\" as source\nuse \"pulse_sink.petrinet\" as sink\nwire source.(missing) -> sink.(pulse_in)\n"
+  }
+}

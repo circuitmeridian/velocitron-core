@@ -1,0 +1,45 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 1,
+    "file": "cookie-vending.petrinet",
+    "help": "remove one declaration or make both arc data values identical",
+    "line": 5,
+    "message": "conflicting data facts for arc @vend_signal",
+    "related": [
+      {
+        "message": "first value {\"source\":\"handler\"} was declared here",
+        "span": {
+          "end": {
+            "byteOffset": 108,
+            "column": 40,
+            "line": 4
+          },
+          "source": "cookie-vending.petrinet",
+          "start": {
+            "byteOffset": 69,
+            "column": 1,
+            "line": 4
+          }
+        }
+      }
+    ],
+    "span": {
+      "end": {
+        "byteOffset": 129,
+        "column": 21,
+        "line": 5
+      },
+      "source": "cookie-vending.petrinet",
+      "start": {
+        "byteOffset": 109,
+        "column": 1,
+        "line": 5
+      }
+    }
+  },
+  "source": {
+    "sourceId": "cookie-vending.petrinet",
+    "text": "net \"cookie-vending\"\n\n@vend_signal: [accept_coin] -signal-> (signal)\n@vend_signal data {\"source\": \"handler\"}\n@vend_signal data {}\n"
+  }
+}

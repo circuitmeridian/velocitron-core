@@ -1,0 +1,7 @@
+net graduation_curate "Curate graduation fragment"
+
+(refresh_due_in) -refresh_due-> [curate] -speak_req-> (speak_request)
+
+[curate] handler "curate@curate"
+(refresh_due_in) port input refresh_due
+(speak_request) port output speak_req

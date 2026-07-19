@@ -1,0 +1,27 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 1,
+    "file": "speaks-window.unknown-transition-target.petrinet",
+    "help": "declare the transition in topology before annotating it",
+    "line": 5,
+    "message": "annotation references unknown transition 'ghost'; metadata facts cannot declare semantic objects",
+    "span": {
+      "end": {
+        "byteOffset": 147,
+        "column": 35,
+        "line": 5
+      },
+      "source": "speaks-window.unknown-transition-target.petrinet",
+      "start": {
+        "byteOffset": 113,
+        "column": 1,
+        "line": 5
+      }
+    }
+  },
+  "source": {
+    "sourceId": "speaks-window.unknown-transition-target.petrinet",
+    "text": "net bad_window\n\n(request_in) -speak_req-> [start] -speak_token-> (in_flight)\n[start] handler \"chip_start@speaks\"\n[ghost] annotation role \"terminal\"\n"
+  }
+}

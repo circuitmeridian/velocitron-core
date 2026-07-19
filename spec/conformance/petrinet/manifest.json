@@ -1,0 +1,1303 @@
+{
+  "cases": [
+    {
+      "id": "01-coin-deposit",
+      "valid": {
+        "canonicalNet": "01-coin-deposit/coin-deposit.net.json",
+        "canonicalSource": "01-coin-deposit/coin-deposit.source.json",
+        "contributionIr": "01-coin-deposit/coin-deposit.contribution-ir.json",
+        "expect": {
+          "arcOrder": [
+            "coin_slot->accept_coin",
+            "accept_coin->cash_box"
+          ],
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "placeOrder": [
+            "coin_slot",
+            "cash_box"
+          ],
+          "tokenOrder": {
+            "coin_slot": [
+              {
+                "data": {},
+                "type": "coin"
+              }
+            ]
+          },
+          "transitionOrder": [
+            "accept_coin"
+          ]
+        }
+      }
+    },
+    {
+      "id": "02-coin-choice",
+      "invalid": [
+        {
+          "expectation": "02-coin-choice/coin-choice.duplicate-transition-order.json",
+          "id": "duplicate-transition-order",
+          "phase": "resolution",
+          "structureParses": true
+        }
+      ],
+      "valid": {
+        "canonicalNet": "02-coin-choice/coin-choice.ordered.net.json",
+        "canonicalSource": "02-coin-choice/coin-choice.canonical.source.json",
+        "contributionIr": "02-coin-choice/coin-choice.ordered.contribution-ir.json",
+        "expect": {
+          "arcOrder": [
+            "coin_slot->accept_coin",
+            "accept_coin->cash_box",
+            "coin_slot->return_coin"
+          ],
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "placeOrder": [
+            "coin_slot",
+            "cash_box"
+          ],
+          "source": "02-coin-choice/coin-choice.ordered.source.json",
+          "tokenOrder": {
+            "coin_slot": [
+              {
+                "data": {},
+                "type": "coin"
+              }
+            ]
+          },
+          "transitionOrder": [
+            "accept_coin",
+            "return_coin"
+          ]
+        }
+      }
+    },
+    {
+      "id": "02-coin-choice-order-free",
+      "valid": {
+        "canonicalNet": "02-coin-choice/coin-choice.order-free.net.json",
+        "canonicalSource": "02-coin-choice/coin-choice.order-free.canonical.source.json",
+        "contributionIr": "02-coin-choice/coin-choice.order-free.contribution-ir.json",
+        "expect": {
+          "arcOrder": [
+            "coin_slot->return_coin",
+            "coin_slot->accept_coin",
+            "accept_coin->cash_box"
+          ],
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "placeOrder": [
+            "coin_slot",
+            "cash_box"
+          ],
+          "source": "02-coin-choice/coin-choice.order-free.source.json",
+          "tokenOrder": {
+            "coin_slot": [
+              {
+                "data": {},
+                "type": "coin"
+              }
+            ]
+          },
+          "transitionOrder": [
+            "return_coin",
+            "accept_coin"
+          ]
+        }
+      }
+    },
+    {
+      "id": "03-cookie-vending",
+      "invalid": [
+        {
+          "expectation": "03-cookie-vending/cookie-vending.conflicting-arc-data.json",
+          "id": "conflicting-arc-data",
+          "phase": "resolution",
+          "structureParses": true
+        }
+      ],
+      "valid": {
+        "canonicalNet": "03-cookie-vending/cookie-vending.net.json",
+        "canonicalSource": "03-cookie-vending/cookie-vending.canonical.source.json",
+        "contributionIr": "03-cookie-vending/cookie-vending.contribution-ir.json",
+        "expect": {
+          "arcOrder": [
+            "coin_slot->accept_coin",
+            "coin_slot->return_coin",
+            "accept_coin->cash_box",
+            "accept_coin->signal",
+            "signal->vend_packet",
+            "storage->vend_packet",
+            "vend_packet->compartment",
+            "compartment->take_packet"
+          ],
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "placeOrder": [
+            "coin_slot",
+            "cash_box",
+            "signal",
+            "storage",
+            "compartment"
+          ],
+          "source": "03-cookie-vending/cookie-vending.source.json",
+          "tokenOrder": {
+            "coin_slot": [
+              {
+                "data": {},
+                "type": "coin"
+              }
+            ],
+            "storage": [
+              {
+                "data": {},
+                "type": "packet"
+              },
+              {
+                "data": {},
+                "type": "packet"
+              },
+              {
+                "data": {},
+                "type": "packet"
+              },
+              {
+                "data": {},
+                "type": "packet"
+              },
+              {
+                "data": {},
+                "type": "packet"
+              }
+            ]
+          },
+          "transitionOrder": [
+            "accept_coin",
+            "vend_packet",
+            "return_coin",
+            "take_packet"
+          ]
+        }
+      }
+    },
+    {
+      "id": "04-source-router",
+      "invalid": [
+        {
+          "expectation": "04-source-router/source-router.conflicting-predicate-kinds.json",
+          "id": "conflicting-predicate-kinds",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "04-source-router/source-router.malformed-cel.json",
+          "id": "malformed-cel",
+          "phase": "resolution",
+          "structureParses": true
+        }
+      ],
+      "valid": {
+        "canonicalNet": "04-source-router/source-router.net.json",
+        "canonicalSource": "04-source-router/source-router.canonical.source.json",
+        "contributionIr": "04-source-router/source-router.contribution-ir.json",
+        "expect": {
+          "arcOrder": [
+            "sample_in->route_co2mon",
+            "route_co2mon->co2mon_samples",
+            "sample_in->route_weather",
+            "route_weather->weather_samples"
+          ],
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "placeOrder": [
+            "sample_in",
+            "co2mon_samples",
+            "weather_samples"
+          ],
+          "source": "04-source-router/source-router.source.json",
+          "tokenOrder": {
+            "sample_in": [
+              {
+                "data": {
+                  "co2_ppm": 602,
+                  "error": null,
+                  "humidity_pct": 51.0,
+                  "source": "co2mon",
+                  "temp_c": 28.9,
+                  "timestamp_ms": 1234567890000
+                },
+                "type": "sample"
+              }
+            ]
+          },
+          "transitionOrder": [
+            "route_co2mon",
+            "route_weather"
+          ]
+        }
+      }
+    },
+    {
+      "id": "04-source-router-predicate-handlers",
+      "valid": {
+        "canonicalNet": "04-source-router/source-router-predicate-handlers.net.json",
+        "canonicalSource": "04-source-router/source-router-predicate-handlers.canonical.source.json",
+        "contributionIr": "04-source-router/source-router-predicate-handlers.contribution-ir.json",
+        "expect": {
+          "arcOrder": [
+            "sample_in->route_co2mon",
+            "route_co2mon->co2mon_samples",
+            "sample_in->route_weather",
+            "route_weather->weather_samples"
+          ],
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "placeOrder": [
+            "sample_in",
+            "co2mon_samples",
+            "weather_samples"
+          ],
+          "source": "04-source-router/source-router-predicate-handlers.source.json",
+          "tokenOrder": {
+            "sample_in": [
+              {
+                "data": {
+                  "co2_ppm": 602,
+                  "error": null,
+                  "humidity_pct": 51.0,
+                  "source": "co2mon",
+                  "temp_c": 28.9,
+                  "timestamp_ms": 1234567890000
+                },
+                "type": "sample"
+              }
+            ]
+          },
+          "transitionOrder": [
+            "route_co2mon",
+            "route_weather"
+          ]
+        }
+      }
+    },
+    {
+      "id": "05-crossing-window",
+      "invalid": [
+        {
+          "expectation": "05-crossing-window/crossing-window.invalid-output-read.json",
+          "id": "invalid-output-read",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "05-crossing-window/crossing-window.invalid-output-inhibit.json",
+          "id": "invalid-output-inhibit",
+          "phase": "resolution",
+          "structureParses": true
+        }
+      ],
+      "valid": {
+        "canonicalNet": "05-crossing-window/crossing-window.net.json",
+        "canonicalSource": "05-crossing-window/crossing-window.canonical.source.json",
+        "contributionIr": "05-crossing-window/crossing-window.contribution-ir.json",
+        "expect": {
+          "arcOrder": [
+            "arrival->detect_crossing",
+            "latest_sample->detect_crossing",
+            "previous_sample->detect_crossing",
+            "open_alert->detect_crossing",
+            "detect_crossing->alert_out"
+          ],
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "placeOrder": [
+            "arrival",
+            "latest_sample",
+            "previous_sample",
+            "open_alert",
+            "alert_out"
+          ],
+          "source": "05-crossing-window/crossing-window.source.json",
+          "tokenOrder": {
+            "arrival": [
+              {
+                "data": {
+                  "source": "co2mon"
+                },
+                "type": "arrival"
+              }
+            ],
+            "latest_sample": [
+              {
+                "data": {
+                  "ppm": 1200,
+                  "source": "co2mon"
+                },
+                "type": "sample"
+              }
+            ],
+            "previous_sample": [
+              {
+                "data": {
+                  "ppm": 900,
+                  "source": "co2mon"
+                },
+                "type": "sample"
+              }
+            ]
+          },
+          "transitionOrder": [
+            "detect_crossing"
+          ]
+        }
+      }
+    },
+    {
+      "id": "06-batch-gate",
+      "invalid": [
+        {
+          "expectation": "06-batch-gate/batch-gate.invalid-weight.json",
+          "id": "invalid-weight",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "06-batch-gate/batch-gate.invalid-capacity.json",
+          "id": "invalid-capacity",
+          "phase": "resolution",
+          "structureParses": true
+        }
+      ],
+      "valid": {
+        "canonicalNet": "06-batch-gate/batch-gate.net.json",
+        "canonicalSource": "06-batch-gate/batch-gate.canonical.source.json",
+        "contributionIr": "06-batch-gate/batch-gate.contribution-ir.json",
+        "expect": {
+          "arcOrder": [
+            "items->form_batch",
+            "form_batch->batches"
+          ],
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "placeOrder": [
+            "items",
+            "batches"
+          ],
+          "source": "06-batch-gate/batch-gate.source.json",
+          "tokenOrder": {
+            "batches": [
+              {
+                "data": {
+                  "batch_id": "A"
+                },
+                "type": "batch"
+              }
+            ],
+            "items": [
+              {
+                "data": {
+                  "batch_id": "A"
+                },
+                "type": "item"
+              },
+              {
+                "data": {
+                  "batch_id": "A"
+                },
+                "type": "item"
+              }
+            ]
+          },
+          "transitionOrder": [
+            "form_batch"
+          ]
+        }
+      }
+    },
+    {
+      "id": "07-per-key-suppression",
+      "invalid": [
+        {
+          "expectation": "07-per-key-suppression/per-key-suppression.invalid-non-inhibit-target.json",
+          "id": "invalid-non-inhibit-target",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "07-per-key-suppression/per-key-suppression.malformed-cel.json",
+          "id": "malformed-cel",
+          "phase": "resolution",
+          "structureParses": true
+        }
+      ],
+      "valid": {
+        "canonicalNet": "07-per-key-suppression/per-key-suppression.net.json",
+        "canonicalSource": "07-per-key-suppression/per-key-suppression.canonical.source.json",
+        "contributionIr": "07-per-key-suppression/per-key-suppression.contribution-ir.json",
+        "expect": {
+          "arcOrder": [
+            "requests->admit",
+            "admit->admitted",
+            "suppressions->admit"
+          ],
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "placeOrder": [
+            "requests",
+            "admitted",
+            "suppressions"
+          ],
+          "source": "07-per-key-suppression/per-key-suppression.source.json",
+          "tokenOrder": {
+            "requests": [
+              {
+                "data": {
+                  "key": "A"
+                },
+                "type": "request"
+              },
+              {
+                "data": {
+                  "key": "B"
+                },
+                "type": "request"
+              }
+            ],
+            "suppressions": [
+              {
+                "data": {
+                  "key": "A"
+                },
+                "type": "suppression"
+              }
+            ]
+          },
+          "transitionOrder": [
+            "admit"
+          ]
+        }
+      }
+    },
+    {
+      "id": "08-guarded-curation-choice",
+      "invalid": [
+        {
+          "expectation": "08-guarded-curation-choice/guarded-curation-choice.conflicting-guard.json",
+          "id": "conflicting-guard",
+          "phase": "resolution",
+          "structureParses": true
+        }
+      ],
+      "valid": {
+        "canonicalNet": "08-guarded-curation-choice/guarded-curation-choice.net.json",
+        "canonicalSource": "08-guarded-curation-choice/guarded-curation-choice.canonical.source.json",
+        "contributionIr": "08-guarded-curation-choice/guarded-curation-choice.contribution-ir.json",
+        "expect": {
+          "arcOrder": [
+            "curation_token->speak_gate_speak",
+            "speak_gate_speak->speak_request",
+            "curation_token->speak_gate_skip",
+            "speak_gate_skip->final_utterance"
+          ],
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "placeOrder": [
+            "curation_token",
+            "speak_request",
+            "final_utterance"
+          ],
+          "source": "08-guarded-curation-choice/guarded-curation-choice.source.json",
+          "tokenOrder": {
+            "curation_token": [
+              {
+                "data": {
+                  "should_speak": true
+                },
+                "type": "curation"
+              }
+            ]
+          },
+          "transitionOrder": [
+            "speak_gate_speak",
+            "speak_gate_skip"
+          ]
+        }
+      }
+    },
+    {
+      "id": "09-cadence-tick",
+      "invalid": [
+        {
+          "expectation": "09-cadence-tick/cadence-tick.unresolved-clock.json",
+          "id": "unresolved-clock",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "09-cadence-tick/cadence-tick.non-input-bind-place.json",
+          "id": "non-input-bind-place",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "09-cadence-tick/cadence-tick.reserved-clock-bind.json",
+          "id": "reserved-clock-bind",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "09-cadence-tick/cadence-tick.malformed-cel.json",
+          "id": "malformed-cel",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "09-cadence-tick/cadence-tick.conflicting-timer-clock.json",
+          "id": "conflicting-timer-clock",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "09-cadence-tick/cadence-tick.conflicting-timer-cel.json",
+          "id": "conflicting-timer-cel",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "09-cadence-tick/cadence-tick.conflicting-timer-bind.json",
+          "id": "conflicting-timer-bind",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "09-cadence-tick/cadence-tick.conflicting-priority.json",
+          "id": "conflicting-priority",
+          "phase": "resolution",
+          "structureParses": true
+        }
+      ],
+      "valid": {
+        "canonicalNet": "09-cadence-tick/cadence-tick.net.json",
+        "canonicalSource": "09-cadence-tick/cadence-tick.canonical.source.json",
+        "contributionIr": "09-cadence-tick/cadence-tick.contribution-ir.json",
+        "expect": {
+          "arcOrder": [
+            "tick_latch->on_tick",
+            "on_tick->tick_latch",
+            "clock->on_tick",
+            "on_tick->refresh_due",
+            "alert->on_alert",
+            "on_alert->refresh_due",
+            "tick_latch->on_alert",
+            "on_alert->tick_latch",
+            "clock->on_alert"
+          ],
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "placeOrder": [
+            "tick_latch",
+            "clock",
+            "refresh_due",
+            "alert"
+          ],
+          "source": "09-cadence-tick/cadence-tick.source.json",
+          "tokenOrder": {
+            "clock": [
+              {
+                "data": {
+                  "now": 0
+                },
+                "type": "clock"
+              }
+            ],
+            "tick_latch": [
+              {
+                "data": {
+                  "cadence_s": 300,
+                  "fired_at": 0
+                },
+                "type": "tick_latch"
+              }
+            ]
+          },
+          "transitionOrder": [
+            "on_tick",
+            "on_alert"
+          ]
+        }
+      }
+    },
+    {
+      "id": "10-pulse_source",
+      "invalid": [
+        {
+          "expectation": "10-wired-pulse/pulse_source.port-type-not-accepted.json",
+          "id": "port-type-not-accepted",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "10-wired-pulse/pulse_source.conflicting-port.json",
+          "id": "conflicting-port",
+          "phase": "resolution",
+          "structureParses": true
+        }
+      ],
+      "valid": {
+        "canonicalNet": "10-wired-pulse/pulse_source.net.json",
+        "canonicalSource": "10-wired-pulse/pulse_source.canonical.source.json",
+        "contributionIr": "10-wired-pulse/pulse_source.contribution-ir.json",
+        "expect": {
+          "arcOrder": [
+            "seed->emit",
+            "emit->pulse_out"
+          ],
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "placeOrder": [
+            "seed",
+            "pulse_out"
+          ],
+          "source": "10-wired-pulse/pulse_source.source.json",
+          "tokenOrder": {
+            "seed": [
+              {
+                "data": {},
+                "type": "seed"
+              }
+            ]
+          },
+          "transitionOrder": [
+            "emit"
+          ]
+        }
+      }
+    },
+    {
+      "id": "10-pulse_sink",
+      "valid": {
+        "canonicalNet": "10-wired-pulse/pulse_sink.net.json",
+        "canonicalSource": "10-wired-pulse/pulse_sink.canonical.source.json",
+        "contributionIr": "10-wired-pulse/pulse_sink.contribution-ir.json",
+        "expect": {
+          "arcOrder": [
+            "pulse_in->receive",
+            "receive->received"
+          ],
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "placeOrder": [
+            "pulse_in",
+            "received"
+          ],
+          "source": "10-wired-pulse/pulse_sink.source.json",
+          "tokenOrder": {},
+          "transitionOrder": [
+            "receive"
+          ]
+        }
+      }
+    },
+    {
+      "id": "10-wired_pulse",
+      "invalid": [
+        {
+          "expectation": "10-wired-pulse/wired_pulse.unknown-wire-alias.json",
+          "id": "unknown-wire-alias",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "10-wired-pulse/wired_pulse.unknown-wire-port.json",
+          "id": "unknown-wire-port",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "10-wired-pulse/wired_pulse.reversed-wire-direction.json",
+          "id": "reversed-wire-direction",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "10-wired-pulse/wired_pulse.wire-type-mismatch.json",
+          "id": "wire-type-mismatch",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "10-wired-pulse/wired_pulse.conflicting-use.json",
+          "id": "conflicting-use",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "10-wired-pulse/wired_pulse.conflicting-wire.json",
+          "id": "conflicting-wire",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "10-wired-pulse/wired_pulse.missing-use-alias.json",
+          "id": "missing-use-alias",
+          "phase": "parse",
+          "structureParses": false
+        }
+      ],
+      "valid": {
+        "canonicalComposition": "10-wired-pulse/wired_pulse.composition.json",
+        "canonicalSource": "10-wired-pulse/wired_pulse.canonical.source.json",
+        "contributionIr": "10-wired-pulse/wired_pulse.contribution-ir.json",
+        "expect": {
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "source": "10-wired-pulse/wired_pulse.source.json"
+        }
+      }
+    },
+    {
+      "id": "10-pulse_source-duplicate-port",
+      "valid": {
+        "canonicalNet": "10-wired-pulse/pulse_source.duplicate-port.net.json",
+        "canonicalSource": "10-wired-pulse/pulse_source.duplicate-port.canonical.source.json",
+        "contributionIr": "10-wired-pulse/pulse_source.duplicate-port.contribution-ir.json",
+        "expect": {
+          "arcOrder": [
+            "seed->emit",
+            "emit->pulse_out"
+          ],
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "placeOrder": [
+            "seed",
+            "pulse_out"
+          ],
+          "source": "10-wired-pulse/pulse_source.duplicate-port.source.json",
+          "tokenOrder": {
+            "seed": [
+              {
+                "data": {},
+                "type": "seed"
+              }
+            ]
+          },
+          "transitionOrder": [
+            "emit"
+          ]
+        }
+      }
+    },
+    {
+      "id": "10-wired_pulse-duplicate-use",
+      "valid": {
+        "canonicalComposition": "10-wired-pulse/wired_pulse.duplicate-use.composition.json",
+        "canonicalSource": "10-wired-pulse/wired_pulse.duplicate-use.canonical.source.json",
+        "contributionIr": "10-wired-pulse/wired_pulse.duplicate-use.contribution-ir.json",
+        "expect": {
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "source": "10-wired-pulse/wired_pulse.duplicate-use.source.json"
+        }
+      }
+    },
+    {
+      "id": "10-wired_pulse-duplicate-wire",
+      "valid": {
+        "canonicalComposition": "10-wired-pulse/wired_pulse.duplicate-wire.composition.json",
+        "canonicalSource": "10-wired-pulse/wired_pulse.duplicate-wire.canonical.source.json",
+        "contributionIr": "10-wired-pulse/wired_pulse.duplicate-wire.contribution-ir.json",
+        "expect": {
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "source": "10-wired-pulse/wired_pulse.duplicate-wire.source.json"
+        }
+      }
+    },
+    {
+      "id": "11-speaks-window",
+      "invalid": [
+        {
+          "expectation": "11-speaks-window/speaks-window.arc-handle-out-of-range.json",
+          "id": "arc-handle-out-of-range",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.arc-handle-stale-from.json",
+          "id": "arc-handle-stale-from",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.arc-handle-stale-mode.json",
+          "id": "arc-handle-stale-mode",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.arc-handle-stale-to.json",
+          "id": "arc-handle-stale-to",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.arc-handle-stale-type.json",
+          "id": "arc-handle-stale-type",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.arc-handle-unknown-field.json",
+          "id": "arc-handle-unknown-field",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.conflicting-annotation.json",
+          "id": "conflicting-annotation",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.conflicting-position.json",
+          "id": "conflicting-position",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.empty-route-points.json",
+          "id": "empty-route-points",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.extensions-non-object.json",
+          "id": "extensions-non-object",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.fingerprint-unknown-field.json",
+          "id": "fingerprint-unknown-field",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.marking-unknown-field.json",
+          "id": "marking-unknown-field",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.named-marking-reserved-initial.json",
+          "id": "named-marking-reserved-initial",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.named-marking-unknown-place.json",
+          "id": "named-marking-unknown-place",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.named-marking-unknown-target.json",
+          "id": "named-marking-unknown-target",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.non-object-extensions.json",
+          "id": "non-object-extensions",
+          "phase": "parse",
+          "structureParses": false
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.reserved-annotation-key.json",
+          "id": "reserved-annotation-key",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.route-point-missing-y.json",
+          "id": "route-point-missing-y",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.route-unknown-field.json",
+          "id": "route-unknown-field",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.route-unknown-handle.json",
+          "id": "route-unknown-handle",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.unknown-arc-target.json",
+          "id": "unknown-arc-target",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.unknown-place-target.json",
+          "id": "unknown-place-target",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.unknown-route-handle.json",
+          "id": "unknown-route-handle",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.unknown-transition-target.json",
+          "id": "unknown-transition-target",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.unknown-view-place.json",
+          "id": "unknown-view-place",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.unsupported-route-style.json",
+          "id": "unsupported-route-style",
+          "phase": "parse",
+          "structureParses": false
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.v1-unknown-field.json",
+          "id": "v1-unknown-field",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.view-point-missing-y.json",
+          "id": "view-point-missing-y",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.view-point-unknown-field.json",
+          "id": "view-point-unknown-field",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.view-position-invalid-target-kind.json",
+          "id": "view-position-invalid-target-kind",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.view-position-unknown-target.json",
+          "id": "view-position-unknown-target",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.view-route-empty-points.json",
+          "id": "view-route-empty-points",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.view-route-invalid-style.json",
+          "id": "view-route-invalid-style",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks-window.view-unknown-field.json",
+          "id": "view-unknown-field",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks_window.conflicting-annotation.json",
+          "id": "underscore-conflicting-annotation",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks_window.conflicting-position.json",
+          "id": "underscore-conflicting-position",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks_window.non-object-extensions.json",
+          "id": "underscore-non-object-extensions",
+          "phase": "parse",
+          "structureParses": false
+        },
+        {
+          "expectation": "11-speaks-window/speaks_window.reserved-annotation-key.json",
+          "id": "underscore-reserved-annotation-key",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks_window.unknown-marking-place.json",
+          "id": "underscore-unknown-marking-place",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks_window.unknown-position-target.json",
+          "id": "underscore-unknown-position-target",
+          "phase": "resolution",
+          "structureParses": true
+        },
+        {
+          "expectation": "11-speaks-window/speaks_window.unknown-route-handle.json",
+          "id": "underscore-unknown-route-handle",
+          "phase": "resolution",
+          "structureParses": true
+        }
+      ],
+      "valid": {
+        "canonicalNet": "11-speaks-window/speaks-window.net.json",
+        "canonicalSource": "11-speaks-window/speaks-window.canonical.source.json",
+        "contributionIr": "11-speaks-window/speaks-window.contribution-ir.json",
+        "expect": {
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "source": "11-speaks-window/speaks-window.source.json"
+        }
+      }
+    },
+    {
+      "id": "11-metadata-idempotence",
+      "valid": {
+        "canonicalNet": "11-speaks-window/metadata-idempotence.net.json",
+        "canonicalSource": "11-speaks-window/metadata-idempotence.canonical.source.json",
+        "contributionIr": "11-speaks-window/metadata-idempotence.contribution-ir.json",
+        "expect": {
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "source": "11-speaks-window/metadata-idempotence.source.json"
+        }
+      }
+    },
+    {
+      "id": "12-graduation-cadence",
+      "valid": {
+        "canonicalNet": "12-guinan-graduation-fragment/graduation_cadence.net.json",
+        "canonicalSource": "12-guinan-graduation-fragment/graduation_cadence.canonical.source.json",
+        "contributionIr": "12-guinan-graduation-fragment/graduation_cadence.contribution-ir.json",
+        "expect": {
+          "arcOrder": [
+            "tick_latch->on_tick",
+            "on_tick->tick_latch",
+            "clock->on_tick",
+            "on_tick->refresh_due_out"
+          ],
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "placeOrder": [
+            "tick_latch",
+            "clock",
+            "refresh_due_out"
+          ],
+          "source": "12-guinan-graduation-fragment/graduation_cadence.source.json",
+          "tokenOrder": {
+            "clock": [
+              {
+                "data": {
+                  "now": 0
+                },
+                "type": "clock"
+              }
+            ],
+            "tick_latch": [
+              {
+                "data": {
+                  "cadence_s": 300,
+                  "fired_at": 0
+                },
+                "type": "tick_latch"
+              }
+            ]
+          },
+          "transitionOrder": [
+            "on_tick"
+          ]
+        }
+      }
+    },
+    {
+      "id": "12-graduation-curate",
+      "valid": {
+        "canonicalNet": "12-guinan-graduation-fragment/graduation_curate.net.json",
+        "canonicalSource": "12-guinan-graduation-fragment/graduation_curate.canonical.source.json",
+        "contributionIr": "12-guinan-graduation-fragment/graduation_curate.contribution-ir.json",
+        "expect": {
+          "arcOrder": [
+            "refresh_due_in->curate",
+            "curate->speak_request"
+          ],
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "placeOrder": [
+            "refresh_due_in",
+            "speak_request"
+          ],
+          "source": "12-guinan-graduation-fragment/graduation_curate.source.json",
+          "tokenOrder": {},
+          "transitionOrder": [
+            "curate"
+          ]
+        }
+      }
+    },
+    {
+      "id": "12-graduation-speaks",
+      "valid": {
+        "canonicalNet": "12-guinan-graduation-fragment/graduation_speaks.net.json",
+        "canonicalSource": "12-guinan-graduation-fragment/graduation_speaks.canonical.source.json",
+        "contributionIr": "12-guinan-graduation-fragment/graduation_speaks.contribution-ir.json",
+        "expect": {
+          "arcOrder": [
+            "request_in->start",
+            "start->in_flight",
+            "in_flight->start",
+            "work->start",
+            "start->work",
+            "work->finish",
+            "finish->utterance_out",
+            "in_flight->finish"
+          ],
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "placeOrder": [
+            "request_in",
+            "in_flight",
+            "work",
+            "utterance_out"
+          ],
+          "source": "12-guinan-graduation-fragment/graduation_speaks.source.json",
+          "tokenOrder": {},
+          "transitionOrder": [
+            "start",
+            "finish"
+          ]
+        }
+      }
+    },
+    {
+      "id": "12-guinan-graduation",
+      "invalid": [
+        {
+          "expectation": "12-guinan-graduation-fragment/guinan_graduation.unsupported-pipeline.json",
+          "id": "unsupported-pipeline",
+          "phase": "parse",
+          "structureParses": false
+        }
+      ],
+      "valid": {
+        "canonicalComposition": "12-guinan-graduation-fragment/guinan_graduation.composition.json",
+        "canonicalSource": "12-guinan-graduation-fragment/guinan_graduation.canonical.source.json",
+        "contributionIr": "12-guinan-graduation-fragment/guinan_graduation.contribution-ir.json",
+        "expect": {
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "source": "12-guinan-graduation-fragment/guinan_graduation.source.json"
+        }
+      }
+    },
+    {
+      "id": "14-progressive-shorthand",
+      "valid": {
+        "canonicalNet": "14-progressive-shorthand/progressive-shorthand.net.json",
+        "canonicalSource": "14-progressive-shorthand/progressive-shorthand.canonical.source.json",
+        "contributionIr": "14-progressive-shorthand/progressive-shorthand.contribution-ir.json",
+        "expect": {
+          "arcOrder": [
+            "a->b",
+            "b->c"
+          ],
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "placeOrder": [
+            "a",
+            "c"
+          ],
+          "source": "14-progressive-shorthand/progressive-shorthand.source.json",
+          "tokenOrder": {},
+          "transitionOrder": [
+            "b"
+          ]
+        }
+      }
+    },
+    {
+      "id": "15-long-chain",
+      "valid": {
+        "canonicalNet": "15-long-chain/long-chain.net.json",
+        "canonicalSource": "15-long-chain/long-chain.canonical.source.json",
+        "contributionIr": "15-long-chain/long-chain.contribution-ir.json",
+        "expect": {
+          "arcOrder": [
+            "a->b",
+            "b->c",
+            "c->d",
+            "d->e"
+          ],
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "placeOrder": [
+            "a",
+            "c",
+            "e"
+          ],
+          "source": "15-long-chain/long-chain.source.json",
+          "tokenOrder": {},
+          "transitionOrder": [
+            "b",
+            "d"
+          ]
+        }
+      }
+    },
+    {
+      "id": "16-handled-long-chain",
+      "valid": {
+        "canonicalNet": "16-handled-long-chain/handled-long-chain.net.json",
+        "canonicalSource": "16-handled-long-chain/handled-long-chain.canonical.source.json",
+        "contributionIr": "16-handled-long-chain/handled-long-chain.contribution-ir.json",
+        "expect": {
+          "arcOrder": [
+            "a->b",
+            "b->c",
+            "c->d",
+            "d->e"
+          ],
+          "canonicalSourceFixedPoint": true,
+          "contributionIrVersion": 1,
+          "placeOrder": [
+            "a",
+            "c",
+            "e"
+          ],
+          "source": "16-handled-long-chain/handled-long-chain.source.json",
+          "tokenOrder": {},
+          "transitionOrder": [
+            "b",
+            "d"
+          ]
+        }
+      }
+    }
+  ],
+  "format": "velocitron.petrinet/conformance-corpus",
+  "version": 1
+}

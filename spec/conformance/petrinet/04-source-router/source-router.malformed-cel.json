@@ -1,0 +1,27 @@
+{
+  "diagnostic": {
+    "code": "PN203",
+    "column": 1,
+    "file": "malformed-source-router.petrinet",
+    "help": "fix the CEL expression syntax",
+    "line": 4,
+    "message": "invalid CEL predicate for arc @route",
+    "span": {
+      "end": {
+        "byteOffset": 176,
+        "column": 47,
+        "line": 4
+      },
+      "source": "malformed-source-router.petrinet",
+      "start": {
+        "byteOffset": 130,
+        "column": 1,
+        "line": 4
+      }
+    }
+  },
+  "source": {
+    "sourceId": "malformed-source-router.petrinet",
+    "text": "net \"source-router\"\n@route: (sample_in) -sample-> [route_co2mon] -sample-> (co2mon_samples)\n[route_co2mon] handler \"route_co2mon\"\n@route predicate cel \"source == == \\\"co2mon\\\"\"\n"
+  }
+}

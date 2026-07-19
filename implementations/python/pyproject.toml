@@ -1,0 +1,77 @@
+[project]
+name = "velocitron"
+version = "0.1.0"
+description = "Python reference implementation for authoring, validating, visualizing, simulating, and running typed colored Petri nets."
+readme = "README.md"
+authors = [
+    { name = "Matthew R. Scott" },
+]
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.12"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "jsonschema>=4.26.0",
+    "cel-python>=0.1",
+    "pyrsistent>=0.20.0",
+    "antlr4-python3-runtime==4.13.2",
+    "json5>=0.15.0",
+]
+
+[project.scripts]
+velocitron-viz = "velocitron.viz:main"
+velocitron = "velocitron.dsl.cli:main"
+
+[project.optional-dependencies]
+cel-cpp = ["cel-expr-python>=0.1.3"]
+cel-rust = ["common-expression-language>=0.6.0", "typing_extensions>=4.12"]
+
+[project.urls]
+Homepage = "https://github.com/circuitmeridian/velocitron-core"
+Repository = "https://github.com/circuitmeridian/velocitron-core"
+Issues = "https://github.com/circuitmeridian/velocitron-core/issues"
+
+[dependency-groups]
+test = [
+    "pytest>=9.0",
+]
+
+dev = [
+    { include-group = "test" },
+    "basedpyright>=1.39.9",
+    "cel-expr-python>=0.1.3",
+    "common-expression-language>=0.6.0",
+    "typing_extensions>=4.12",
+    "pre-commit==4.6.0",
+]
+
+release = [
+    "build==1.5.0",
+    "hatchling==1.31.0",
+]
+
+[build-system]
+requires = ["hatchling==1.31.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/velocitron"]
+# `src/velocitron/skill` is a symlink to the repo-root `skills/velocitron/`
+# (the authoring source of truth). hatchling follows it, shipping the skill as
+# package data under `velocitron/skill/`; under an editable/`uv run` install the
+# same symlink resolves in place. `velocitron skill <path>` reads it via
+# importlib.resources — one code path for both (see cli._skill_source_dir).
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff.lint]
+extend-select = ["BLE001"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/velocitron/dsl/generated/*.py" = ["F403", "F405"]

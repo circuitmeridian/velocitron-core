@@ -1,0 +1,26 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 15,
+    "file": "batch-gate.invalid-weight.petrinet",
+    "line": 7,
+    "message": "arc weight must be an integer greater than or equal to 1; got 0 for @items",
+    "span": {
+      "end": {
+        "byteOffset": 112,
+        "column": 16,
+        "line": 7
+      },
+      "source": "batch-gate.invalid-weight.petrinet",
+      "start": {
+        "byteOffset": 111,
+        "column": 15,
+        "line": 7
+      }
+    }
+  },
+  "source": {
+    "sourceId": "batch-gate.invalid-weight.petrinet",
+    "text": "net batch_gate_invalid\n\n@items: (items) -item-> [form_batch]\n\n[form_batch] handler \"form_batch\"\n\n@items weight 0\n"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 1,
+    "file": "speaks_window.conflicting-position.petrinet",
+    "help": "remove one declaration or make both positions identical",
+    "line": 6,
+    "message": "conflicting position facts for place (request_in) in view 'window'",
+    "related": [
+      {
+        "message": "first position was declared here",
+        "span": {
+          "end": {
+            "byteOffset": 134,
+            "column": 55,
+            "line": 5
+          },
+          "source": "speaks_window.conflicting-position.petrinet",
+          "start": {
+            "byteOffset": 80,
+            "column": 1,
+            "line": 5
+          }
+        }
+      }
+    ],
+    "span": {
+      "end": {
+        "byteOffset": 189,
+        "column": 55,
+        "line": 6
+      },
+      "source": "speaks_window.conflicting-position.petrinet",
+      "start": {
+        "byteOffset": 135,
+        "column": 1,
+        "line": 6
+      }
+    }
+  },
+  "source": {
+    "sourceId": "speaks_window.conflicting-position.petrinet",
+    "text": "net conflicting_position\n\n(request_in) -token-> [go]\n[go] handler \"go@metadata\"\nview window position (request_in) at {\"x\": 0, \"y\": 80}\nview window position (request_in) at {\"x\": 1, \"y\": 80}\n"
+  }
+}

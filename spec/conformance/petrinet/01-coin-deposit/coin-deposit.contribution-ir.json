@@ -1,0 +1,238 @@
+{
+  "contributions": [
+    {
+      "id": {
+        "part": 0,
+        "source": "coin-deposit.petrinet",
+        "statement": 0
+      },
+      "kind": "document.net-header",
+      "ordinal": 0,
+      "span": {
+        "end": {
+          "byteOffset": 31,
+          "column": 32,
+          "line": 1
+        },
+        "source": "coin-deposit.petrinet",
+        "start": {
+          "byteOffset": 0,
+          "column": 1,
+          "line": 1
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "description": "Coin deposit",
+        "name": "coin_deposit"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "coin-deposit.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.declare",
+      "ordinal": 1,
+      "span": {
+        "end": {
+          "byteOffset": 66,
+          "column": 34,
+          "line": 3
+        },
+        "source": "coin-deposit.petrinet",
+        "start": {
+          "byteOffset": 33,
+          "column": 1,
+          "line": 3
+        }
+      },
+      "target": {
+        "id": {
+          "document": "coin-deposit.petrinet",
+          "part": 0,
+          "statement": 1
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "coin"
+        },
+        "from": {
+          "name": "coin_slot",
+          "type": "place"
+        },
+        "mode": "consume",
+        "to": {
+          "name": "accept_coin",
+          "type": "transition"
+        },
+        "transitionNameSpan": {
+          "end": {
+            "byteOffset": 65,
+            "column": 33,
+            "line": 3
+          },
+          "source": "coin-deposit.petrinet",
+          "start": {
+            "byteOffset": 54,
+            "column": 22,
+            "line": 3
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "coin-deposit.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.declare",
+      "ordinal": 2,
+      "span": {
+        "end": {
+          "byteOffset": 85,
+          "column": 53,
+          "line": 3
+        },
+        "source": "coin-deposit.petrinet",
+        "start": {
+          "byteOffset": 53,
+          "column": 21,
+          "line": 3
+        }
+      },
+      "target": {
+        "id": {
+          "document": "coin-deposit.petrinet",
+          "part": 1,
+          "statement": 1
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "coin"
+        },
+        "from": {
+          "name": "accept_coin",
+          "type": "transition"
+        },
+        "mode": "produce",
+        "to": {
+          "name": "cash_box",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "coin-deposit.petrinet",
+        "statement": 2
+      },
+      "kind": "transition.handler",
+      "ordinal": 3,
+      "span": {
+        "end": {
+          "byteOffset": 122,
+          "column": 36,
+          "line": 5
+        },
+        "source": "coin-deposit.petrinet",
+        "start": {
+          "byteOffset": 87,
+          "column": 1,
+          "line": 5
+        }
+      },
+      "target": {
+        "name": "accept_coin",
+        "type": "transition"
+      },
+      "value": {
+        "handler": "accept_coin"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "coin-deposit.petrinet",
+        "statement": 3
+      },
+      "kind": "marking.append",
+      "ordinal": 4,
+      "span": {
+        "end": {
+          "byteOffset": 169,
+          "column": 46,
+          "line": 7
+        },
+        "source": "coin-deposit.petrinet",
+        "start": {
+          "byteOffset": 124,
+          "column": 1,
+          "line": 7
+        }
+      },
+      "target": {
+        "name": "coin_slot",
+        "type": "place"
+      },
+      "value": {
+        "count": 1,
+        "token": {
+          "template": {
+            "name": "inserted_coin",
+            "type": "template"
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "coin-deposit.petrinet",
+        "statement": 4
+      },
+      "kind": "template.define",
+      "ordinal": 5,
+      "span": {
+        "end": {
+          "byteOffset": 193,
+          "column": 24,
+          "line": 8
+        },
+        "source": "coin-deposit.petrinet",
+        "start": {
+          "byteOffset": 170,
+          "column": 1,
+          "line": 8
+        }
+      },
+      "target": {
+        "name": "inserted_coin",
+        "type": "template"
+      },
+      "value": {
+        "value": {
+          "entries": [],
+          "type": "object"
+        }
+      }
+    }
+  ],
+  "document": {
+    "id": "coin-deposit.petrinet"
+  },
+  "documentKind": "net",
+  "format": "velocitron.petrinet/contribution-ir",
+  "version": 1
+}

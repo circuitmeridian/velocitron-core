@@ -1,0 +1,134 @@
+{
+  "arcs": [
+    {
+      "consume": {
+        "predicate": {
+          "cel": "source == \"co2mon\""
+        },
+        "type": "arrival"
+      },
+      "from": {
+        "place": "arrival"
+      },
+      "to": {
+        "transition": "detect_crossing"
+      }
+    },
+    {
+      "consume": {
+        "mode": "read",
+        "type": "sample"
+      },
+      "from": {
+        "place": "latest_sample"
+      },
+      "to": {
+        "transition": "detect_crossing"
+      }
+    },
+    {
+      "consume": {
+        "mode": "read",
+        "type": "sample"
+      },
+      "from": {
+        "place": "previous_sample"
+      },
+      "to": {
+        "transition": "detect_crossing"
+      }
+    },
+    {
+      "consume": {
+        "mode": "inhibit",
+        "type": "alert"
+      },
+      "from": {
+        "place": "open_alert"
+      },
+      "to": {
+        "transition": "detect_crossing"
+      }
+    },
+    {
+      "from": {
+        "transition": "detect_crossing"
+      },
+      "produce": {
+        "destination": "alert_out",
+        "type": "alert"
+      },
+      "to": {
+        "place": "alert_out"
+      }
+    }
+  ],
+  "description": "Read a sample window unless an alert is already open",
+  "initialMarking": {
+    "arrival": [
+      {
+        "data": {
+          "source": "co2mon"
+        },
+        "type": "arrival"
+      }
+    ],
+    "latest_sample": [
+      {
+        "data": {
+          "ppm": 1200,
+          "source": "co2mon"
+        },
+        "type": "sample"
+      }
+    ],
+    "previous_sample": [
+      {
+        "data": {
+          "ppm": 900,
+          "source": "co2mon"
+        },
+        "type": "sample"
+      }
+    ]
+  },
+  "name": "crossing_window",
+  "places": [
+    {
+      "accepts": [
+        "arrival"
+      ],
+      "name": "arrival"
+    },
+    {
+      "accepts": [
+        "sample"
+      ],
+      "name": "latest_sample"
+    },
+    {
+      "accepts": [
+        "sample"
+      ],
+      "name": "previous_sample"
+    },
+    {
+      "accepts": [
+        "alert"
+      ],
+      "name": "open_alert"
+    },
+    {
+      "accepts": [
+        "alert"
+      ],
+      "name": "alert_out"
+    }
+  ],
+  "transitions": [
+    {
+      "handler": "detect_crossing@ingest",
+      "name": "detect_crossing"
+    }
+  ]
+}

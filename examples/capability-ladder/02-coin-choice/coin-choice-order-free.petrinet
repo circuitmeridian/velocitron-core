@@ -1,0 +1,10 @@
+net coin_choice "Coin choice"
+
+(coin_slot) -coin-> [return_coin]
+(coin_slot) -coin-> [accept_coin] -coin-> (cash_box)
+
+[return_coin] handler "return_coin"
+[accept_coin] handler "accept_coin"
+
+marking initial (coin_slot) <- $inserted_coin
+$inserted_coin: coin {}

@@ -1,0 +1,45 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 1,
+    "file": "speaks-window.conflicting-annotation.petrinet",
+    "help": "remove one declaration or make both annotation values identical",
+    "line": 6,
+    "message": "conflicting annotation fusion facts for place (in_flight)",
+    "related": [
+      {
+        "message": "first annotation value was declared here",
+        "span": {
+          "end": {
+            "byteOffset": 147,
+            "column": 35,
+            "line": 5
+          },
+          "source": "speaks-window.conflicting-annotation.petrinet",
+          "start": {
+            "byteOffset": 113,
+            "column": 1,
+            "line": 5
+          }
+        }
+      }
+    ],
+    "span": {
+      "end": {
+        "byteOffset": 183,
+        "column": 36,
+        "line": 6
+      },
+      "source": "speaks-window.conflicting-annotation.petrinet",
+      "start": {
+        "byteOffset": 148,
+        "column": 1,
+        "line": 6
+      }
+    }
+  },
+  "source": {
+    "sourceId": "speaks-window.conflicting-annotation.petrinet",
+    "text": "net bad_window\n\n(request_in) -speak_req-> [start] -speak_token-> (in_flight)\n[start] handler \"chip_start@speaks\"\n(in_flight) annotation fusion true\n(in_flight) annotation fusion false\n"
+  }
+}

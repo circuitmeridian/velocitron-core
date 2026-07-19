@@ -1,0 +1,26 @@
+{
+  "diagnostic": {
+    "code": "PN101",
+    "column": 28,
+    "file": "speaks-window.unsupported-route-style.petrinet",
+    "line": 6,
+    "message": "mismatched input 'diagonal' expecting 'orthogonal'",
+    "span": {
+      "end": {
+        "byteOffset": 192,
+        "column": 36,
+        "line": 6
+      },
+      "source": "speaks-window.unsupported-route-style.petrinet",
+      "start": {
+        "byteOffset": 184,
+        "column": 28,
+        "line": 6
+      }
+    }
+  },
+  "source": {
+    "sourceId": "speaks-window.unsupported-route-style.petrinet",
+    "text": "net bad_window\n\n(request_in) -speak_req-> [start] -speak_token-> (in_flight)\n[start] handler \"chip_start@speaks\"\n@request: (request_in) -speak_req-> [start]\nview window route @request diagonal [{\"x\": 20, \"y\": 20}]\n"
+  }
+}

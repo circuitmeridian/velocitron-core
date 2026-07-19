@@ -1,0 +1,268 @@
+{
+  "contributions": [
+    {
+      "id": {
+        "part": 0,
+        "source": "handled-long-chain.petrinet",
+        "statement": 0
+      },
+      "kind": "document.net-header",
+      "ordinal": 0,
+      "span": {
+        "end": {
+          "byteOffset": 22,
+          "column": 23,
+          "line": 1
+        },
+        "source": "handled-long-chain.petrinet",
+        "start": {
+          "byteOffset": 0,
+          "column": 1,
+          "line": 1
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "name": "handled_long_chain"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "handled-long-chain.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.handle",
+      "ordinal": 1,
+      "span": {
+        "end": {
+          "byteOffset": 78,
+          "column": 55,
+          "line": 3
+        },
+        "source": "handled-long-chain.petrinet",
+        "start": {
+          "byteOffset": 24,
+          "column": 1,
+          "line": 3
+        }
+      },
+      "target": {
+        "name": "run",
+        "type": "arcHandle"
+      },
+      "value": {
+        "arcIds": [
+          {
+            "document": "handled-long-chain.petrinet",
+            "part": 1,
+            "statement": 1
+          },
+          {
+            "document": "handled-long-chain.petrinet",
+            "part": 2,
+            "statement": 1
+          },
+          {
+            "document": "handled-long-chain.petrinet",
+            "part": 3,
+            "statement": 1
+          },
+          {
+            "document": "handled-long-chain.petrinet",
+            "part": 4,
+            "statement": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "handled-long-chain.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.declare",
+      "ordinal": 2,
+      "span": {
+        "end": {
+          "byteOffset": 45,
+          "column": 22,
+          "line": 3
+        },
+        "source": "handled-long-chain.petrinet",
+        "start": {
+          "byteOffset": 30,
+          "column": 7,
+          "line": 3
+        }
+      },
+      "target": {
+        "id": {
+          "document": "handled-long-chain.petrinet",
+          "part": 1,
+          "statement": 1
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "red"
+        },
+        "from": {
+          "name": "a",
+          "type": "place"
+        },
+        "mode": "read",
+        "to": {
+          "name": "b",
+          "type": "transition"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 2,
+        "source": "handled-long-chain.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.declare",
+      "ordinal": 3,
+      "span": {
+        "end": {
+          "byteOffset": 57,
+          "column": 34,
+          "line": 3
+        },
+        "source": "handled-long-chain.petrinet",
+        "start": {
+          "byteOffset": 42,
+          "column": 19,
+          "line": 3
+        }
+      },
+      "target": {
+        "id": {
+          "document": "handled-long-chain.petrinet",
+          "part": 2,
+          "statement": 1
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "blue"
+        },
+        "from": {
+          "name": "b",
+          "type": "transition"
+        },
+        "mode": "produce",
+        "to": {
+          "name": "c",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 3,
+        "source": "handled-long-chain.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.declare",
+      "ordinal": 4,
+      "span": {
+        "end": {
+          "byteOffset": 65,
+          "column": 42,
+          "line": 3
+        },
+        "source": "handled-long-chain.petrinet",
+        "start": {
+          "byteOffset": 54,
+          "column": 31,
+          "line": 3
+        }
+      },
+      "target": {
+        "id": {
+          "document": "handled-long-chain.petrinet",
+          "part": 3,
+          "statement": 1
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "token"
+        },
+        "from": {
+          "name": "c",
+          "type": "place"
+        },
+        "mode": "inhibit",
+        "to": {
+          "name": "d",
+          "type": "transition"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 4,
+        "source": "handled-long-chain.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.declare",
+      "ordinal": 5,
+      "span": {
+        "end": {
+          "byteOffset": 78,
+          "column": 55,
+          "line": 3
+        },
+        "source": "handled-long-chain.petrinet",
+        "start": {
+          "byteOffset": 62,
+          "column": 39,
+          "line": 3
+        }
+      },
+      "target": {
+        "id": {
+          "document": "handled-long-chain.petrinet",
+          "part": 4,
+          "statement": 1
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "green"
+        },
+        "from": {
+          "name": "d",
+          "type": "transition"
+        },
+        "mode": "produce",
+        "to": {
+          "name": "e",
+          "type": "place"
+        }
+      }
+    }
+  ],
+  "document": {
+    "id": "handled-long-chain.petrinet"
+  },
+  "documentKind": "net",
+  "format": "velocitron.petrinet/contribution-ir",
+  "version": 1
+}

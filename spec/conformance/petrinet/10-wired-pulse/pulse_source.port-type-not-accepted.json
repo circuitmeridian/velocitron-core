@@ -1,0 +1,27 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 1,
+    "file": "pulse_source.port-type-not-accepted.petrinet",
+    "help": "declare a port color already accepted by the place",
+    "line": 5,
+    "message": "port color 'alert' is not accepted by place (pulse_out)",
+    "span": {
+      "end": {
+        "byteOffset": 128,
+        "column": 30,
+        "line": 5
+      },
+      "source": "pulse_source.port-type-not-accepted.petrinet",
+      "start": {
+        "byteOffset": 99,
+        "column": 1,
+        "line": 5
+      }
+    }
+  },
+  "source": {
+    "sourceId": "pulse_source.port-type-not-accepted.petrinet",
+    "text": "net pulse_source_bad_port\n\n(seed) -seed-> [emit] -pulse-> (pulse_out)\n[emit] handler \"emit@source\"\n(pulse_out) port output alert\n"
+  }
+}

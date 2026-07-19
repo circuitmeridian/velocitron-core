@@ -1,0 +1,56 @@
+{
+  "arcs": [
+    {
+      "consume": {
+        "type": "status"
+      },
+      "from": {
+        "place": "off"
+      },
+      "to": {
+        "transition": "turn_on"
+      }
+    },
+    {
+      "from": {
+        "transition": "turn_on"
+      },
+      "produce": {
+        "destination": "on",
+        "type": "status"
+      },
+      "to": {
+        "place": "on"
+      }
+    }
+  ],
+  "initialMarking": {
+    "off": [
+      {
+        "data": {},
+        "type": "status"
+      }
+    ]
+  },
+  "name": "on-off",
+  "places": [
+    {
+      "accepts": [
+        "status"
+      ],
+      "name": "off"
+    },
+    {
+      "accepts": [
+        "status"
+      ],
+      "name": "on"
+    }
+  ],
+  "transitions": [
+    {
+      "handler": "turn_on",
+      "name": "turn_on"
+    }
+  ]
+}

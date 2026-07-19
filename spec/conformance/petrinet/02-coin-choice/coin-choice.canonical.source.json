@@ -1,0 +1,4 @@
+{
+  "sourceId": "coin-choice.canonical.petrinet",
+  "text": "net coin_choice \"Coin choice\"\n\n(coin_slot) -coin-> [accept_coin] -coin-> (cash_box)\n(coin_slot) -coin-> [return_coin]\n\n[accept_coin] handler \"accept_coin\"\n[return_coin] handler \"return_coin\"\n\nmarking initial (coin_slot) <- $inserted_coin\n$inserted_coin: coin {}\n"
+}

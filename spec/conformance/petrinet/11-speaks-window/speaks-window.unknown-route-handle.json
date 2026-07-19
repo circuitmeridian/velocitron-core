@@ -1,0 +1,27 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 1,
+    "file": "speaks-window.unknown-route-handle.petrinet",
+    "help": "declare and name the routed arc before routing it",
+    "line": 5,
+    "message": "view 'window' route references unknown arc handle @ghost",
+    "span": {
+      "end": {
+        "byteOffset": 169,
+        "column": 57,
+        "line": 5
+      },
+      "source": "speaks-window.unknown-route-handle.petrinet",
+      "start": {
+        "byteOffset": 113,
+        "column": 1,
+        "line": 5
+      }
+    }
+  },
+  "source": {
+    "sourceId": "speaks-window.unknown-route-handle.petrinet",
+    "text": "net bad_window\n\n(request_in) -speak_req-> [start] -speak_token-> (in_flight)\n[start] handler \"chip_start@speaks\"\nview window route @ghost orthogonal [{\"x\": 20, \"y\": 20}]\n"
+  }
+}

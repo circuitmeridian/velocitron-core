@@ -1,0 +1,72 @@
+{
+  "description": "A placed order (demand_c) pulls a 3-stage manufacturing cascade: demand propagates C\u2192B\u2192A, product flows A\u2192B\u2192C\u2192received, raw material is restocked at each done; the net quiesces.",
+  "expectedFinalMarking": {
+    "ready_a": [
+      {
+        "data": {},
+        "type": "unit"
+      }
+    ],
+    "ready_b": [
+      {
+        "data": {},
+        "type": "unit"
+      }
+    ],
+    "ready_c": [
+      {
+        "data": {},
+        "type": "unit"
+      }
+    ],
+    "received": [
+      {
+        "data": {},
+        "type": "unit"
+      }
+    ]
+  },
+  "expectedFiringSequence": [
+    {
+      "status": "completed",
+      "transition": "prep_c"
+    },
+    {
+      "status": "completed",
+      "transition": "prep_b"
+    },
+    {
+      "status": "completed",
+      "transition": "prep_a"
+    },
+    {
+      "status": "completed",
+      "transition": "work_a"
+    },
+    {
+      "status": "completed",
+      "transition": "done_a"
+    },
+    {
+      "status": "completed",
+      "transition": "work_b"
+    },
+    {
+      "status": "completed",
+      "transition": "done_b"
+    },
+    {
+      "status": "completed",
+      "transition": "work_c"
+    },
+    {
+      "status": "completed",
+      "transition": "done_c"
+    },
+    {
+      "status": "completed",
+      "transition": "receive_c"
+    }
+  ],
+  "maxSteps": 20
+}

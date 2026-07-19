@@ -1,0 +1,1339 @@
+{
+  "contributions": [
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 0
+      },
+      "kind": "document.net-header",
+      "ordinal": 0,
+      "span": {
+        "end": {
+          "byteOffset": 53,
+          "column": 54,
+          "line": 1
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 0,
+          "column": 1,
+          "line": 1
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "description": "Minimal clean-start Speaks window",
+        "name": "speaks_window"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.declare",
+      "ordinal": 1,
+      "span": {
+        "end": {
+          "byteOffset": 88,
+          "column": 34,
+          "line": 3
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 55,
+          "column": 1,
+          "line": 3
+        }
+      },
+      "target": {
+        "id": {
+          "document": "speaks-window.petrinet",
+          "part": 0,
+          "statement": 1
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "speak_req"
+        },
+        "from": {
+          "name": "request_in",
+          "type": "place"
+        },
+        "mode": "consume",
+        "to": {
+          "name": "start",
+          "type": "transition"
+        },
+        "transitionNameSpan": {
+          "end": {
+            "byteOffset": 87,
+            "column": 33,
+            "line": 3
+          },
+          "source": "speaks-window.petrinet",
+          "start": {
+            "byteOffset": 82,
+            "column": 28,
+            "line": 3
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "speaks-window.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.declare",
+      "ordinal": 2,
+      "span": {
+        "end": {
+          "byteOffset": 115,
+          "column": 61,
+          "line": 3
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 81,
+          "column": 27,
+          "line": 3
+        }
+      },
+      "target": {
+        "id": {
+          "document": "speaks-window.petrinet",
+          "part": 1,
+          "statement": 1
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "speak_token"
+        },
+        "from": {
+          "name": "start",
+          "type": "transition"
+        },
+        "mode": "produce",
+        "to": {
+          "name": "in_flight",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 2
+      },
+      "kind": "arc.handle",
+      "ordinal": 3,
+      "span": {
+        "end": {
+          "byteOffset": 169,
+          "column": 54,
+          "line": 4
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 116,
+          "column": 1,
+          "line": 4
+        }
+      },
+      "target": {
+        "name": "in_flight_clear",
+        "type": "arcHandle"
+      },
+      "value": {
+        "arcIds": [
+          {
+            "document": "speaks-window.petrinet",
+            "part": 1,
+            "statement": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "speaks-window.petrinet",
+        "statement": 2
+      },
+      "kind": "arc.declare",
+      "ordinal": 4,
+      "span": {
+        "end": {
+          "byteOffset": 169,
+          "column": 54,
+          "line": 4
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 134,
+          "column": 19,
+          "line": 4
+        }
+      },
+      "target": {
+        "id": {
+          "document": "speaks-window.petrinet",
+          "part": 1,
+          "statement": 2
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "speak_token"
+        },
+        "from": {
+          "name": "in_flight",
+          "type": "place"
+        },
+        "mode": "inhibit",
+        "to": {
+          "name": "start",
+          "type": "transition"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 3
+      },
+      "kind": "arc.handle",
+      "ordinal": 5,
+      "span": {
+        "end": {
+          "byteOffset": 223,
+          "column": 54,
+          "line": 5
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 170,
+          "column": 1,
+          "line": 5
+        }
+      },
+      "target": {
+        "name": "judge_clear",
+        "type": "arcHandle"
+      },
+      "value": {
+        "arcIds": [
+          {
+            "document": "speaks-window.petrinet",
+            "part": 1,
+            "statement": 3
+          }
+        ]
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "speaks-window.petrinet",
+        "statement": 3
+      },
+      "kind": "arc.declare",
+      "ordinal": 6,
+      "span": {
+        "end": {
+          "byteOffset": 223,
+          "column": 54,
+          "line": 5
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 184,
+          "column": 15,
+          "line": 5
+        }
+      },
+      "target": {
+        "id": {
+          "document": "speaks-window.petrinet",
+          "part": 1,
+          "statement": 3
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "judge_req"
+        },
+        "from": {
+          "name": "judge_requested",
+          "type": "place"
+        },
+        "mode": "inhibit",
+        "to": {
+          "name": "start",
+          "type": "transition"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 4
+      },
+      "kind": "arc.declare",
+      "ordinal": 7,
+      "span": {
+        "end": {
+          "byteOffset": 262,
+          "column": 39,
+          "line": 6
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 224,
+          "column": 1,
+          "line": 6
+        }
+      },
+      "target": {
+        "id": {
+          "document": "speaks-window.petrinet",
+          "part": 0,
+          "statement": 4
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "judge_req"
+        },
+        "from": {
+          "name": "start",
+          "type": "transition"
+        },
+        "mode": "produce",
+        "to": {
+          "name": "judge_requested",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 5
+      },
+      "kind": "arc.declare",
+      "ordinal": 8,
+      "span": {
+        "end": {
+          "byteOffset": 303,
+          "column": 40,
+          "line": 8
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 264,
+          "column": 1,
+          "line": 8
+        }
+      },
+      "target": {
+        "id": {
+          "document": "speaks-window.petrinet",
+          "part": 0,
+          "statement": 5
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "judge_req"
+        },
+        "from": {
+          "name": "judge_requested",
+          "type": "place"
+        },
+        "mode": "consume",
+        "to": {
+          "name": "finish",
+          "type": "transition"
+        },
+        "transitionNameSpan": {
+          "end": {
+            "byteOffset": 302,
+            "column": 39,
+            "line": 8
+          },
+          "source": "speaks-window.petrinet",
+          "start": {
+            "byteOffset": 296,
+            "column": 33,
+            "line": 8
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "speaks-window.petrinet",
+        "statement": 5
+      },
+      "kind": "arc.declare",
+      "ordinal": 9,
+      "span": {
+        "end": {
+          "byteOffset": 332,
+          "column": 69,
+          "line": 8
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 295,
+          "column": 32,
+          "line": 8
+        }
+      },
+      "target": {
+        "id": {
+          "document": "speaks-window.petrinet",
+          "part": 1,
+          "statement": 5
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "utterance"
+        },
+        "from": {
+          "name": "finish",
+          "type": "transition"
+        },
+        "mode": "produce",
+        "to": {
+          "name": "utterance_out",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 6
+      },
+      "kind": "arc.handle",
+      "ordinal": 10,
+      "span": {
+        "end": {
+          "byteOffset": 383,
+          "column": 51,
+          "line": 9
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 333,
+          "column": 1,
+          "line": 9
+        }
+      },
+      "target": {
+        "name": "window_close",
+        "type": "arcHandle"
+      },
+      "value": {
+        "arcIds": [
+          {
+            "document": "speaks-window.petrinet",
+            "part": 1,
+            "statement": 6
+          }
+        ]
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "speaks-window.petrinet",
+        "statement": 6
+      },
+      "kind": "arc.declare",
+      "ordinal": 11,
+      "span": {
+        "end": {
+          "byteOffset": 383,
+          "column": 51,
+          "line": 9
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 348,
+          "column": 16,
+          "line": 9
+        }
+      },
+      "target": {
+        "id": {
+          "document": "speaks-window.petrinet",
+          "part": 1,
+          "statement": 6
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "speak_token"
+        },
+        "from": {
+          "name": "in_flight",
+          "type": "place"
+        },
+        "mode": "consume",
+        "to": {
+          "name": "finish",
+          "type": "transition"
+        },
+        "transitionNameSpan": {
+          "end": {
+            "byteOffset": 382,
+            "column": 50,
+            "line": 9
+          },
+          "source": "speaks-window.petrinet",
+          "start": {
+            "byteOffset": 376,
+            "column": 44,
+            "line": 9
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 7
+      },
+      "kind": "transition.handler",
+      "ordinal": 12,
+      "span": {
+        "end": {
+          "byteOffset": 420,
+          "column": 36,
+          "line": 11
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 385,
+          "column": 1,
+          "line": 11
+        }
+      },
+      "target": {
+        "name": "start",
+        "type": "transition"
+      },
+      "value": {
+        "handler": "chip_start@speaks"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 8
+      },
+      "kind": "transition.handler",
+      "ordinal": 13,
+      "span": {
+        "end": {
+          "byteOffset": 453,
+          "column": 33,
+          "line": 12
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 421,
+          "column": 1,
+          "line": 12
+        }
+      },
+      "target": {
+        "name": "finish",
+        "type": "transition"
+      },
+      "value": {
+        "handler": "finish@speaks"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 9
+      },
+      "kind": "place.port",
+      "ordinal": 14,
+      "span": {
+        "end": {
+          "byteOffset": 488,
+          "column": 34,
+          "line": 14
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 455,
+          "column": 1,
+          "line": 14
+        }
+      },
+      "target": {
+        "name": "request_in",
+        "type": "place"
+      },
+      "value": {
+        "color": "speak_req",
+        "direction": "input"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 10
+      },
+      "kind": "place.port",
+      "ordinal": 15,
+      "span": {
+        "end": {
+          "byteOffset": 526,
+          "column": 38,
+          "line": 15
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 489,
+          "column": 1,
+          "line": 15
+        }
+      },
+      "target": {
+        "name": "utterance_out",
+        "type": "place"
+      },
+      "value": {
+        "color": "utterance",
+        "direction": "output"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 11
+      },
+      "kind": "documentation.description",
+      "ordinal": 16,
+      "span": {
+        "end": {
+          "byteOffset": 599,
+          "column": 72,
+          "line": 17
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 528,
+          "column": 1,
+          "line": 17
+        }
+      },
+      "target": {
+        "name": "in_flight",
+        "type": "place"
+      },
+      "value": {
+        "text": "Singleton token delimiting one active request"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 12
+      },
+      "kind": "documentation.annotation",
+      "ordinal": 17,
+      "span": {
+        "end": {
+          "byteOffset": 634,
+          "column": 35,
+          "line": 18
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 600,
+          "column": 1,
+          "line": 18
+        }
+      },
+      "target": {
+        "name": "in_flight",
+        "type": "place"
+      },
+      "value": {
+        "key": "fusion",
+        "value": {
+          "type": "boolean",
+          "value": true
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 13
+      },
+      "kind": "documentation.description",
+      "ordinal": 18,
+      "span": {
+        "end": {
+          "byteOffset": 711,
+          "column": 77,
+          "line": 19
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 635,
+          "column": 1,
+          "line": 19
+        }
+      },
+      "target": {
+        "name": "start",
+        "type": "transition"
+      },
+      "value": {
+        "text": "Accept a request only when all internal state is clean"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 14
+      },
+      "kind": "documentation.annotation",
+      "ordinal": 19,
+      "span": {
+        "end": {
+          "byteOffset": 747,
+          "column": 36,
+          "line": 20
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 712,
+          "column": 1,
+          "line": 20
+        }
+      },
+      "target": {
+        "name": "finish",
+        "type": "transition"
+      },
+      "value": {
+        "key": "role",
+        "value": {
+          "type": "string",
+          "value": "terminal"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 15
+      },
+      "kind": "documentation.description",
+      "ordinal": 20,
+      "span": {
+        "end": {
+          "byteOffset": 815,
+          "column": 68,
+          "line": 21
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 748,
+          "column": 1,
+          "line": 21
+        }
+      },
+      "target": {
+        "name": "window_close",
+        "type": "arcHandle"
+      },
+      "value": {
+        "text": "Terminally consumes the in-flight token"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 16
+      },
+      "kind": "documentation.annotation",
+      "ordinal": 21,
+      "span": {
+        "end": {
+          "byteOffset": 855,
+          "column": 40,
+          "line": 22
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 816,
+          "column": 1,
+          "line": 22
+        }
+      },
+      "target": {
+        "name": "window_close",
+        "type": "arcHandle"
+      },
+      "value": {
+        "key": "window",
+        "value": {
+          "type": "string",
+          "value": "close"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 17
+      },
+      "kind": "metadata.named-marking",
+      "ordinal": 22,
+      "span": {
+        "end": {
+          "byteOffset": 901,
+          "column": 45,
+          "line": 24
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 857,
+          "column": 1,
+          "line": 24
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "entries": [
+          {
+            "count": 1,
+            "place": {
+              "name": "request_in",
+              "type": "place"
+            },
+            "token": {
+              "template": {
+                "name": "demo_request",
+                "type": "template"
+              }
+            }
+          }
+        ],
+        "name": "queued"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 18
+      },
+      "kind": "template.define",
+      "ordinal": 23,
+      "span": {
+        "end": {
+          "byteOffset": 946,
+          "column": 45,
+          "line": 25
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 902,
+          "column": 1,
+          "line": 25
+        }
+      },
+      "target": {
+        "name": "demo_request",
+        "type": "template"
+      },
+      "value": {
+        "value": {
+          "entries": [
+            {
+              "key": "text",
+              "value": {
+                "type": "string",
+                "value": "Status?"
+              }
+            }
+          ],
+          "type": "object"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 19
+      },
+      "kind": "view.position",
+      "ordinal": 24,
+      "span": {
+        "end": {
+          "byteOffset": 1002,
+          "column": 55,
+          "line": 27
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 948,
+          "column": 1,
+          "line": 27
+        }
+      },
+      "target": {
+        "name": "window",
+        "type": "view"
+      },
+      "value": {
+        "position": {
+          "entries": [
+            {
+              "key": "x",
+              "value": {
+                "lexeme": "0",
+                "type": "number"
+              }
+            },
+            {
+              "key": "y",
+              "value": {
+                "lexeme": "80",
+                "type": "number"
+              }
+            }
+          ],
+          "type": "object"
+        },
+        "subject": {
+          "name": "request_in",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 20
+      },
+      "kind": "view.position",
+      "ordinal": 25,
+      "span": {
+        "end": {
+          "byteOffset": 1054,
+          "column": 52,
+          "line": 28
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 1003,
+          "column": 1,
+          "line": 28
+        }
+      },
+      "target": {
+        "name": "window",
+        "type": "view"
+      },
+      "value": {
+        "position": {
+          "entries": [
+            {
+              "key": "x",
+              "value": {
+                "lexeme": "160",
+                "type": "number"
+              }
+            },
+            {
+              "key": "y",
+              "value": {
+                "lexeme": "80",
+                "type": "number"
+              }
+            }
+          ],
+          "type": "object"
+        },
+        "subject": {
+          "name": "start",
+          "type": "transition"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 21
+      },
+      "kind": "view.position",
+      "ordinal": 26,
+      "span": {
+        "end": {
+          "byteOffset": 1110,
+          "column": 56,
+          "line": 29
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 1055,
+          "column": 1,
+          "line": 29
+        }
+      },
+      "target": {
+        "name": "window",
+        "type": "view"
+      },
+      "value": {
+        "position": {
+          "entries": [
+            {
+              "key": "x",
+              "value": {
+                "lexeme": "320",
+                "type": "number"
+              }
+            },
+            {
+              "key": "y",
+              "value": {
+                "lexeme": "20",
+                "type": "number"
+              }
+            }
+          ],
+          "type": "object"
+        },
+        "subject": {
+          "name": "in_flight",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 22
+      },
+      "kind": "view.position",
+      "ordinal": 27,
+      "span": {
+        "end": {
+          "byteOffset": 1173,
+          "column": 63,
+          "line": 30
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 1111,
+          "column": 1,
+          "line": 30
+        }
+      },
+      "target": {
+        "name": "window",
+        "type": "view"
+      },
+      "value": {
+        "position": {
+          "entries": [
+            {
+              "key": "x",
+              "value": {
+                "lexeme": "320",
+                "type": "number"
+              }
+            },
+            {
+              "key": "y",
+              "value": {
+                "lexeme": "140",
+                "type": "number"
+              }
+            }
+          ],
+          "type": "object"
+        },
+        "subject": {
+          "name": "judge_requested",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 23
+      },
+      "kind": "view.position",
+      "ordinal": 28,
+      "span": {
+        "end": {
+          "byteOffset": 1226,
+          "column": 53,
+          "line": 31
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 1174,
+          "column": 1,
+          "line": 31
+        }
+      },
+      "target": {
+        "name": "window",
+        "type": "view"
+      },
+      "value": {
+        "position": {
+          "entries": [
+            {
+              "key": "x",
+              "value": {
+                "lexeme": "500",
+                "type": "number"
+              }
+            },
+            {
+              "key": "y",
+              "value": {
+                "lexeme": "80",
+                "type": "number"
+              }
+            }
+          ],
+          "type": "object"
+        },
+        "subject": {
+          "name": "finish",
+          "type": "transition"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 24
+      },
+      "kind": "view.position",
+      "ordinal": 29,
+      "span": {
+        "end": {
+          "byteOffset": 1286,
+          "column": 60,
+          "line": 32
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 1227,
+          "column": 1,
+          "line": 32
+        }
+      },
+      "target": {
+        "name": "window",
+        "type": "view"
+      },
+      "value": {
+        "position": {
+          "entries": [
+            {
+              "key": "x",
+              "value": {
+                "lexeme": "680",
+                "type": "number"
+              }
+            },
+            {
+              "key": "y",
+              "value": {
+                "lexeme": "80",
+                "type": "number"
+              }
+            }
+          ],
+          "type": "object"
+        },
+        "subject": {
+          "name": "utterance_out",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 25
+      },
+      "kind": "view.route",
+      "ordinal": 30,
+      "span": {
+        "end": {
+          "byteOffset": 1372,
+          "column": 86,
+          "line": 33
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 1287,
+          "column": 1,
+          "line": 33
+        }
+      },
+      "target": {
+        "name": "window_close",
+        "type": "arcHandle"
+      },
+      "value": {
+        "points": [
+          {
+            "entries": [
+              {
+                "key": "x",
+                "value": {
+                  "lexeme": "400",
+                  "type": "number"
+                }
+              },
+              {
+                "key": "y",
+                "value": {
+                  "lexeme": "20",
+                  "type": "number"
+                }
+              }
+            ],
+            "type": "object"
+          },
+          {
+            "entries": [
+              {
+                "key": "x",
+                "value": {
+                  "lexeme": "500",
+                  "type": "number"
+                }
+              },
+              {
+                "key": "y",
+                "value": {
+                  "lexeme": "20",
+                  "type": "number"
+                }
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "view": {
+          "name": "window",
+          "type": "view"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "speaks-window.petrinet",
+        "statement": 26
+      },
+      "kind": "document.extensions",
+      "ordinal": 31,
+      "span": {
+        "end": {
+          "byteOffset": 1386,
+          "column": 14,
+          "line": 34
+        },
+        "source": "speaks-window.petrinet",
+        "start": {
+          "byteOffset": 1373,
+          "column": 1,
+          "line": 34
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "extensions": {
+          "entries": [],
+          "type": "object"
+        }
+      }
+    }
+  ],
+  "document": {
+    "id": "speaks-window.petrinet"
+  },
+  "documentKind": "net",
+  "format": "velocitron.petrinet/contribution-ir",
+  "version": 1
+}

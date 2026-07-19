@@ -1,0 +1,44 @@
+{
+  "description": "A coin in coin_slot fires 'accept_coin' (winning the conflict with 'return_coin' under first-found), which signals 'vend_packet' to deliver a packet to the compartment; 'take_packet' drains it; the net quiesces with the coin collected and four packets remaining in storage.",
+  "expectedFinalMarking": {
+    "cash_box": [
+      {
+        "data": {},
+        "type": "coin"
+      }
+    ],
+    "storage": [
+      {
+        "data": {},
+        "type": "packet"
+      },
+      {
+        "data": {},
+        "type": "packet"
+      },
+      {
+        "data": {},
+        "type": "packet"
+      },
+      {
+        "data": {},
+        "type": "packet"
+      }
+    ]
+  },
+  "expectedFiringSequence": [
+    {
+      "status": "completed",
+      "transition": "accept_coin"
+    },
+    {
+      "status": "completed",
+      "transition": "vend_packet"
+    },
+    {
+      "status": "completed",
+      "transition": "take_packet"
+    }
+  ],
+  "maxSteps": 10
+}

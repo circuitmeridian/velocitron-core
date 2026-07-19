@@ -1,0 +1,45 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 1,
+    "file": "coin-choice.petrinet",
+    "help": "assign each explicitly ordered transition a unique positive position",
+    "line": 11,
+    "message": "transition order position 1 is assigned more than once",
+    "related": [
+      {
+        "message": "[accept_coin] first assigned position 1",
+        "span": {
+          "end": {
+            "byteOffset": 232,
+            "column": 22,
+            "line": 10
+          },
+          "source": "coin-choice.petrinet",
+          "start": {
+            "byteOffset": 211,
+            "column": 1,
+            "line": 10
+          }
+        }
+      }
+    ],
+    "span": {
+      "end": {
+        "byteOffset": 254,
+        "column": 22,
+        "line": 11
+      },
+      "source": "coin-choice.petrinet",
+      "start": {
+        "byteOffset": 233,
+        "column": 1,
+        "line": 11
+      }
+    }
+  },
+  "source": {
+    "sourceId": "coin-choice.petrinet",
+    "text": "net coin_choice \"Coin choice\"\n\n@return: (coin_slot) -coin-> [return_coin]\n@accept: (coin_slot) -coin-> [accept_coin] -coin-> (cash_box)\n\n[accept_coin] handler \"accept_coin\"\n[return_coin] handler \"return_coin\"\n\n\n[accept_coin] order 1\n[return_coin] order 1\n"
+  }
+}

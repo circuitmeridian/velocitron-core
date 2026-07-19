@@ -1,0 +1,27 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 6,
+    "file": "bad_wire.petrinet",
+    "help": "reverse the wire so it runs from output to input",
+    "line": 5,
+    "message": "wire source endpoint sink.(pulse_in) is an input port; a wire must run from an output port to an input port",
+    "span": {
+      "end": {
+        "byteOffset": 114,
+        "column": 21,
+        "line": 5
+      },
+      "source": "bad_wire.petrinet",
+      "start": {
+        "byteOffset": 99,
+        "column": 6,
+        "line": 5
+      }
+    }
+  },
+  "source": {
+    "sourceId": "bad_wire.petrinet",
+    "text": "composition bad_wire\n\nuse \"pulse_source.petrinet\" as source\nuse \"pulse_sink.petrinet\" as sink\nwire sink.(pulse_in) -> source.(pulse_out)\n"
+  }
+}

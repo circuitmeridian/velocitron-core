@@ -1,0 +1,58 @@
+{
+  "arcs": [
+    {
+      "consume": {
+        "type": "refresh_due"
+      },
+      "from": {
+        "place": "refresh_due_in"
+      },
+      "to": {
+        "transition": "curate"
+      }
+    },
+    {
+      "from": {
+        "transition": "curate"
+      },
+      "produce": {
+        "destination": "speak_request",
+        "type": "speak_req"
+      },
+      "to": {
+        "place": "speak_request"
+      }
+    }
+  ],
+  "description": "Curate graduation fragment",
+  "initialMarking": {},
+  "name": "graduation_curate",
+  "places": [
+    {
+      "accepts": [
+        "refresh_due"
+      ],
+      "name": "refresh_due_in",
+      "port": {
+        "direction": "input",
+        "type": "refresh_due"
+      }
+    },
+    {
+      "accepts": [
+        "speak_req"
+      ],
+      "name": "speak_request",
+      "port": {
+        "direction": "output",
+        "type": "speak_req"
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "handler": "curate@curate",
+      "name": "curate"
+    }
+  ]
+}

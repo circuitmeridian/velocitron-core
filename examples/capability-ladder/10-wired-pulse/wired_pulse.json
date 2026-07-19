@@ -1,0 +1,24 @@
+{
+  "nets": [
+    {
+      "alias": "source",
+      "ref": "pulse_source.petrinet"
+    },
+    {
+      "alias": "sink",
+      "ref": "pulse_sink.petrinet"
+    }
+  ],
+  "wires": [
+    {
+      "from": {
+        "net": "source",
+        "port": "pulse_out"
+      },
+      "to": {
+        "net": "sink",
+        "port": "pulse_in"
+      }
+    }
+  ]
+}

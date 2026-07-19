@@ -1,0 +1,200 @@
+{
+  "cases": [
+    {
+      "expectedEnabledTransitions": [
+        "admit"
+      ],
+      "expectedFinalMarking": {
+        "admitted": [
+          {
+            "data": {
+              "key": "B"
+            },
+            "type": "request"
+          }
+        ],
+        "requests": [
+          {
+            "data": {
+              "key": "A"
+            },
+            "type": "request"
+          }
+        ],
+        "suppressions": [
+          {
+            "data": {
+              "key": "A"
+            },
+            "type": "suppression"
+          }
+        ]
+      },
+      "expectedFiringSequence": [
+        {
+          "status": "completed",
+          "transition": "admit"
+        }
+      ],
+      "initialMarking": {
+        "requests": [
+          {
+            "data": {
+              "key": "A"
+            },
+            "type": "request"
+          },
+          {
+            "data": {
+              "key": "B"
+            },
+            "type": "request"
+          }
+        ],
+        "suppressions": [
+          {
+            "data": {
+              "key": "A"
+            },
+            "type": "suppression"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "same-key candidate is filtered before different-key candidate"
+    },
+    {
+      "expectedEnabledTransitions": [],
+      "expectedFinalMarking": {
+        "requests": [
+          {
+            "data": {
+              "key": "A"
+            },
+            "type": "request"
+          }
+        ],
+        "suppressions": [
+          {
+            "data": {
+              "key": "A"
+            },
+            "type": "suppression"
+          }
+        ]
+      },
+      "expectedFiringSequence": [],
+      "initialMarking": {
+        "requests": [
+          {
+            "data": {
+              "key": "A"
+            },
+            "type": "request"
+          }
+        ],
+        "suppressions": [
+          {
+            "data": {
+              "key": "A"
+            },
+            "type": "suppression"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "same-key suppression blocks the request"
+    },
+    {
+      "expectedEnabledTransitions": [
+        "admit"
+      ],
+      "expectedFinalMarking": {
+        "admitted": [
+          {
+            "data": {
+              "key": "B"
+            },
+            "type": "request"
+          }
+        ],
+        "suppressions": [
+          {
+            "data": {
+              "key": "A"
+            },
+            "type": "suppression"
+          }
+        ]
+      },
+      "expectedFiringSequence": [
+        {
+          "status": "completed",
+          "transition": "admit"
+        }
+      ],
+      "initialMarking": {
+        "requests": [
+          {
+            "data": {
+              "key": "B"
+            },
+            "type": "request"
+          }
+        ],
+        "suppressions": [
+          {
+            "data": {
+              "key": "A"
+            },
+            "type": "suppression"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "different-key suppression permits the request"
+    },
+    {
+      "expectedEnabledTransitions": [],
+      "expectedFinalMarking": {
+        "requests": [
+          {
+            "data": {
+              "key": "A"
+            },
+            "type": "request"
+          }
+        ],
+        "suppressions": [
+          {
+            "data": {},
+            "type": "suppression"
+          }
+        ]
+      },
+      "expectedFiringSequence": [],
+      "initialMarking": {
+        "requests": [
+          {
+            "data": {
+              "key": "A"
+            },
+            "type": "request"
+          }
+        ],
+        "suppressions": [
+          {
+            "data": {},
+            "type": "suppression"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "correlation evaluation error fails closed"
+    }
+  ],
+  "description": "Per-key suppression anti-join filtering and fail-closed correlation",
+  "dslVariants": [
+    "per-key-suppression.petrinet"
+  ]
+}

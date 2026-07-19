@@ -1,0 +1,53 @@
+{
+  "author": "Matthew R. Scott",
+  "dependencies": {
+    "@marcbachmann/cel-js": "8.0.0",
+    "ajv": "8.20.0",
+    "antlr4": "4.13.2"
+  },
+  "description": "TypeScript types, schema validation, .petrinet compilation, and structural operations for Velocitron nets.",
+  "devDependencies": {
+    "typescript": "7.0.2",
+    "vitest": "4.1.10"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/circuitmeridian/velocitron-core",
+  "license": "MIT",
+  "name": "@velocitron/core",
+  "bugs": {
+    "url": "https://github.com/circuitmeridian/velocitron-core/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/circuitmeridian/velocitron-core.git",
+    "directory": "implementations/typescript"
+  },
+  "scripts": {
+    "audit:browser": "node tools/audit-browser-seam.mjs",
+    "build": "node tools/generate-schemas.mjs && node tools/generate-ir-schema.mjs && tsc -b tsconfig.build.json --clean && tsc -b tsconfig.build.json && node tools/audit-package-import.mjs",
+    "check:generated": "python3 ../../tools/antlr.py check-typescript && node tools/generate-schemas.mjs --check && node tools/generate-ir-schema.mjs --check",
+    "check:ir-schema": "node tools/generate-ir-schema.mjs --check",
+    "check:schema": "node tools/generate-schemas.mjs --check",
+    "generate": "python3 ../../tools/antlr.py generate-typescript && node tools/generate-schemas.mjs && node tools/generate-ir-schema.mjs",
+    "generate:ir-schema": "node tools/generate-ir-schema.mjs",
+    "generate:schema": "node tools/generate-schemas.mjs",
+    "smoke:package": "node tools/audit-package-import.mjs",
+    "test": "vitest run --passWithNoTests",
+    "test:schema": "vitest run tests/schema",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "version": "0.1.0"
+}

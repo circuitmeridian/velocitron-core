@@ -1,0 +1,45 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 1,
+    "file": "pulse_source.conflicting-port.petrinet",
+    "help": "remove one declaration or make both port values identical",
+    "line": 6,
+    "message": "conflicting port facts for place (pulse_out)",
+    "related": [
+      {
+        "message": "first port was declared here",
+        "span": {
+          "end": {
+            "byteOffset": 136,
+            "column": 30,
+            "line": 5
+          },
+          "source": "pulse_source.conflicting-port.petrinet",
+          "start": {
+            "byteOffset": 107,
+            "column": 1,
+            "line": 5
+          }
+        }
+      }
+    ],
+    "span": {
+      "end": {
+        "byteOffset": 165,
+        "column": 29,
+        "line": 6
+      },
+      "source": "pulse_source.conflicting-port.petrinet",
+      "start": {
+        "byteOffset": 137,
+        "column": 1,
+        "line": 6
+      }
+    }
+  },
+  "source": {
+    "sourceId": "pulse_source.conflicting-port.petrinet",
+    "text": "net pulse_source_conflicting_port\n\n(seed) -seed-> [emit] -pulse-> (pulse_out)\n[emit] handler \"emit@source\"\n(pulse_out) port output pulse\n(pulse_out) port input pulse\n"
+  }
+}

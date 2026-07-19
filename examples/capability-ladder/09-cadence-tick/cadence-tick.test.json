@@ -1,0 +1,447 @@
+{
+  "cases": [
+    {
+      "bdd": {
+        "given": "the canonical latch and an injected clock before its deadline",
+        "then": "no transition is enabled and no scheduler advances time",
+        "when": "the engine reevaluates enablement without an injection"
+      },
+      "expectedEnabledTransitions": [],
+      "expectedFinalMarking": {
+        "clock": [
+          {
+            "data": {
+              "now": 0
+            },
+            "type": "clock"
+          }
+        ],
+        "tick_latch": [
+          {
+            "data": {
+              "cadence_s": 300,
+              "fired_at": 0
+            },
+            "type": "tick_latch"
+          }
+        ]
+      },
+      "expectedFiringSequence": [],
+      "expectedJournalSequence": [],
+      "initialMarking": {
+        "clock": [
+          {
+            "data": {
+              "now": 0
+            },
+            "type": "clock"
+          }
+        ],
+        "tick_latch": [
+          {
+            "data": {
+              "cadence_s": 300,
+              "fired_at": 0
+            },
+            "type": "tick_latch"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "immature clock remains quiescent"
+    },
+    {
+      "bdd": {
+        "given": "an immature singleton clock and the canonical latch",
+        "then": "on_tick fires, preserves the read clock, and rearms the latch from injected time",
+        "when": "clock 300 replaces clock 0 and the engine is run explicitly"
+      },
+      "expectedEnabledTransitions": [],
+      "expectedEnabledTransitionsAfterInjection": [
+        "on_tick"
+      ],
+      "expectedFinalMarking": {
+        "clock": [
+          {
+            "data": {
+              "now": 300
+            },
+            "type": "clock"
+          }
+        ],
+        "refresh_due": [
+          {
+            "data": {
+              "trigger": "tick"
+            },
+            "type": "refresh_due"
+          }
+        ],
+        "tick_latch": [
+          {
+            "data": {
+              "cadence_s": 300,
+              "fired_at": 300
+            },
+            "type": "tick_latch"
+          }
+        ]
+      },
+      "expectedFiringSequence": [
+        {
+          "status": "completed",
+          "transition": "on_tick"
+        }
+      ],
+      "expectedJournalSequence": [
+        {
+          "kind": "update",
+          "place": "clock",
+          "sequence": 0
+        },
+        {
+          "sequence": 1,
+          "transition": "on_tick"
+        }
+      ],
+      "initialMarking": {
+        "clock": [
+          {
+            "data": {
+              "now": 0
+            },
+            "type": "clock"
+          }
+        ],
+        "tick_latch": [
+          {
+            "data": {
+              "cadence_s": 300,
+              "fired_at": 0
+            },
+            "type": "tick_latch"
+          }
+        ]
+      },
+      "injections": [
+        {
+          "attempt": 0,
+          "place": "clock",
+          "replace": true,
+          "token": {
+            "data": {
+              "now": 300
+            },
+            "type": "clock"
+          }
+        }
+      ],
+      "maxSteps": 1,
+      "name": "replacement injection matures one tick"
+    },
+    {
+      "bdd": {
+        "given": "an alert and a mature tick conflicting over one latch",
+        "then": "on_alert wins, consumes the alert, preserves the read clock, and resets the deadline",
+        "when": "the opt-in priority policy selects one firing"
+      },
+      "expectedEnabledTransitions": [
+        "on_tick",
+        "on_alert"
+      ],
+      "expectedEnabledTransitionsAfterRun": [],
+      "expectedFinalMarking": {
+        "clock": [
+          {
+            "data": {
+              "now": 300
+            },
+            "type": "clock"
+          }
+        ],
+        "refresh_due": [
+          {
+            "data": {
+              "severity": "warning",
+              "trigger": "alert"
+            },
+            "type": "refresh_due"
+          }
+        ],
+        "tick_latch": [
+          {
+            "data": {
+              "cadence_s": 300,
+              "fired_at": 300
+            },
+            "type": "tick_latch"
+          }
+        ]
+      },
+      "expectedFiringSequence": [
+        {
+          "status": "completed",
+          "transition": "on_alert"
+        }
+      ],
+      "firingPolicy": "priority",
+      "initialMarking": {
+        "alert": [
+          {
+            "data": {
+              "severity": "warning"
+            },
+            "type": "alert"
+          }
+        ],
+        "clock": [
+          {
+            "data": {
+              "now": 300
+            },
+            "type": "clock"
+          }
+        ],
+        "tick_latch": [
+          {
+            "data": {
+              "cadence_s": 300,
+              "fired_at": 0
+            },
+            "type": "tick_latch"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "priority policy lets alert reset a mature tick"
+    },
+    {
+      "bdd": {
+        "given": "the same alert and mature tick conflict",
+        "then": "declaration-first on_tick wins despite on_alert priority 10",
+        "when": "the default first-found policy selects one firing"
+      },
+      "expectedEnabledTransitions": [
+        "on_tick",
+        "on_alert"
+      ],
+      "expectedEnabledTransitionsAfterRun": [
+        "on_alert"
+      ],
+      "expectedFinalMarking": {
+        "alert": [
+          {
+            "data": {
+              "severity": "warning"
+            },
+            "type": "alert"
+          }
+        ],
+        "clock": [
+          {
+            "data": {
+              "now": 300
+            },
+            "type": "clock"
+          }
+        ],
+        "refresh_due": [
+          {
+            "data": {
+              "trigger": "tick"
+            },
+            "type": "refresh_due"
+          }
+        ],
+        "tick_latch": [
+          {
+            "data": {
+              "cadence_s": 300,
+              "fired_at": 300
+            },
+            "type": "tick_latch"
+          }
+        ]
+      },
+      "expectedFiringSequence": [
+        {
+          "status": "completed",
+          "transition": "on_tick"
+        }
+      ],
+      "firingPolicy": "first_found",
+      "initialMarking": {
+        "alert": [
+          {
+            "data": {
+              "severity": "warning"
+            },
+            "type": "alert"
+          }
+        ],
+        "clock": [
+          {
+            "data": {
+              "now": 300
+            },
+            "type": "clock"
+          }
+        ],
+        "tick_latch": [
+          {
+            "data": {
+              "cadence_s": 300,
+              "fired_at": 0
+            },
+            "type": "tick_latch"
+          }
+        ]
+      },
+      "maxSteps": 1,
+      "name": "default first-found policy ignores priority"
+    },
+    {
+      "bdd": {
+        "given": "an alert-reset latch whose next deadline is 600",
+        "then": "599 stays immature, 600 fires on_tick, both clock reads survive, and journal sequence is total",
+        "when": "the runtime explicitly injects replacement clocks before and at the rearmed deadline"
+      },
+      "expectedFinalMarking": {
+        "clock": [
+          {
+            "data": {
+              "now": 600
+            },
+            "type": "clock"
+          }
+        ],
+        "refresh_due": [
+          {
+            "data": {
+              "source": "sensor-a",
+              "trigger": "alert"
+            },
+            "type": "refresh_due"
+          },
+          {
+            "data": {
+              "trigger": "tick"
+            },
+            "type": "refresh_due"
+          }
+        ],
+        "tick_latch": [
+          {
+            "data": {
+              "cadence_s": 300,
+              "fired_at": 600
+            },
+            "type": "tick_latch"
+          }
+        ]
+      },
+      "expectedFiringSequence": [
+        {
+          "status": "completed",
+          "transition": "on_alert"
+        },
+        {
+          "status": "completed",
+          "transition": "on_tick"
+        }
+      ],
+      "expectedJournalSequence": [
+        {
+          "sequence": 0,
+          "transition": "on_alert"
+        },
+        {
+          "kind": "update",
+          "place": "clock",
+          "sequence": 1
+        },
+        {
+          "kind": "update",
+          "place": "clock",
+          "sequence": 2
+        },
+        {
+          "sequence": 3,
+          "transition": "on_tick"
+        }
+      ],
+      "initialMarking": {
+        "alert": [
+          {
+            "data": {
+              "source": "sensor-a"
+            },
+            "type": "alert"
+          }
+        ],
+        "clock": [
+          {
+            "data": {
+              "now": 300
+            },
+            "type": "clock"
+          }
+        ],
+        "tick_latch": [
+          {
+            "data": {
+              "cadence_s": 300,
+              "fired_at": 0
+            },
+            "type": "tick_latch"
+          }
+        ]
+      },
+      "name": "alert reset rearms deadline and orders explicit time events",
+      "steps": [
+        {
+          "action": "fire",
+          "expectedEnabledTransitionsAfter": [],
+          "transition": "on_alert"
+        },
+        {
+          "action": "inject",
+          "attempt": 1,
+          "expectedEnabledTransitionsAfter": [],
+          "place": "clock",
+          "replace": true,
+          "token": {
+            "data": {
+              "now": 599
+            },
+            "type": "clock"
+          }
+        },
+        {
+          "action": "inject",
+          "attempt": 2,
+          "expectedEnabledTransitionsAfter": [
+            "on_tick"
+          ],
+          "place": "clock",
+          "replace": true,
+          "token": {
+            "data": {
+              "now": 600
+            },
+            "type": "clock"
+          }
+        },
+        {
+          "action": "fire",
+          "expectedEnabledTransitionsAfter": [],
+          "transition": "on_tick"
+        }
+      ]
+    }
+  ],
+  "description": "Native timer enablement, replacement clock injection, shared-latch conflict policy, read preservation, rearming, and journal order without a scheduler",
+  "dslVariants": [
+    "cadence-tick.petrinet"
+  ]
+}

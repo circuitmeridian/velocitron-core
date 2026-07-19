@@ -1,0 +1,45 @@
+{
+  "diagnostic": {
+    "code": "PN202",
+    "column": 1,
+    "file": "predicate-conflict.petrinet",
+    "help": "remove one declaration or make both predicate values identical",
+    "line": 5,
+    "message": "conflicting predicate facts for arc @route",
+    "related": [
+      {
+        "message": "first predicate was declared here",
+        "span": {
+          "end": {
+            "byteOffset": 173,
+            "column": 44,
+            "line": 4
+          },
+          "source": "predicate-conflict.petrinet",
+          "start": {
+            "byteOffset": 130,
+            "column": 1,
+            "line": 4
+          }
+        }
+      }
+    ],
+    "span": {
+      "end": {
+        "byteOffset": 210,
+        "column": 37,
+        "line": 5
+      },
+      "source": "predicate-conflict.petrinet",
+      "start": {
+        "byteOffset": 174,
+        "column": 1,
+        "line": 5
+      }
+    }
+  },
+  "source": {
+    "sourceId": "predicate-conflict.petrinet",
+    "text": "net \"source-router\"\n@route: (sample_in) -sample-> [route_co2mon] -sample-> (co2mon_samples)\n[route_co2mon] handler \"route_co2mon\"\n@route predicate cel \"source == \\\"co2mon\\\"\"\n@route predicate handler \"is_co2mon\"\n"
+  }
+}

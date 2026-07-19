@@ -1,0 +1,715 @@
+{
+  "contributions": [
+    {
+      "id": {
+        "part": 0,
+        "source": "crossing-window.petrinet",
+        "statement": 0
+      },
+      "kind": "document.net-header",
+      "ordinal": 0,
+      "span": {
+        "end": {
+          "byteOffset": 74,
+          "column": 75,
+          "line": 1
+        },
+        "source": "crossing-window.petrinet",
+        "start": {
+          "byteOffset": 0,
+          "column": 1,
+          "line": 1
+        }
+      },
+      "target": {
+        "type": "document"
+      },
+      "value": {
+        "description": "Read a sample window unless an alert is already open",
+        "name": "crossing_window"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "crossing-window.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.handle",
+      "ordinal": 1,
+      "span": {
+        "end": {
+          "byteOffset": 124,
+          "column": 49,
+          "line": 3
+        },
+        "source": "crossing-window.petrinet",
+        "start": {
+          "byteOffset": 76,
+          "column": 1,
+          "line": 3
+        }
+      },
+      "target": {
+        "name": "arrival",
+        "type": "arcHandle"
+      },
+      "value": {
+        "arcIds": [
+          {
+            "document": "crossing-window.petrinet",
+            "part": 1,
+            "statement": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "crossing-window.petrinet",
+        "statement": 1
+      },
+      "kind": "arc.declare",
+      "ordinal": 2,
+      "span": {
+        "end": {
+          "byteOffset": 124,
+          "column": 49,
+          "line": 3
+        },
+        "source": "crossing-window.petrinet",
+        "start": {
+          "byteOffset": 86,
+          "column": 11,
+          "line": 3
+        }
+      },
+      "target": {
+        "id": {
+          "document": "crossing-window.petrinet",
+          "part": 1,
+          "statement": 1
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "arrival"
+        },
+        "from": {
+          "name": "arrival",
+          "type": "place"
+        },
+        "mode": "consume",
+        "to": {
+          "name": "detect_crossing",
+          "type": "transition"
+        },
+        "transitionNameSpan": {
+          "end": {
+            "byteOffset": 123,
+            "column": 48,
+            "line": 3
+          },
+          "source": "crossing-window.petrinet",
+          "start": {
+            "byteOffset": 108,
+            "column": 33,
+            "line": 3
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "crossing-window.petrinet",
+        "statement": 2
+      },
+      "kind": "arc.handle",
+      "ordinal": 3,
+      "span": {
+        "end": {
+          "byteOffset": 178,
+          "column": 54,
+          "line": 4
+        },
+        "source": "crossing-window.petrinet",
+        "start": {
+          "byteOffset": 125,
+          "column": 1,
+          "line": 4
+        }
+      },
+      "target": {
+        "name": "latest",
+        "type": "arcHandle"
+      },
+      "value": {
+        "arcIds": [
+          {
+            "document": "crossing-window.petrinet",
+            "part": 1,
+            "statement": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "crossing-window.petrinet",
+        "statement": 2
+      },
+      "kind": "arc.declare",
+      "ordinal": 4,
+      "span": {
+        "end": {
+          "byteOffset": 178,
+          "column": 54,
+          "line": 4
+        },
+        "source": "crossing-window.petrinet",
+        "start": {
+          "byteOffset": 134,
+          "column": 10,
+          "line": 4
+        }
+      },
+      "target": {
+        "id": {
+          "document": "crossing-window.petrinet",
+          "part": 1,
+          "statement": 2
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "sample"
+        },
+        "from": {
+          "name": "latest_sample",
+          "type": "place"
+        },
+        "mode": "read",
+        "to": {
+          "name": "detect_crossing",
+          "type": "transition"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "crossing-window.petrinet",
+        "statement": 3
+      },
+      "kind": "arc.handle",
+      "ordinal": 5,
+      "span": {
+        "end": {
+          "byteOffset": 236,
+          "column": 58,
+          "line": 5
+        },
+        "source": "crossing-window.petrinet",
+        "start": {
+          "byteOffset": 179,
+          "column": 1,
+          "line": 5
+        }
+      },
+      "target": {
+        "name": "previous",
+        "type": "arcHandle"
+      },
+      "value": {
+        "arcIds": [
+          {
+            "document": "crossing-window.petrinet",
+            "part": 1,
+            "statement": 3
+          }
+        ]
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "crossing-window.petrinet",
+        "statement": 3
+      },
+      "kind": "arc.declare",
+      "ordinal": 6,
+      "span": {
+        "end": {
+          "byteOffset": 236,
+          "column": 58,
+          "line": 5
+        },
+        "source": "crossing-window.petrinet",
+        "start": {
+          "byteOffset": 190,
+          "column": 12,
+          "line": 5
+        }
+      },
+      "target": {
+        "id": {
+          "document": "crossing-window.petrinet",
+          "part": 1,
+          "statement": 3
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "sample"
+        },
+        "from": {
+          "name": "previous_sample",
+          "type": "place"
+        },
+        "mode": "read",
+        "to": {
+          "name": "detect_crossing",
+          "type": "transition"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "crossing-window.petrinet",
+        "statement": 4
+      },
+      "kind": "arc.handle",
+      "ordinal": 7,
+      "span": {
+        "end": {
+          "byteOffset": 293,
+          "column": 57,
+          "line": 6
+        },
+        "source": "crossing-window.petrinet",
+        "start": {
+          "byteOffset": 237,
+          "column": 1,
+          "line": 6
+        }
+      },
+      "target": {
+        "name": "no_open_alert",
+        "type": "arcHandle"
+      },
+      "value": {
+        "arcIds": [
+          {
+            "document": "crossing-window.petrinet",
+            "part": 1,
+            "statement": 4
+          }
+        ]
+      }
+    },
+    {
+      "id": {
+        "part": 1,
+        "source": "crossing-window.petrinet",
+        "statement": 4
+      },
+      "kind": "arc.declare",
+      "ordinal": 8,
+      "span": {
+        "end": {
+          "byteOffset": 293,
+          "column": 57,
+          "line": 6
+        },
+        "source": "crossing-window.petrinet",
+        "start": {
+          "byteOffset": 253,
+          "column": 17,
+          "line": 6
+        }
+      },
+      "target": {
+        "id": {
+          "document": "crossing-window.petrinet",
+          "part": 1,
+          "statement": 4
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "alert"
+        },
+        "from": {
+          "name": "open_alert",
+          "type": "place"
+        },
+        "mode": "inhibit",
+        "to": {
+          "name": "detect_crossing",
+          "type": "transition"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "crossing-window.petrinet",
+        "statement": 5
+      },
+      "kind": "arc.declare",
+      "ordinal": 9,
+      "span": {
+        "end": {
+          "byteOffset": 332,
+          "column": 39,
+          "line": 7
+        },
+        "source": "crossing-window.petrinet",
+        "start": {
+          "byteOffset": 294,
+          "column": 1,
+          "line": 7
+        }
+      },
+      "target": {
+        "id": {
+          "document": "crossing-window.petrinet",
+          "part": 0,
+          "statement": 5
+        },
+        "type": "arc"
+      },
+      "value": {
+        "color": {
+          "kind": "explicit",
+          "value": "alert"
+        },
+        "from": {
+          "name": "detect_crossing",
+          "type": "transition"
+        },
+        "mode": "produce",
+        "to": {
+          "name": "alert_out",
+          "type": "place"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "crossing-window.petrinet",
+        "statement": 6
+      },
+      "kind": "transition.handler",
+      "ordinal": 10,
+      "span": {
+        "end": {
+          "byteOffset": 384,
+          "column": 51,
+          "line": 9
+        },
+        "source": "crossing-window.petrinet",
+        "start": {
+          "byteOffset": 334,
+          "column": 1,
+          "line": 9
+        }
+      },
+      "target": {
+        "name": "detect_crossing",
+        "type": "transition"
+      },
+      "value": {
+        "handler": "detect_crossing@ingest"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "crossing-window.petrinet",
+        "statement": 7
+      },
+      "kind": "arc.predicate",
+      "ordinal": 11,
+      "span": {
+        "end": {
+          "byteOffset": 431,
+          "column": 46,
+          "line": 11
+        },
+        "source": "crossing-window.petrinet",
+        "start": {
+          "byteOffset": 386,
+          "column": 1,
+          "line": 11
+        }
+      },
+      "target": {
+        "name": "arrival",
+        "type": "arcHandle"
+      },
+      "value": {
+        "cel": "source == \"co2mon\"",
+        "kind": "cel"
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "crossing-window.petrinet",
+        "statement": 8
+      },
+      "kind": "marking.append",
+      "ordinal": 12,
+      "span": {
+        "end": {
+          "byteOffset": 470,
+          "column": 38,
+          "line": 13
+        },
+        "source": "crossing-window.petrinet",
+        "start": {
+          "byteOffset": 433,
+          "column": 1,
+          "line": 13
+        }
+      },
+      "target": {
+        "name": "arrival",
+        "type": "place"
+      },
+      "value": {
+        "count": 1,
+        "token": {
+          "template": {
+            "name": "arrival",
+            "type": "template"
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "crossing-window.petrinet",
+        "statement": 9
+      },
+      "kind": "marking.append",
+      "ordinal": 13,
+      "span": {
+        "end": {
+          "byteOffset": 513,
+          "column": 43,
+          "line": 14
+        },
+        "source": "crossing-window.petrinet",
+        "start": {
+          "byteOffset": 471,
+          "column": 1,
+          "line": 14
+        }
+      },
+      "target": {
+        "name": "latest_sample",
+        "type": "place"
+      },
+      "value": {
+        "count": 1,
+        "token": {
+          "template": {
+            "name": "latest",
+            "type": "template"
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "crossing-window.petrinet",
+        "statement": 10
+      },
+      "kind": "marking.append",
+      "ordinal": 14,
+      "span": {
+        "end": {
+          "byteOffset": 560,
+          "column": 47,
+          "line": 15
+        },
+        "source": "crossing-window.petrinet",
+        "start": {
+          "byteOffset": 514,
+          "column": 1,
+          "line": 15
+        }
+      },
+      "target": {
+        "name": "previous_sample",
+        "type": "place"
+      },
+      "value": {
+        "count": 1,
+        "token": {
+          "template": {
+            "name": "previous",
+            "type": "template"
+          }
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "crossing-window.petrinet",
+        "statement": 11
+      },
+      "kind": "template.define",
+      "ordinal": 15,
+      "span": {
+        "end": {
+          "byteOffset": 600,
+          "column": 39,
+          "line": 17
+        },
+        "source": "crossing-window.petrinet",
+        "start": {
+          "byteOffset": 562,
+          "column": 1,
+          "line": 17
+        }
+      },
+      "target": {
+        "name": "arrival",
+        "type": "template"
+      },
+      "value": {
+        "value": {
+          "entries": [
+            {
+              "key": "source",
+              "value": {
+                "type": "string",
+                "value": "co2mon"
+              }
+            }
+          ],
+          "type": "object"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "crossing-window.petrinet",
+        "statement": 12
+      },
+      "kind": "template.define",
+      "ordinal": 16,
+      "span": {
+        "end": {
+          "byteOffset": 650,
+          "column": 50,
+          "line": 18
+        },
+        "source": "crossing-window.petrinet",
+        "start": {
+          "byteOffset": 601,
+          "column": 1,
+          "line": 18
+        }
+      },
+      "target": {
+        "name": "latest",
+        "type": "template"
+      },
+      "value": {
+        "value": {
+          "entries": [
+            {
+              "key": "source",
+              "value": {
+                "type": "string",
+                "value": "co2mon"
+              }
+            },
+            {
+              "key": "ppm",
+              "value": {
+                "lexeme": "1200",
+                "type": "number"
+              }
+            }
+          ],
+          "type": "object"
+        }
+      }
+    },
+    {
+      "id": {
+        "part": 0,
+        "source": "crossing-window.petrinet",
+        "statement": 13
+      },
+      "kind": "template.define",
+      "ordinal": 17,
+      "span": {
+        "end": {
+          "byteOffset": 701,
+          "column": 51,
+          "line": 19
+        },
+        "source": "crossing-window.petrinet",
+        "start": {
+          "byteOffset": 651,
+          "column": 1,
+          "line": 19
+        }
+      },
+      "target": {
+        "name": "previous",
+        "type": "template"
+      },
+      "value": {
+        "value": {
+          "entries": [
+            {
+              "key": "source",
+              "value": {
+                "type": "string",
+                "value": "co2mon"
+              }
+            },
+            {
+              "key": "ppm",
+              "value": {
+                "lexeme": "900",
+                "type": "number"
+              }
+            }
+          ],
+          "type": "object"
+        }
+      }
+    }
+  ],
+  "document": {
+    "id": "crossing-window.petrinet"
+  },
+  "documentKind": "net",
+  "format": "velocitron.petrinet/contribution-ir",
+  "version": 1
+}

@@ -1,0 +1,34 @@
+net speaks_window "Minimal clean-start Speaks window"
+
+(request_in) -speak_req-> [start] -speak_token-> (in_flight)
+@in_flight_clear: (in_flight) -speak_token->0 [start]
+@judge_clear: (judge_requested) -judge_req->0 [start]
+[start] -judge_req-> (judge_requested)
+
+(judge_requested) -judge_req-> [finish] -utterance-> (utterance_out)
+@window_close: (in_flight) -speak_token-> [finish]
+
+[start] handler "chip_start@speaks"
+[finish] handler "finish@speaks"
+
+(request_in) port input speak_req
+(utterance_out) port output utterance
+
+(in_flight) description "Singleton token delimiting one active request"
+(in_flight) annotation fusion true
+[start] description "Accept a request only when all internal state is clean"
+[finish] annotation role "terminal"
+@window_close description "Terminally consumes the in-flight token"
+@window_close annotation window "close"
+
+marking queued (request_in) <- $demo_request
+$demo_request: speak_req {"text": "Status?"}
+
+view window position (request_in) at {"x": 0, "y": 80}
+view window position [start] at {"x": 160, "y": 80}
+view window position (in_flight) at {"x": 320, "y": 20}
+view window position (judge_requested) at {"x": 320, "y": 140}
+view window position [finish] at {"x": 500, "y": 80}
+view window position (utterance_out) at {"x": 680, "y": 80}
+view window route @window_close orthogonal [{"x": 400, "y": 20}, {"x": 500, "y": 20}]
+extensions {}

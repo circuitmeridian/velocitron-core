@@ -1,0 +1,27 @@
+{
+  "diagnostic": {
+    "code": "PN101",
+    "column": 1,
+    "file": "wired_pulse.missing-use-alias.petrinet",
+    "help": "add a mandatory identifier alias after as",
+    "line": 4,
+    "message": "mismatched input 'use' expecting identifier",
+    "span": {
+      "end": {
+        "byteOffset": 73,
+        "column": 4,
+        "line": 4
+      },
+      "source": "wired_pulse.missing-use-alias.petrinet",
+      "start": {
+        "byteOffset": 70,
+        "column": 1,
+        "line": 4
+      }
+    }
+  },
+  "source": {
+    "sourceId": "wired_pulse.missing-use-alias.petrinet",
+    "text": "composition wired_pulse_missing_alias\n\nuse \"pulse_source.petrinet\" as\nuse \"pulse_sink.petrinet\" as sink\n"
+  }
+}

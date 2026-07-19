@@ -1,0 +1,4 @@
+{
+  "sourceId": "graduation_cadence.petrinet",
+  "text": "net graduation_cadence \"Cadence graduation fragment\"\n\n(tick_latch) -tick_latch-> [on_tick] -tick_latch-> (tick_latch)\n(clock) -clock->? [on_tick]\n[on_tick] -refresh_due-> (refresh_due_out)\n\n(refresh_due_out) port output refresh_due\n\n[on_tick] handler \"on_tick@cadence\"\n\n[on_tick] timer clock (clock) cel \"clock.now >= latch.fired_at + latch.cadence_s\"\n[on_tick] timer bind latch (tick_latch)\n\nmarking initial (tick_latch) <- $token_0\nmarking initial (clock) <- $token_1\n$token_0: tick_latch {\"cadence_s\":300,\"fired_at\":0}\n$token_1: clock {\"now\":0}\n"
+}

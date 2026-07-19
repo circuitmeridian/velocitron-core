@@ -1,0 +1,4 @@
+{
+  "sourceId": "batch-gate.petrinet",
+  "text": "net batch_gate \"Consume two items; verify, but do not gate, per-key batch capacity\"\n\n@items: (items) -item-> [form_batch] -batch-> (batches)\n\n[form_batch] handler \"form_batch\"\n\n(batches) capacityPerColorKey {\"key\": \"batch_id\", \"max\": 1}\n\n@items weight 2\n\nmarking initial (items) <- 2 * $item_a\nmarking initial (batches) <- $batch_a\n\n$item_a: item {\"batch_id\": \"A\"}\n$batch_a: batch {\"batch_id\": \"A\"}\n"
+}

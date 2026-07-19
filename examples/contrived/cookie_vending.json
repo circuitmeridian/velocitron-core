@@ -1,0 +1,177 @@
+{
+  "arcs": [
+    {
+      "consume": {
+        "type": "coin"
+      },
+      "from": {
+        "place": "coin_slot"
+      },
+      "to": {
+        "transition": "accept_coin"
+      }
+    },
+    {
+      "consume": {
+        "type": "coin"
+      },
+      "from": {
+        "place": "coin_slot"
+      },
+      "to": {
+        "transition": "return_coin"
+      }
+    },
+    {
+      "from": {
+        "transition": "accept_coin"
+      },
+      "produce": {
+        "destination": "cash_box",
+        "type": "coin"
+      },
+      "to": {
+        "place": "cash_box"
+      }
+    },
+    {
+      "from": {
+        "transition": "accept_coin"
+      },
+      "produce": {
+        "data": {},
+        "destination": "signal",
+        "type": "signal"
+      },
+      "to": {
+        "place": "signal"
+      }
+    },
+    {
+      "consume": {
+        "type": "signal"
+      },
+      "from": {
+        "place": "signal"
+      },
+      "to": {
+        "transition": "vend_packet"
+      }
+    },
+    {
+      "consume": {
+        "type": "packet"
+      },
+      "from": {
+        "place": "storage"
+      },
+      "to": {
+        "transition": "vend_packet"
+      }
+    },
+    {
+      "from": {
+        "transition": "vend_packet"
+      },
+      "produce": {
+        "destination": "compartment",
+        "type": "packet"
+      },
+      "to": {
+        "place": "compartment"
+      }
+    },
+    {
+      "consume": {
+        "type": "packet"
+      },
+      "from": {
+        "place": "compartment"
+      },
+      "to": {
+        "transition": "take_packet"
+      }
+    }
+  ],
+  "initialMarking": {
+    "coin_slot": [
+      {
+        "data": {},
+        "type": "coin"
+      }
+    ],
+    "storage": [
+      {
+        "data": {},
+        "type": "packet"
+      },
+      {
+        "data": {},
+        "type": "packet"
+      },
+      {
+        "data": {},
+        "type": "packet"
+      },
+      {
+        "data": {},
+        "type": "packet"
+      },
+      {
+        "data": {},
+        "type": "packet"
+      }
+    ]
+  },
+  "name": "cookie-vending",
+  "places": [
+    {
+      "accepts": [
+        "coin"
+      ],
+      "name": "coin_slot"
+    },
+    {
+      "accepts": [
+        "coin"
+      ],
+      "name": "cash_box"
+    },
+    {
+      "accepts": [
+        "signal"
+      ],
+      "name": "signal"
+    },
+    {
+      "accepts": [
+        "packet"
+      ],
+      "name": "storage"
+    },
+    {
+      "accepts": [
+        "packet"
+      ],
+      "name": "compartment"
+    }
+  ],
+  "transitions": [
+    {
+      "handler": "accept_coin",
+      "name": "accept_coin"
+    },
+    {
+      "handler": "vend_packet",
+      "name": "vend_packet"
+    },
+    {
+      "handler": "return_coin",
+      "name": "return_coin"
+    },
+    {
+      "handler": "take_packet",
+      "name": "take_packet"
+    }
+  ]
+}

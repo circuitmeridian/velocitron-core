@@ -1,0 +1,8 @@
+composition guinan_graduation
+
+use "graduation_cadence.petrinet" as cadence
+use "graduation_curate.petrinet" as curate
+use "graduation_speaks.petrinet" as speaks
+
+wire cadence.(refresh_due_out) -> curate.(refresh_due_in)
+wire curate.(speak_request) -> speaks.(request_in)

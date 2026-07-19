@@ -1,0 +1,19 @@
+{
+  "exclude": [
+    ".venv",
+    ".pytest_cache",
+    "src/velocitron/dsl/generated"
+  ],
+  "extraPaths": [
+    "src"
+  ],
+  "include": [
+    "src",
+    "tests"
+  ],
+  "pythonVersion": "3.14",
+  "reportMissingTypeStubs": false,
+  "typeCheckingMode": "strict",
+  "venv": ".venv",
+  "venvPath": "."
+}

@@ -1,0 +1,48 @@
+{
+  "arcs": [
+    {
+      "consume": {
+        "type": "token"
+      },
+      "from": {
+        "place": "a"
+      },
+      "to": {
+        "transition": "b"
+      }
+    },
+    {
+      "from": {
+        "transition": "b"
+      },
+      "produce": {
+        "destination": "c",
+        "type": "token"
+      },
+      "to": {
+        "place": "c"
+      }
+    }
+  ],
+  "initialMarking": {},
+  "name": "unnamed",
+  "places": [
+    {
+      "accepts": [
+        "token"
+      ],
+      "name": "a"
+    },
+    {
+      "accepts": [
+        "token"
+      ],
+      "name": "c"
+    }
+  ],
+  "transitions": [
+    {
+      "name": "b"
+    }
+  ]
+}

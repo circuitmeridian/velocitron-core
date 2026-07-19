@@ -1,0 +1,13 @@
+net guarded_curation_choice "Choose the speak or silent curation branch with complementary guards"
+
+(curation_token) -curation-> [speak_gate_speak] -speak_req-> (speak_request)
+(curation_token) -curation-> [speak_gate_skip] -utterance-> (final_utterance)
+
+[speak_gate_speak] handler "request_speak@curate"
+[speak_gate_speak] guard "speak_eligible@curate"
+
+[speak_gate_skip] handler "skip_speak@curate"
+[speak_gate_skip] guard "speak_skip@curate"
+
+marking initial (curation_token) <- $curation
+$curation: curation {"should_speak": true}

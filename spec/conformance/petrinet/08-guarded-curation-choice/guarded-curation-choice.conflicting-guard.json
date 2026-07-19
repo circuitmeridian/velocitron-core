@@ -1,0 +1,45 @@
+{
+  "diagnostic": {
+    "code": "PN204",
+    "column": 1,
+    "file": "guarded-curation-choice.conflicting-guard.petrinet",
+    "help": "remove one declaration or make both guard values identical",
+    "line": 6,
+    "message": "conflicting guard facts for transition [speak_gate_speak]",
+    "related": [
+      {
+        "message": "first guard was declared here",
+        "span": {
+          "end": {
+            "byteOffset": 213,
+            "column": 49,
+            "line": 5
+          },
+          "source": "guarded-curation-choice.conflicting-guard.petrinet",
+          "start": {
+            "byteOffset": 165,
+            "column": 1,
+            "line": 5
+          }
+        }
+      }
+    ],
+    "span": {
+      "end": {
+        "byteOffset": 258,
+        "column": 45,
+        "line": 6
+      },
+      "source": "guarded-curation-choice.conflicting-guard.petrinet",
+      "start": {
+        "byteOffset": 214,
+        "column": 1,
+        "line": 6
+      }
+    }
+  },
+  "source": {
+    "sourceId": "guarded-curation-choice.conflicting-guard.petrinet",
+    "text": "net guarded_curation_choice_conflict\n\n(curation_token) -curation-> [speak_gate_speak] -speak_req-> (speak_request)\n[speak_gate_speak] handler \"request_speak@curate\"\n[speak_gate_speak] guard \"speak_eligible@curate\"\n[speak_gate_speak] guard \"speak_skip@curate\"\n"
+  }
+}
