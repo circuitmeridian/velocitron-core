@@ -43,7 +43,7 @@ test = [
 
 dev = [
     { include-group = "test" },
-    "basedpyright>=1.39.9",
+    "basedpyright==1.39.9",
     "cel-expr-python>=0.1.3",
     "common-expression-language>=0.6.0",
     "typing_extensions>=4.12",

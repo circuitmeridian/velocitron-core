@@ -6,7 +6,7 @@ repos:
         args: [--fix, --unsafe-fixes]
       - id: ruff-format
   - repo: https://github.com/DetachHead/basedpyright-prek-mirror
-    rev: 1.39.8
+    rev: 1.39.9
     hooks:
       - id: basedpyright
         name: basedpyright (implementations/python)

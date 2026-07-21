@@ -399,9 +399,9 @@ def test_wrong_repository_detector_covers_supported_git_forms() -> None:
 
     # when/then: host case and transport cannot bypass owner binding
     for identity in identities:
-        assert _TOOL._wrong_repository_identities(identity) == [
-            identity.decode("ascii")
-        ]
+        assert _TOOL._wrong_repository_identities(  # pyright: ignore[reportPrivateUsage]
+            identity
+        ) == [identity.decode("ascii")]
 
 
 def test_repository_detector_accepts_circuit_meridian_git_forms() -> None:
@@ -416,7 +416,9 @@ def test_repository_detector_accepts_circuit_meridian_git_forms() -> None:
 
     # when/then: generic detection does not reject the canonical repository
     for identity in identities:
-        assert _TOOL._wrong_repository_identities(identity) == []
+        assert _TOOL._wrong_repository_identities(  # pyright: ignore[reportPrivateUsage]
+            identity
+        ) == []
 
 @pytest.mark.parametrize("kind", _KINDS)
 def test_wrong_organization_repository_url_in_metadata_fails(

@@ -18,6 +18,7 @@ env:
   EXPECTED_REPOSITORY: circuitmeridian/velocitron-core
   NODE_VERSION: "24.15.0"
   PNPM_VERSION: "11.13.1"
+  BASEDPYRIGHT_VERSION: "1.39.9"
   PYTHON_VERSION: "3.12.11"
   UV_VERSION: "0.11.29"
   UV_CHECKSUM: "04f8b82f5d47f0512dcd32c67a4a6f16a0ea27c81537c338fd0ad6b23cebe829"
@@ -119,6 +120,7 @@ jobs:
       - name: Run candidate source gates
         run: |
           uv run --project implementations/python --no-sync pytest
+          test "$(uv run --project implementations/python --no-sync basedpyright --version | head -n 1)" = "basedpyright $BASEDPYRIGHT_VERSION"
           uv run --project implementations/python --no-sync basedpyright --project implementations/python/pyrightconfig.json
           pnpm typecheck
           pnpm test
